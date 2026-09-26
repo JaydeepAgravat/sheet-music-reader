@@ -76,3 +76,19 @@ jest.mock('@/data/db/database', () => ({ getDb: jest.fn() }));
 
 // SafeAreaProvider renders nothing until native insets arrive; use the library's static mock.
 jest.mock('react-native-safe-area-context', () => require('react-native-safe-area-context/jest/mock').default);
+
+jest.mock('@/specs/NativeSafImport', () => ({
+  __esModule: true,
+  default: {
+    pickFiles: jest.fn(async () => []),
+    pickFolder: jest.fn(async () => null),
+    listFolder: jest.fn(async () => []),
+    copyToLibrary: jest.fn(),
+    takePendingShares: jest.fn(() => []),
+    libraryDir: jest.fn(() => '/data/files/library'),
+    coversDir: jest.fn(() => '/data/files/covers'),
+    deleteFile: jest.fn(() => true),
+    freeBytes: jest.fn(() => 1e10),
+    onShareReceived: jest.fn(() => ({ remove: jest.fn() })),
+  },
+}));

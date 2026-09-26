@@ -9,6 +9,7 @@ import { ShowcaseScreen } from '@/features/showcase/ShowcaseScreen';
 import { RendererLabScreen } from '@/features/dev/RendererLabScreen';
 import { PedalsScreen } from '@/features/pedals/PedalsScreen';
 import { ReaderScreen } from '@/features/reader/ReaderScreen';
+import { TrashScreen } from '@/features/library/TrashScreen';
 import { useTheme } from '@/ui/theme';
 import { createAdaptiveTabs } from './navigation/AdaptiveTabs';
 
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   /** startPage overrides the remembered page (setlists always start at the entry's page). */
   Reader: { scoreId: string; startPage?: number };
   Pedals: undefined;
+  Trash: undefined;
 };
 
 export type MainTabParamList = {
@@ -63,6 +65,7 @@ export function RootNavigator() {
         options={{ animation: 'fade', animationDuration: 200, contentStyle: { backgroundColor: colors.readerBackdrop } }}
       />
       <Stack.Screen name="Pedals" component={PedalsScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="Trash" component={TrashScreen} options={{ animation: 'slide_from_right' }} />
     </Stack.Navigator>
   );
 }

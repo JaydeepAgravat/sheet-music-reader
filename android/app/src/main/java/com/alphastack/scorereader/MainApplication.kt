@@ -8,6 +8,7 @@ import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.alphastack.scorereader.keys.KeyEventsPackage
 import com.alphastack.scorereader.renderer.RendererPackage
+import com.alphastack.scorereader.saf.SafImportPackage
 import com.alphastack.scorereader.system.AppSystemPackage
 
 class MainApplication : Application(), ReactApplication {
@@ -21,6 +22,7 @@ class MainApplication : Application(), ReactApplication {
           add(AppSystemPackage())
           add(RendererPackage())
           add(KeyEventsPackage())
+          add(SafImportPackage())
         },
     )
   }

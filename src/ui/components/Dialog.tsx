@@ -16,10 +16,12 @@ type Props = {
   cancel: Omit<Action, 'variant'>;
   /** Tapping the scrim or pressing back cancels (default true). */
   dismissable?: boolean;
+  /** Extra content under the body (e.g. a name field). */
+  children?: React.ReactNode;
 };
 
 /** Confirmation dialog. Used sparingly: we prefer undo over confirmation (docs/PLAN.md §1.4). */
-export function Dialog({ visible, title, body, confirm, cancel, dismissable = true }: Props) {
+export function Dialog({ visible, title, body, confirm, cancel, dismissable = true, children }: Props) {
   const { colors, reduceMotion } = useTheme();
 
   useEffect(() => {
@@ -50,6 +52,7 @@ export function Dialog({ visible, title, body, confirm, cancel, dismissable = tr
               {body}
             </Text>
           )}
+          {children && <View style={styles.extra}>{children}</View>}
           <View style={styles.actions}>
             <Button label={cancel.label} variant="ghost" onPress={cancel.onPress} />
             <Button label={confirm.label} variant={confirm.variant ?? 'primary'} onPress={confirm.onPress} />
@@ -64,5 +67,6 @@ const styles = StyleSheet.create({
   scrim: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: space.xl },
   card: { width: '100%', maxWidth: 420, borderRadius: radius.sheet, padding: space.xl, paddingBottom: space.lg, elevation: 16, shadowColor: '#000' },
   body: { marginTop: space.sm },
+  extra: { marginTop: space.lg },
   actions: { flexDirection: 'row', justifyContent: 'flex-end', gap: space.sm, marginTop: space.xl },
 });

@@ -14,9 +14,11 @@ type Props = {
   /** Large variant for the library header on tablets. */
   size?: 'md' | 'lg';
   ref?: React.Ref<React.ComponentRef<typeof TextInput>>;
+  onFocus?: () => void;
+  onBlur?: () => void;
 };
 
-export function SearchBar({ value, onChangeText, placeholder, onSubmit, autoFocus, size = 'md', ref }: Props) {
+export function SearchBar({ value, onChangeText, placeholder, onSubmit, autoFocus, size = 'md', ref, onFocus, onBlur }: Props) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const [focused, setFocused] = useState(false);
@@ -42,8 +44,14 @@ export function SearchBar({ value, onChangeText, placeholder, onSubmit, autoFocu
         autoFocus={autoFocus}
         autoCorrect={false}
         autoCapitalize="none"
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        onFocus={() => {
+          setFocused(true);
+          onFocus?.();
+        }}
+        onBlur={() => {
+          setFocused(false);
+          onBlur?.();
+        }}
         maxFontSizeMultiplier={2}
         accessibilityLabel={placeholder}
         style={[styles.input, typography.body, { color: colors.textPrimary }]}

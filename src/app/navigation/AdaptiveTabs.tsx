@@ -12,7 +12,8 @@ import {
   type TabRouterOptions,
   useIsFocused,
 } from '@react-navigation/native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { Freeze } from 'react-freeze';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { haptic } from '@/platform/haptics';
 import { useFeedback } from '@/ui/feedback/store';
@@ -103,17 +104,10 @@ function AdaptiveTabsNavigator({ id, initialRouteName, backBehavior = 'firstRout
         <View style={styles.content}>
           {state.routes.map(route => {
             if (!visited.has(route.key)) return null;
-            const focused = route.key === activeKey;
             return (
-              <View key={route.key} style={[StyleSheet.absoluteFill, !focused && styles.hidden]} importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}>
-                {focused && !reduceMotion ? (
-                  <Animated.View key={`${route.key}-in`} entering={FadeIn.duration(motion.duration.base)} style={styles.fill}>
-                    {descriptors[route.key]!.render()}
-                  </Animated.View>
-                ) : (
-                  descriptors[route.key]!.render()
-                )}
-              </View>
+              <TabScene key={route.key} focused={route.key === activeKey} reduceMotion={reduceMotion}>
+                {descriptors[route.key]!.render()}
+              </TabScene>
             );
           })}
         </View>
@@ -130,13 +124,35 @@ function AdaptiveTabsNavigator({ id, initialRouteName, backBehavior = 'firstRout
   );
 }
 
+/**
+ * A visited tab stays mounted (scroll position, search text survive) but, while hidden, keeps its
+ * full size and is frozen: no re-renders from data changes, and lists keep their real viewport.
+ * (display: none would give lists a 0×0 viewport, and FlashList then renders every row.)
+ */
+function TabScene({ focused, reduceMotion, children }: { focused: boolean; reduceMotion: boolean; children: React.ReactNode }) {
+  const opacity = useSharedValue(focused ? 1 : 0);
+  useEffect(() => {
+    opacity.value = focused && !reduceMotion ? withTiming(1, { duration: motion.duration.base }) : focused ? 1 : 0;
+  }, [focused, reduceMotion, opacity]);
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  return (
+    <Animated.View
+      style={[StyleSheet.absoluteFill, style, !focused && styles.behind]}
+      pointerEvents={focused ? 'auto' : 'none'}
+      importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}
+    >
+      <Freeze freeze={!focused}>{children}</Freeze>
+    </Animated.View>
+  );
+}
+
 export const createAdaptiveTabs = createNavigatorFactory(AdaptiveTabsNavigator);
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
   fill: { flex: 1 },
   content: { flex: 1 },
-  hidden: { display: 'none' },
+  behind: { zIndex: -1 },
   rail: { width: 88, alignItems: 'center', gap: space.md, borderRightWidth: StyleSheet.hairlineWidth },
   bar: { flexDirection: 'row', borderTopWidth: StyleSheet.hairlineWidth },
 });

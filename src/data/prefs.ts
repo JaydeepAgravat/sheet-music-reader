@@ -29,6 +29,10 @@ type PrefSchema = {
   performanceHintShown: boolean;
   /** InputDevice descriptors we already greeted with the "Pedal detected" sheet. */
   greetedPedals: string[];
+  libraryView: 'grid' | 'list';
+  librarySort: 'title' | 'composer' | 'recent' | 'added';
+  /** Newest first, max 8. */
+  recentSearches: string[];
 };
 
 const defaults: PrefSchema = {
@@ -43,6 +47,9 @@ const defaults: PrefSchema = {
   readerHintsShown: 0,
   performanceHintShown: false,
   greetedPedals: [],
+  libraryView: 'grid',
+  librarySort: 'title',
+  recentSearches: [],
 };
 
 type Key = keyof PrefSchema;

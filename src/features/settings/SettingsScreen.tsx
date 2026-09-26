@@ -56,6 +56,13 @@ export function SettingsScreen() {
           <ReadingSettings onOpenPedals={() => nav.navigate('Pedals')} />
         </View>
 
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.library').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <ListRow icon="trash" title={t('settings.trash')} subtitle={t('settings.trashHint')} chevron onPress={() => nav.navigate('Trash')} />
+        </View>
+
         {SHOW_DEV_TOOLS && <DevToolsGroup />}
       </View>
     </Screen>

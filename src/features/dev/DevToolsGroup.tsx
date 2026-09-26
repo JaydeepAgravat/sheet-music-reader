@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@/app/RootNavigator';
+import { benchmarkSearch, removeSyntheticScores, seedSyntheticScores } from '@/dev/libraryBench';
 import { seedLibraryFromTestPdfs } from '@/dev/seedLibrary';
 import { usePedalSheet } from '@/features/pedals/PedalHost';
 import { Divider, ListRow } from '@/ui/components';
@@ -27,6 +28,19 @@ export function DevToolsGroup() {
           showToast({ message: `Added ${r.added} · failed ${r.failed}`, icon: 'info' });
         }}
       />
+      <Divider inset={66} />
+      <ListRow icon="plus" title="Seed 5,000 synthetic scores" onPress={() => showToast({ message: `Added ${seedSyntheticScores(5000)}`, icon: 'info' })} />
+      <Divider inset={66} />
+      <ListRow
+        icon="timer"
+        title="Benchmark search"
+        onPress={() => {
+          const r = benchmarkSearch();
+          showToast({ message: `${r.total} scores · search p95 ${r.search.p95} ms · list p95 ${r.list.p95} ms`, icon: 'timer', duration: 8000 });
+        }}
+      />
+      <Divider inset={66} />
+      <ListRow icon="trash" title="Remove synthetic scores" onPress={removeSyntheticScores} />
       <Divider inset={66} />
       <ListRow
         icon="bluetooth"

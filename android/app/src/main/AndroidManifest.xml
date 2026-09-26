@@ -25,6 +25,25 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <!-- "Open with" for PDFs (file managers, mail, browsers' downloads). Handled by saf/ShareInbox. -->
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="content" android:mimeType="application/pdf" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:scheme="file" android:mimeType="application/pdf" />
+        </intent-filter>
+        <!-- Share sheet. Only application/pdf: octet-stream would list us for every file. -->
+        <intent-filter>
+            <action android:name="android.intent.action.SEND" />
+            <action android:name="android.intent.action.SEND_MULTIPLE" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="application/pdf" />
+        </intent-filter>
       </activity>
     </application>
 </manifest>

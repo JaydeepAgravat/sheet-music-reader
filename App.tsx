@@ -6,6 +6,7 @@ import { DarkTheme, DefaultTheme, NavigationContainer, type Theme as NavTheme } 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RootNavigator } from '@/app/RootNavigator';
 import { navigationRef } from '@/app/navigationRef';
+import { ImportHost } from '@/features/import/ImportHost';
 import { PedalHost } from '@/features/pedals/PedalHost';
 import { getDb } from '@/data/db/database';
 import { FeedbackHost } from '@/ui/feedback/FeedbackHost';
@@ -36,6 +37,7 @@ function Navigation() {
     <NavigationContainer ref={navigationRef} theme={navTheme}>
       <RootNavigator />
       <PedalHost />
+      <ImportHost />
       <FeedbackHost />
     </NavigationContainer>
   );
