@@ -7,6 +7,8 @@ import { SetlistsScreen } from '@/features/setlists/SetlistsScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
 import { ShowcaseScreen } from '@/features/showcase/ShowcaseScreen';
 import { RendererLabScreen } from '@/features/dev/RendererLabScreen';
+import { PedalsScreen } from '@/features/pedals/PedalsScreen';
+import { ReaderScreen } from '@/features/reader/ReaderScreen';
 import { useTheme } from '@/ui/theme';
 import { createAdaptiveTabs } from './navigation/AdaptiveTabs';
 
@@ -14,6 +16,9 @@ export type RootStackParamList = {
   Main: undefined;
   Showcase: undefined;
   RendererLab: undefined;
+  /** startPage overrides the remembered page (setlists always start at the entry's page). */
+  Reader: { scoreId: string; startPage?: number };
+  Pedals: undefined;
 };
 
 export type MainTabParamList = {
@@ -52,6 +57,12 @@ export function RootNavigator() {
       <Stack.Screen name="Main" component={MainTabs} />
       <Stack.Screen name="Showcase" component={ShowcaseScreen} />
       <Stack.Screen name="RendererLab" component={RendererLabScreen} />
+      <Stack.Screen
+        name="Reader"
+        component={ReaderScreen}
+        options={{ animation: 'fade', animationDuration: 200, contentStyle: { backgroundColor: colors.readerBackdrop } }}
+      />
+      <Stack.Screen name="Pedals" component={PedalsScreen} options={{ animation: 'slide_from_right' }} />
     </Stack.Navigator>
   );
 }

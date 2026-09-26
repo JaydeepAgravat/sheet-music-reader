@@ -17,3 +17,4 @@ export * from './Surface';
 export * from './Switch';
 export * from './Text';
 export * from './TextField';
+export * from './Menu';

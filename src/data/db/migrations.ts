@@ -103,6 +103,14 @@ export const migrations: Migration[] = [
       );
     `,
   },
+  {
+    version: 2,
+    name: 'pedal key names',
+    sql: `
+      -- KeyEvent name as captured by the learn screen (e.g. BUTTON_A), for keys we have no label for.
+      ALTER TABLE pedal_mappings ADD COLUMN key_name TEXT;
+    `,
+  },
 ];
 
 export const LATEST_VERSION = migrations[migrations.length - 1]?.version ?? 0;

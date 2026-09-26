@@ -1,9 +1,13 @@
 package com.alphastack.scorereader.system
 
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.view.HapticFeedbackConstants
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.alphastack.scorereader.specs.NativeAppSystemSpec
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.UiThreadUtil
@@ -40,6 +44,31 @@ class AppSystemModule(reactContext: ReactApplicationContext) : NativeAppSystemSp
       if (AppCompatDelegate.getDefaultNightMode() != nightMode) {
         AppCompatDelegate.setDefaultNightMode(nightMode)
       }
+    }
+  }
+
+  override fun setKeepAwake(on: Boolean) {
+    UiThreadUtil.runOnUiThread {
+      val window = reactApplicationContext.currentActivity?.window ?: return@runOnUiThread
+      if (on) window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+      else window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+  }
+
+  override fun setImmersive(on: Boolean) {
+    UiThreadUtil.runOnUiThread {
+      val window = reactApplicationContext.currentActivity?.window ?: return@runOnUiThread
+      WindowCompat.getInsetsController(window, window.decorView).apply {
+        systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        if (on) hide(WindowInsetsCompat.Type.systemBars()) else show(WindowInsetsCompat.Type.systemBars())
+      }
+    }
+  }
+
+  override fun setOrientationLock(locked: Boolean) {
+    UiThreadUtil.runOnUiThread {
+      reactApplicationContext.currentActivity?.requestedOrientation =
+          if (locked) ActivityInfo.SCREEN_ORIENTATION_LOCKED else ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
   }
 

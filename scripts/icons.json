@@ -66,6 +66,19 @@
     "book-open",
     "palette",
     "microphone-stage",
-    "piano-keys"
+    "piano-keys",
+    "drop-half",
+    "arrow-line-left",
+    "arrow-right",
+    "skip-forward",
+    "skip-back",
+    "frame-corners",
+    "arrows-horizontal",
+    "magnifying-glass-plus",
+    "list-numbers",
+    "arrow-u-up-left",
+    "plugs-connected",
+    "hand-pointing",
+    "timer"
   ]
 }

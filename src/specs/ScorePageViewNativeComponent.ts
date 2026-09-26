@@ -14,6 +14,7 @@ export type PageShownEvent = Readonly<{
 
 export interface NativeProps extends ViewProps {
   docId?: string;
+  /** -1 = draw nothing. */
   page?: CodegenTypes.Int32;
   /** SINGLE | HALF */
   mode?: CodegenTypes.WithDefault<string, 'SINGLE'>;
@@ -23,6 +24,22 @@ export interface NativeProps extends ViewProps {
   prefetchRadius?: CodegenTypes.WithDefault<CodegenTypes.Int32, 2>;
   /** Instrumentation: NativeScoreRenderer.nowMs() captured when JS requested this page. */
   turnRequestedAtMs?: CodegenTypes.WithDefault<CodegenTypes.Double, 0>;
+  /** Horizontal placement of the fitted page: LEFT | CENTER | RIGHT (two-up pages hug the spine). */
+  alignX?: CodegenTypes.WithDefault<string, 'CENTER'>;
+  /** Registers this view with KeyRouter so pedal turns can be applied natively ('' = none). */
+  readerSlot?: CodegenTypes.WithDefault<string, ''>;
+  /** Thumbnail: lowest render priority, no prefetch, no onPageShown. */
+  thumbnail?: CodegenTypes.WithDefault<boolean, false>;
+  /**
+   * Zoom sharpening. The view is scaled by a transform on an ancestor; when zoomScale > 1 the view
+   * renders the visible region (zoomRect, normalised 0..1 in this view's own coordinates) at
+   * zoomScale × resolution and draws it over the base bitmap.
+   */
+  zoomScale?: CodegenTypes.WithDefault<CodegenTypes.Float, 1>;
+  zoomLeft?: CodegenTypes.WithDefault<CodegenTypes.Float, 0>;
+  zoomTop?: CodegenTypes.WithDefault<CodegenTypes.Float, 0>;
+  zoomRight?: CodegenTypes.WithDefault<CodegenTypes.Float, 1>;
+  zoomBottom?: CodegenTypes.WithDefault<CodegenTypes.Float, 1>;
   onPageShown?: CodegenTypes.DirectEventHandler<PageShownEvent>;
 }
 

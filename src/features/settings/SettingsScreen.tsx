@@ -9,6 +9,8 @@ import { SHOW_DEV_TOOLS } from '@/dev/flags';
 import { usePref, type ThemeMode } from '@/data/prefs';
 import { radius, space, useTheme } from '@/ui/theme';
 import type { RootStackParamList } from '@/app/RootNavigator';
+import { DevToolsGroup } from '@/features/dev/DevToolsGroup';
+import { ReadingSettings } from './ReadingSettings';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
@@ -47,13 +49,14 @@ export function SettingsScreen() {
           />
         </View>
 
-        {SHOW_DEV_TOOLS && (
-          <View style={[styles.group, styles.devGroup, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
-            <ListRow icon="palette" title={t('settings.designShowcase')} chevron onPress={() => nav.navigate('Showcase')} />
-            <Divider inset={66} />
-            <ListRow icon="file-pdf" title={t('settings.rendererLab')} chevron onPress={() => nav.navigate('RendererLab')} />
-          </View>
-        )}
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.reading').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <ReadingSettings onOpenPedals={() => nav.navigate('Pedals')} />
+        </View>
+
+        {SHOW_DEV_TOOLS && <DevToolsGroup />}
       </View>
     </Screen>
   );
@@ -63,7 +66,6 @@ const styles = StyleSheet.create({
   column: { maxWidth: 720, width: '100%', alignSelf: 'center' },
   section: { marginTop: space.lg, marginBottom: space.sm, marginLeft: space.xs },
   group: { borderRadius: radius.lg, borderWidth: StyleSheet.hairlineWidth * 2, overflow: 'hidden' },
-  devGroup: { marginTop: space.xl },
   padded: { padding: space.lg },
   label: { marginBottom: space.md },
 });

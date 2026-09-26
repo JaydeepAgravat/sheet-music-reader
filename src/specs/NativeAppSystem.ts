@@ -15,6 +15,12 @@ export interface Spec extends TurboModule {
   setSystemBarIconsDark(dark: boolean): void;
   /** Keeps native UI (splash, system dialogs) in sync with the in-app theme. mode: 'system' | 'light' | 'dark' */
   setNightMode(mode: string): void;
+  /** FLAG_KEEP_SCREEN_ON on the activity window. */
+  setKeepAwake(on: boolean): void;
+  /** Hides status + navigation bars (swipe from the edge shows them transiently). */
+  setImmersive(on: boolean): void;
+  /** true = lock to the current orientation; false = follow the sensor/system again. */
+  setOrientationLock(locked: boolean): void;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('AppSystem');

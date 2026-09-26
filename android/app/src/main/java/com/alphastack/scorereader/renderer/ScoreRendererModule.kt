@@ -1,5 +1,6 @@
 package com.alphastack.scorereader.renderer
 
+import com.alphastack.scorereader.renderer.core.CoverRenderer
 import com.alphastack.scorereader.renderer.core.RenderEngine
 import com.alphastack.scorereader.specs.NativeScoreRendererSpec
 import com.facebook.react.bridge.Arguments
@@ -8,6 +9,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.WritableMap
 import java.io.File
 import java.util.concurrent.Executors
+import kotlin.math.roundToInt
 
 class ScoreRendererModule(reactContext: ReactApplicationContext) : NativeScoreRendererSpec(reactContext) {
 
@@ -60,6 +62,22 @@ class ScoreRendererModule(reactContext: ReactApplicationContext) : NativeScoreRe
   override fun clearCache() = engine.store.clear()
 
   override fun nowMs(): Double = android.os.SystemClock.elapsedRealtimeNanos() / 1e6
+
+  override fun renderCover(path: String, outPath: String, widthPx: Double, aspect: Double, promise: Promise) {
+    io.execute {
+      try {
+        val r = CoverRenderer.render(File(path.removePrefix("file://")), File(outPath.removePrefix("file://")), widthPx.roundToInt(), aspect)
+        promise.resolve(
+            Arguments.createMap().apply {
+              putInt("width", r.width)
+              putInt("height", r.height)
+              putInt("pageCount", r.pageCount)
+            })
+      } catch (t: Throwable) {
+        promise.reject("E_OPEN", t.message ?: t.javaClass.simpleName, t)
+      }
+    }
+  }
 
   override fun listTestPdfs(promise: Promise) {
     io.execute {

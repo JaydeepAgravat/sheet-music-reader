@@ -14,10 +14,13 @@ type Props = {
   dropdown?: boolean;
   /** Count badge, e.g. number of selected composers. */
   count?: number;
+  /** Trailing action glyph, e.g. 'x' on a removable chip. */
+  trailingIcon?: IconName;
+  accessibilityHint?: string;
 };
 
 /** Filter / choice chip. 32dp visual inside a 48dp touch row (via hitSlop). */
-export function Chip({ label, selected = false, onPress, icon, dropdown, count }: Props) {
+export function Chip({ label, selected = false, onPress, icon, dropdown, count, trailingIcon, accessibilityHint }: Props) {
   const { colors } = useTheme();
   const fg = selected ? 'onAccentContainer' : 'textPrimary';
   return (
@@ -28,6 +31,7 @@ export function Chip({ label, selected = false, onPress, icon, dropdown, count }
         accessibilityRole="button"
         accessibilityLabel={count ? `${label}, ${count}` : label}
         accessibilityState={{ selected }}
+        accessibilityHint={accessibilityHint}
         style={[
           styles.chip,
           {
@@ -36,7 +40,7 @@ export function Chip({ label, selected = false, onPress, icon, dropdown, count }
           },
         ]}
       >
-        {selected && !icon && <Icon name="check" size={16} color={fg} />}
+        {selected && !icon && !trailingIcon && <Icon name="check" size={16} color={fg} />}
         {icon && <Icon name={icon} size={16} weight={selected ? 'fill' : 'regular'} color={fg} />}
         <Text variant="label" color={fg} numberOfLines={1}>
           {label}
@@ -49,6 +53,7 @@ export function Chip({ label, selected = false, onPress, icon, dropdown, count }
           </View>
         )}
         {dropdown && <Icon name="caret-down" size={14} color={fg} />}
+        {trailingIcon && <Icon name={trailingIcon} size={14} color={fg} />}
       </Surface>
     </View>
   );

@@ -11,8 +11,36 @@ jest.mock('react-native-reanimated/lib/module/css/native/proxy', () => ({
 // Native modules that don't exist in Jest.
 jest.mock('@/specs/NativeAppSystem', () => ({
   __esModule: true,
-  default: { performHaptic: jest.fn(), setSystemBarIconsDark: jest.fn(), setNightMode: jest.fn() },
+  default: {
+    performHaptic: jest.fn(),
+    setSystemBarIconsDark: jest.fn(),
+    setNightMode: jest.fn(),
+    setKeepAwake: jest.fn(),
+    setImmersive: jest.fn(),
+    setOrientationLock: jest.fn(),
+  },
 }));
+
+jest.mock('@/specs/NativeKeyEvents', () => {
+  const sub = () => ({ remove: jest.fn() });
+  return {
+    __esModule: true,
+    default: {
+      setMappings: jest.fn(),
+      setDebounceMs: jest.fn(),
+      setReaderActive: jest.fn(),
+      setTurnPlan: jest.fn(),
+      clearTurnPlan: jest.fn(),
+      setLearning: jest.fn(),
+      getConnectedDevices: jest.fn(() => []),
+      hasHardwareKeyboard: jest.fn(() => false),
+      onPedal: jest.fn(sub),
+      onKeyLearned: jest.fn(sub),
+      onDeviceAdded: jest.fn(sub),
+      onDeviceRemoved: jest.fn(sub),
+    },
+  };
+});
 
 jest.mock('react-native-mmkv', () => {
   const React = require('react');

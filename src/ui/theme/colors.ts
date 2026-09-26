@@ -41,6 +41,10 @@ export type ColorTokens = {
   skeleton: string;
   /** Dims paper-white page covers slightly in dark mode so they don't glare. */
   coverDim: string;
+  /** Behind the pages in the reader: a quiet tone that lets paper-white pages stand out. */
+  readerBackdrop: string;
+  /** Reader top bar / scrubber: raised, slightly translucent over the score. */
+  readerChrome: string;
 };
 
 export const lightColors: ColorTokens = {
@@ -70,6 +74,8 @@ export const lightColors: ColorTokens = {
   focusRing: '#2F3F8F',
   skeleton: '#EAE5DB',
   coverDim: 'transparent',
+  readerBackdrop: '#E4E0D8',
+  readerChrome: 'rgba(255, 253, 249, 0.97)',
 };
 
 export const darkColors: ColorTokens = {
@@ -99,6 +105,8 @@ export const darkColors: ColorTokens = {
   focusRing: '#9BA9F0',
   skeleton: '#2A2C32',
   coverDim: 'rgba(0, 0, 0, 0.07)',
+  readerBackdrop: '#0E0F11',
+  readerChrome: 'rgba(28, 29, 33, 0.97)',
 };
 
 /** Annotation ink presets — identical in both themes (ink sits on the page, not the UI). */

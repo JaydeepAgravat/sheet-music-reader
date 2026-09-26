@@ -5,6 +5,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DarkTheme, DefaultTheme, NavigationContainer, type Theme as NavTheme } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { RootNavigator } from '@/app/RootNavigator';
+import { navigationRef } from '@/app/navigationRef';
+import { PedalHost } from '@/features/pedals/PedalHost';
 import { getDb } from '@/data/db/database';
 import { FeedbackHost } from '@/ui/feedback/FeedbackHost';
 import { ThemeProvider, useTheme } from '@/ui/theme';
@@ -31,8 +33,9 @@ function Navigation() {
   }, [colors, isDark]);
 
   return (
-    <NavigationContainer theme={navTheme}>
+    <NavigationContainer ref={navigationRef} theme={navTheme}>
       <RootNavigator />
+      <PedalHost />
       <FeedbackHost />
     </NavigationContainer>
   );

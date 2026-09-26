@@ -10,6 +10,7 @@ import {
   type TabActionHelpers,
   type TabNavigationState,
   type TabRouterOptions,
+  useIsFocused,
 } from '@react-navigation/native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -60,10 +61,12 @@ function AdaptiveTabsNavigator({ id, initialRouteName, backBehavior = 'firstRout
     setVisited(v => (v.has(activeKey) ? v : new Set(v).add(activeKey)));
   }, [activeKey]);
 
+  // Only while the tabs are on screen: a pushed screen (the reader) has no bottom bar.
+  const onScreen = useIsFocused();
   useEffect(() => {
-    setObstruction(rail ? 0 : BAR_HEIGHT + insets.bottom);
+    setObstruction(rail || !onScreen ? 0 : BAR_HEIGHT + insets.bottom);
     return () => setObstruction(0);
-  }, [rail, insets.bottom, setObstruction]);
+  }, [rail, onScreen, insets.bottom, setObstruction]);
 
   const go = (routeKey: string, routeName: string) => {
     const event = navigation.emit({ type: 'tabPress', target: routeKey, canPreventDefault: true, data: undefined });

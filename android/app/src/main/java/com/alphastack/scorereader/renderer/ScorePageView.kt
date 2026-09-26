@@ -6,8 +6,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
+import android.os.Build
 import android.os.SystemClock
 import android.view.View
+import com.alphastack.scorereader.keys.KeyRouter
 import com.alphastack.scorereader.renderer.core.PageBitmap
 import com.alphastack.scorereader.renderer.core.PageSize
 import com.alphastack.scorereader.renderer.core.Priority
@@ -16,6 +18,7 @@ import com.alphastack.scorereader.renderer.core.RenderKey
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /**
  * Draws one score page (or a half-page composite) fitted inside the view.
@@ -24,6 +27,10 @@ import kotlin.math.roundToInt
  * - Neighbours ±[prefetchRadius] are rendered ahead at this view's exact pixel size.
  * - HALF mode: top band = next page's top, bottom band = current page's bottom, both cut from the
  *   same full-page bitmaps single mode uses (so switching modes needs no new renders).
+ * - Zoom: an ancestor transform scales the view; while zoomed, the visible region is rendered at
+ *   zoom resolution as a separate cropped tile and drawn over the (always drawn) base bitmap.
+ * - Pedal turns: KeyRouter can set page/mode directly ([applyNativeTurn]); React props still win,
+ *   because setters compare against what is displayed, not against the last prop.
  */
 class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
 
@@ -48,6 +55,12 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   private var mode = Mode.SINGLE
   private var halfSplit = 0.5f
   private var prefetchRadius = 2
+  private var align = Align.CENTER
+  private var readerSlot = ""
+  private var thumbnail = false
+  private var zoomScale = 1f
+  /** Visible region while zoomed, normalised to this view's own (untransformed) size. */
+  private val zoomRect = RectF(0f, 0f, 1f, 1f)
   private var pageSizes: List<PageSize> = emptyList()
 
   // Bitmaps currently pinned for drawing (released when no longer needed).
@@ -56,8 +69,18 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   private var reportedFor = -1
   private var cachedAtChange = false
   private var turnRequestedAtNs = 0L
+  /** Set by a native pedal turn; takes precedence over the JS stamp until React drives a change. */
+  private var nativeTurnAtNs = 0L
+
+  // Zoom tile: the key we want now, and the tile being drawn (may be the previous one until the
+  // new render lands, so panning never flashes back to the blurry base).
+  private var tileKey: RenderKey? = null
+  private var tile: PageBitmap? = null
+  private val tileRefresh = Runnable { refresh() }
 
   enum class Mode { SINGLE, HALF }
+
+  enum class Align { LEFT, CENTER, RIGHT }
 
   fun setDocId(value: String?) {
     if (value == docId) return
@@ -71,17 +94,103 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   fun setPage(value: Int) {
     if (value == page) return
     page = value
+    nativeTurnAtNs = 0
     markPageChanged()
     refresh()
   }
 
   fun setMode(value: String?) {
-    val m = if (value == "HALF") Mode.HALF else Mode.SINGLE
+    val m = parseMode(value)
     if (m == mode) return
     mode = m
+    nativeTurnAtNs = 0
     markPageChanged()
     refresh()
   }
+
+  /**
+   * Pedal turn applied on the UI thread without a JS round trip. When JS catches up it re-renders
+   * with the same page/mode, which the setters above treat as no-ops.
+   */
+  fun applyNativeTurn(targetPage: Int, targetMode: String) {
+    val m = parseMode(targetMode)
+    if (targetPage == page && m == mode) return
+    page = targetPage
+    mode = m
+    nativeTurnAtNs = SystemClock.elapsedRealtimeNanos()
+    markPageChanged()
+    refresh()
+  }
+
+  fun setAlignX(value: String?) {
+    val a =
+        when (value) {
+          "LEFT" -> Align.LEFT
+          "RIGHT" -> Align.RIGHT
+          else -> Align.CENTER
+        }
+    if (a == align) return
+    align = a
+    refresh()
+  }
+
+  fun setReaderSlot(value: String?) {
+    val slot = value ?: ""
+    if (slot == readerSlot) return
+    if (readerSlot.isNotEmpty()) KeyRouter.unregister(readerSlot, this)
+    readerSlot = slot
+    if (slot.isNotEmpty() && isAttachedToWindow) KeyRouter.register(slot, this)
+    holdKeyFocus()
+  }
+
+  /**
+   * The reader's main page holds keyboard focus. Without a focused (non-group) view, Android spends
+   * the first navigation key after a touch (PAGE_DOWN, arrows) on leaving touch mode and moving
+   * focus — before Activity.dispatchKeyEvent sees it — so the first pedal press after tapping the
+   * screen would be lost. A focused leaf view makes ViewRootImpl pass the key through.
+   */
+  private fun holdKeyFocus() {
+    val main = readerSlot == MAIN_SLOT
+    isFocusable = main
+    isFocusableInTouchMode = main
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) defaultFocusHighlightEnabled = false
+    if (main && isAttachedToWindow) post { if (readerSlot == MAIN_SLOT && !hasFocus()) requestFocus() }
+  }
+
+  override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
+    super.onWindowFocusChanged(hasWindowFocus)
+    // Back from a menu/sheet (separate windows): take the key focus back.
+    if (hasWindowFocus && readerSlot == MAIN_SLOT && !hasFocus()) requestFocus()
+  }
+
+  fun setThumbnail(value: Boolean) {
+    if (value == thumbnail) return
+    thumbnail = value
+    refresh()
+  }
+
+  fun setZoomScale(value: Float) {
+    if (value == zoomScale) return
+    zoomScale = value
+    zoomChanged()
+  }
+
+  fun setZoomRect(left: Float = zoomRect.left, top: Float = zoomRect.top, right: Float = zoomRect.right, bottom: Float = zoomRect.bottom) {
+    if (left == zoomRect.left && top == zoomRect.top && right == zoomRect.right && bottom == zoomRect.bottom) return
+    zoomRect.set(left, top, right, bottom)
+    zoomChanged()
+  }
+
+  /**
+   * Zoom props stream in during a pinch/pan; wait for them to settle before asking for a (large)
+   * tile render. Leaving zoom releases the tile straight away.
+   */
+  private fun zoomChanged() {
+    removeCallbacks(tileRefresh)
+    if (zoomScale <= ZOOM_MIN) refresh() else postDelayed(tileRefresh, TILE_SETTLE_MS)
+  }
+
+  private fun parseMode(value: String?) = if (value == "HALF") Mode.HALF else Mode.SINGLE
 
   fun setHalfSplit(value: Float) {
     halfSplit = value.coerceIn(0.2f, 0.8f)
@@ -113,11 +222,15 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     engine.addListener(this)
+    if (readerSlot.isNotEmpty()) KeyRouter.register(readerSlot, this)
+    holdKeyFocus()
     refresh()
   }
 
   override fun onDetachedFromWindow() {
     engine.removeListener(this)
+    if (readerSlot.isNotEmpty()) KeyRouter.unregister(readerSlot, this)
+    removeCallbacks(tileRefresh)
     releaseAll()
     super.onDetachedFromWindow()
   }
@@ -129,14 +242,19 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
 
   // --- Layout math ---------------------------------------------------------------------------
 
-  /** Destination rect for a page fitted (contain) and centred in the view. */
+  /** Destination rect for a page fitted (contain), vertically centred, horizontally per [align]. */
   private fun fitRect(p: Int): RectF? {
     val size = pageSizes.getOrNull(p) ?: return null
     if (width == 0 || height == 0) return null
     val scale = min(width / size.widthPt, height / size.heightPt)
     val w = size.widthPt * scale
     val h = size.heightPt * scale
-    val l = (width - w) / 2f
+    val l =
+        when (align) {
+          Align.LEFT -> 0f
+          Align.CENTER -> (width - w) / 2f
+          Align.RIGHT -> width - w
+        }
     val t = (height - h) / 2f
     return RectF(l, t, l + w, t + h)
   }
@@ -147,9 +265,50 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     return RenderKey(id, p, r.width().roundToInt().coerceAtLeast(1), r.height().roundToInt().coerceAtLeast(1))
   }
 
-  /** Pages needed on screen right now. */
+  /** HALF needs a next page; on the last page it falls back to the single layout. */
+  private fun isHalfLayout() = mode == Mode.HALF && page + 1 < pageSizes.size
+
+  /** Pages needed on screen right now (none for page -1). */
   private fun visiblePages(): List<Int> =
-      if (mode == Mode.HALF && page + 1 < pageSizes.size) listOf(page, page + 1) else listOf(page)
+      when {
+        page < 0 -> emptyList()
+        isHalfLayout() -> listOf(page, page + 1)
+        else -> listOf(page)
+      }
+
+  /**
+   * The zoomed tile: the part of the page inside the visible zoom region, as a normalised crop,
+   * rendered at zoomScale × its on-view size (capped). Single layout only.
+   */
+  private fun zoomTileKey(): RenderKey? {
+    if (zoomScale <= ZOOM_MIN || page < 0 || isHalfLayout()) return null
+    val id = docId ?: return null
+    val fit = fitRect(page) ?: return null
+    val visible = RectF(zoomRect.left * width, zoomRect.top * height, zoomRect.right * width, zoomRect.bottom * height)
+    if (!visible.intersect(fit)) return null
+    val crop =
+        RenderKey.Crop.of(
+            (visible.left - fit.left) / fit.width(),
+            (visible.top - fit.top) / fit.height(),
+            (visible.right - fit.left) / fit.width(),
+            (visible.bottom - fit.top) / fit.height(),
+        )
+    // Size from the quantised crop, so the tile's pixels map exactly onto where it is drawn.
+    val w = (crop.r - crop.l) / 1000f * fit.width() * zoomScale
+    val h = (crop.b - crop.t) / 1000f * fit.height() * zoomScale
+    val s = minOf(1f, MAX_TILE_SIDE / w, MAX_TILE_SIDE / h, sqrt(MAX_TILE_PIXELS / (w * h)))
+    return RenderKey(id, page, (w * s).roundToInt().coerceAtLeast(1), (h * s).roundToInt().coerceAtLeast(1), crop)
+  }
+
+  private fun tileDst(key: RenderKey, fit: RectF): RectF {
+    val c = key.crop
+    return RectF(
+        fit.left + c.l / 1000f * fit.width(),
+        fit.top + c.t / 1000f * fit.height(),
+        fit.left + c.r / 1000f * fit.width(),
+        fit.top + c.b / 1000f * fit.height(),
+    )
+  }
 
   // --- Rendering requests ----------------------------------------------------------------------
 
@@ -159,8 +318,10 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     if (width == 0 || height == 0) return
 
     val wanted = HashSet<RenderKey>()
-    visiblePages().forEach { p -> keyFor(p)?.let { wanted += it; engine.request(it, Priority.VISIBLE, this) } }
-    for (d in 1..prefetchRadius) {
+    val visiblePriority = if (thumbnail) Priority.THUMBNAIL else Priority.VISIBLE
+    visiblePages().forEach { p -> keyFor(p)?.let { wanted += it; engine.request(it, visiblePriority, this) } }
+    val radius = if (thumbnail || page < 0) 0 else prefetchRadius
+    for (d in 1..radius) {
       for (p in intArrayOf(page + d, page - d)) {
         if (p !in pageSizes.indices) continue
         keyFor(p)?.let { k ->
@@ -169,7 +330,14 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
         }
       }
     }
-    // Stale neighbours from a previous position no longer need rendering.
+    tileKey =
+        zoomTileKey()?.also { k ->
+          wanted += k
+          if (engine.store.get(k) == null) engine.request(k, Priority.VISIBLE, this)
+        }
+    // An old tile keeps drawing while its replacement renders, but only for the same page + zoom.
+    tile?.let { t -> if (tileKey == null || t.key.page != page || t.key.docId != id) releaseTile() }
+    // Stale neighbours / tiles from a previous position no longer need rendering.
     engine.cancelFor(id, this) { it in wanted }
     // Unpin bitmaps we no longer draw.
     pinned.keys.filter { it.page !in visiblePages() || it !in wanted }.forEach { k -> pinned.remove(k)?.let { engine.store.release(it) } }
@@ -192,24 +360,40 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   private fun releaseAll() {
     pinned.values.forEach { engine.store.release(it) }
     pinned.clear()
+    releaseTile()
+  }
+
+  private fun releaseTile() {
+    tile?.let { engine.store.release(it) }
+    tile = null
   }
 
   // --- Drawing ---------------------------------------------------------------------------------
 
   override fun onDraw(canvas: Canvas) {
-    if (docId == null || pageSizes.isEmpty()) return
-    if (mode == Mode.HALF && page + 1 < pageSizes.size) drawHalf(canvas) else drawSingle(canvas)
+    if (docId == null || pageSizes.isEmpty() || page < 0) return
+    if (isHalfLayout()) drawHalf(canvas) else drawSingle(canvas)
   }
 
   private fun drawSingle(canvas: Canvas) {
     val dst = fitRect(page) ?: return
     val bmp = bitmapFor(page)
-    if (bmp == null) {
-      canvas.drawRect(dst, paperPaint) // blank paper until the render lands (never a flash of empty)
-      return
+    // Blank paper until the render lands (never a flash of empty).
+    if (bmp == null) canvas.drawRect(dst, paperPaint) else canvas.drawBitmap(bmp.bitmap, null, dst, paint)
+    drawTile(canvas, dst)
+    if (bmp != null) reportShown(bmp)
+  }
+
+  private fun drawTile(canvas: Canvas, fit: RectF) {
+    val want = tileKey
+    if (want != null && tile?.key != want) {
+      engine.store.acquire(want)?.let { fresh ->
+        releaseTile()
+        tile = fresh
+      }
     }
-    canvas.drawBitmap(bmp.bitmap, null, dst, paint)
-    reportShown(bmp)
+    val t = tile ?: return
+    canvas.drawBitmap(t.bitmap, null, tileDst(t.key, fit), paint)
   }
 
   private fun drawHalf(canvas: Canvas) {
@@ -257,11 +441,21 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   }
 
   private fun reportShown(entry: PageBitmap) {
-    if (reportedFor == page) return
+    if (thumbnail || reportedFor == page) return
     reportedFor = page
     val now = SystemClock.elapsedRealtimeNanos()
     val latency = (now - pageChangedAt) / 1e6
-    val endToEnd = if (turnRequestedAtNs > 0) (now - turnRequestedAtNs) / 1e6 else 0.0
+    val start = if (nativeTurnAtNs > 0) nativeTurnAtNs else turnRequestedAtNs
+    val endToEnd = if (start > 0) (now - start) / 1e6 else 0.0
     onPageShown?.invoke(page, latency, endToEnd, cachedAtChange, entry.renderMs)
+  }
+
+  companion object {
+    /** Below this the base bitmap is sharp enough; no tile. */
+    private const val MAIN_SLOT = "main"
+    private const val ZOOM_MIN = 1.02f
+    private const val TILE_SETTLE_MS = 120L
+    private const val MAX_TILE_SIDE = 4096f
+    private const val MAX_TILE_PIXELS = 16_000_000f
   }
 }

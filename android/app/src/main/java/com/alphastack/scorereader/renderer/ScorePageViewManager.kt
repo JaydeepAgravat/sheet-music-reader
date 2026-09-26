@@ -49,6 +49,25 @@ class ScorePageViewManager : SimpleViewManager<ScorePageView>(), ScorePageViewMa
   @ReactProp(name = "prefetchRadius", defaultInt = 2)
   override fun setPrefetchRadius(view: ScorePageView, value: Int) = view.setPrefetchRadius(value)
 
+  @ReactProp(name = "alignX") override fun setAlignX(view: ScorePageView, value: String?) = view.setAlignX(value)
+
+  @ReactProp(name = "readerSlot") override fun setReaderSlot(view: ScorePageView, value: String?) = view.setReaderSlot(value)
+
+  @ReactProp(name = "thumbnail") override fun setThumbnail(view: ScorePageView, value: Boolean) = view.setThumbnail(value)
+
+  @ReactProp(name = "zoomScale", defaultFloat = 1f)
+  override fun setZoomScale(view: ScorePageView, value: Float) = view.setZoomScale(value)
+
+  @ReactProp(name = "zoomLeft") override fun setZoomLeft(view: ScorePageView, value: Float) = view.setZoomRect(left = value)
+
+  @ReactProp(name = "zoomTop") override fun setZoomTop(view: ScorePageView, value: Float) = view.setZoomRect(top = value)
+
+  @ReactProp(name = "zoomRight", defaultFloat = 1f)
+  override fun setZoomRight(view: ScorePageView, value: Float) = view.setZoomRect(right = value)
+
+  @ReactProp(name = "zoomBottom", defaultFloat = 1f)
+  override fun setZoomBottom(view: ScorePageView, value: Float) = view.setZoomRect(bottom = value)
+
   override fun getExportedCustomDirectEventTypeConstants(): Map<String, Any> =
       mapOf(PageShownEvent.NAME to mapOf("registrationName" to "onPageShown"))
 

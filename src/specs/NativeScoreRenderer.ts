@@ -21,6 +21,8 @@ export type RendererStats = {
 
 export type TestPdf = { name: string; path: string; bytes: number };
 
+export type CoverResult = { width: number; height: number; pageCount: number };
+
 /** android/.../renderer/ScoreRendererModule.kt */
 export interface Spec extends TurboModule {
   /** Opens a PDF (off the main thread). Rejects with code E_OPEN for unreadable/corrupt files. */
@@ -31,6 +33,11 @@ export interface Spec extends TurboModule {
   clearCache(): void;
   /** Native monotonic clock (SystemClock.elapsedRealtime), ms — to time JS → pixel on one clock. */
   nowMs(): number;
+  /**
+   * Renders the top of page 1 (cropped from the top to the given width/height aspect) to a lossy
+   * WebP at outPath. Opens the file independently of any reader session. Rejects E_OPEN.
+   */
+  renderCover(path: string, outPath: string, widthPx: number, aspect: number): Promise<CoverResult>;
   /** Dev: PDFs pushed by scripts/push-test-pdfs.sh into files/test-pdfs. */
   listTestPdfs(): Promise<TestPdf[]>;
 }
