@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "library": "Library",
+    "setlists": "Setlists",
+    "collections": "Collections",
+    "settings": "Settings"
+  },
+  "common": {
+    "undo": "Undo",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "done": "Done",
+    "close": "Close",
+    "back": "Back",
+    "retry": "Try again",
+    "moreOptions": "More options"
+  },
+  "library": {
+    "searchPlaceholder": "Search scores, composers, tags",
+    "import": "Import",
+    "emptyTitle": "No scores yet",
+    "emptyBody": "Bring in your PDFs from Files, Drive or any folder. They stay on this device.",
+    "emptyAction": "Import your first score",
+    "deleted_one": "Deleted {{count}} score",
+    "deleted_other": "Deleted {{count}} scores"
+  },
+  "setlists": {
+    "emptyTitle": "No setlists yet",
+    "emptyBody": "Line up the songs for your next gig or service, then play straight through with your pedal."
+  },
+  "collections": {
+    "emptyTitle": "No collections yet",
+    "emptyBody": "Group scores the way you think about them — by band, book, season or student."
+  },
+  "settings": {
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "themeSystem": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "haptics": "Haptic feedback",
+    "hapticsHint": "Gentle ticks for scrubbing, reordering and page limits. Never on page turns.",
+    "designShowcase": "Design showcase"
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors src/ui/theme/palette.ts. Keep in sync. -->
+    <color name="canvas">#F7F4EE</color>
+    <color name="ink_indigo">#2F3F8F</color>
+    <color name="icon_background">#2F3F8F</color>
+    <color name="icon_paper">#FBF8F2</color>
+    <color name="icon_paper_shade">#DCD5C8</color>
+</resources>

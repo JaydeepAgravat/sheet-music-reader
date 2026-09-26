@@ -1,0 +1,16 @@
+{
+  "nav": { "library": "Libreria", "setlists": "Scalette", "collections": "Raccolte", "settings": "Impostazioni" },
+  "common": { "undo": "Annulla", "cancel": "Annulla", "delete": "Elimina", "done": "Fine", "close": "Chiudi", "back": "Indietro", "retry": "Riprova", "moreOptions": "Altre opzioni" },
+  "library": {
+    "searchPlaceholder": "Cerca spartiti, compositori, tag",
+    "import": "Importa",
+    "emptyTitle": "Ancora nessuno spartito",
+    "emptyBody": "Porta qui i tuoi PDF da File, Drive o da qualsiasi cartella. Restano su questo dispositivo.",
+    "emptyAction": "Importa il tuo primo spartito",
+    "deleted_one": "{{count}} spartito eliminato",
+    "deleted_other": "{{count}} spartiti eliminati"
+  },
+  "setlists": { "emptyTitle": "Ancora nessuna scaletta", "emptyBody": "Prepara i brani del prossimo concerto o della prossima funzione e suonali di seguito con il pedale." },
+  "collections": { "emptyTitle": "Ancora nessuna raccolta", "emptyBody": "Raggruppa gli spartiti come preferisci: per gruppo, libro, stagione o allievo." },
+  "settings": { "appearance": "Aspetto", "theme": "Tema", "themeSystem": "Sistema", "themeLight": "Chiaro", "themeDark": "Scuro", "haptics": "Feedback aptico", "hapticsHint": "Leggere vibrazioni durante lo scorrimento, il riordino e ai limiti delle pagine. Mai quando giri pagina.", "designShowcase": "Vetrina del design" }
+}

@@ -1,0 +1,4 @@
+<resources>
+    <!-- Placeholder brand name. Final name is set at release (docs/PLAN.md §1.1). -->
+    <string name="app_name">Score Reader</string>
+</resources>

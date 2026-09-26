@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Themed (Material You) icon: the same five bending stave lines, no page. Tinted by the launcher. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:strokeColor="#FF000000" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M31,42 H57 C66,42 71,37.5 75.5,29.5"/>
+    <path android:strokeColor="#FF000000" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M31,49.5 H58.8 C67.8,49.5 73.5,44.3 78,35.8"/>
+    <path android:strokeColor="#FF000000" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M31,57 H60.6 C69.6,57 75.8,51.2 80.3,42"/>
+    <path android:strokeColor="#FF000000" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M31,64.5 H62.4 C71.4,64.5 78,58 82.6,48.3"/>
+    <path android:strokeColor="#FF000000" android:strokeWidth="3" android:strokeLineCap="round"
+        android:pathData="M31,72 H64.2 C73.2,72 80.3,64.9 84.9,54.6"/>
+</vector>

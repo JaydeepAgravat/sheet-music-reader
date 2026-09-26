@@ -1,0 +1,16 @@
+{
+  "nav": { "library": "ライブラリ", "setlists": "セットリスト", "collections": "コレクション", "settings": "設定" },
+  "common": { "undo": "元に戻す", "cancel": "キャンセル", "delete": "削除", "done": "完了", "close": "閉じる", "back": "戻る", "retry": "再試行", "moreOptions": "その他のオプション" },
+  "library": {
+    "searchPlaceholder": "楽譜・作曲者・タグを検索",
+    "import": "読み込む",
+    "emptyTitle": "楽譜はまだありません",
+    "emptyBody": "ファイル、ドライブ、フォルダから PDF を読み込みましょう。データはこの端末内に保存されます。",
+    "emptyAction": "最初の楽譜を読み込む",
+    "deleted_one": "{{count}} 件の楽譜を削除しました",
+    "deleted_other": "{{count}} 件の楽譜を削除しました"
+  },
+  "setlists": { "emptyTitle": "セットリストはまだありません", "emptyBody": "次のライブや礼拝の曲を並べて、ペダルで続けて演奏できます。" },
+  "collections": { "emptyTitle": "コレクションはまだありません", "emptyBody": "バンド、曲集、季節、生徒など、自分の分け方で楽譜をまとめましょう。" },
+  "settings": { "appearance": "外観", "theme": "テーマ", "themeSystem": "システム", "themeLight": "ライト", "themeDark": "ダーク", "haptics": "触覚フィードバック", "hapticsHint": "スクロールや並べ替え、ページの端で軽く振動します。ページめくりでは振動しません。", "designShowcase": "デザインショーケース" }
+}

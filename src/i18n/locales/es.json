@@ -1,0 +1,16 @@
+{
+  "nav": { "library": "Biblioteca", "setlists": "Repertorios", "collections": "Colecciones", "settings": "Ajustes" },
+  "common": { "undo": "Deshacer", "cancel": "Cancelar", "delete": "Eliminar", "done": "Listo", "close": "Cerrar", "back": "Atrás", "retry": "Reintentar", "moreOptions": "Más opciones" },
+  "library": {
+    "searchPlaceholder": "Busca partituras, compositores, etiquetas",
+    "import": "Importar",
+    "emptyTitle": "Aún no hay partituras",
+    "emptyBody": "Trae tus PDF desde Archivos, Drive o cualquier carpeta. Se quedan en este dispositivo.",
+    "emptyAction": "Importa tu primera partitura",
+    "deleted_one": "{{count}} partitura eliminada",
+    "deleted_other": "{{count}} partituras eliminadas"
+  },
+  "setlists": { "emptyTitle": "Aún no hay repertorios", "emptyBody": "Ordena las piezas de tu próximo concierto o servicio y tócalas seguidas con tu pedal." },
+  "collections": { "emptyTitle": "Aún no hay colecciones", "emptyBody": "Agrupa tus partituras como tú las piensas: por banda, libro, temporada o alumno." },
+  "settings": { "appearance": "Apariencia", "theme": "Tema", "themeSystem": "Sistema", "themeLight": "Claro", "themeDark": "Oscuro", "haptics": "Respuesta háptica", "hapticsHint": "Vibraciones suaves al desplazar, reordenar y en los límites de página. Nunca al pasar página.", "designShowcase": "Muestrario de diseño" }
+}
