@@ -6,12 +6,14 @@ import { LibraryScreen } from '@/features/library/LibraryScreen';
 import { SetlistsScreen } from '@/features/setlists/SetlistsScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
 import { ShowcaseScreen } from '@/features/showcase/ShowcaseScreen';
+import { RendererLabScreen } from '@/features/dev/RendererLabScreen';
 import { useTheme } from '@/ui/theme';
 import { createAdaptiveTabs } from './navigation/AdaptiveTabs';
 
 export type RootStackParamList = {
   Main: undefined;
   Showcase: undefined;
+  RendererLab: undefined;
 };
 
 export type MainTabParamList = {
@@ -49,6 +51,7 @@ export function RootNavigator() {
     >
       <Stack.Screen name="Main" component={MainTabs} />
       <Stack.Screen name="Showcase" component={ShowcaseScreen} />
+      <Stack.Screen name="RendererLab" component={RendererLabScreen} />
     </Stack.Navigator>
   );
 }

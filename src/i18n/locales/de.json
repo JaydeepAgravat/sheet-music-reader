@@ -1,6 +1,20 @@
 {
-  "nav": { "library": "Bibliothek", "setlists": "Setlisten", "collections": "Sammlungen", "settings": "Einstellungen" },
-  "common": { "undo": "Rückgängig", "cancel": "Abbrechen", "delete": "Löschen", "done": "Fertig", "close": "Schließen", "back": "Zurück", "retry": "Erneut versuchen", "moreOptions": "Weitere Optionen" },
+  "nav": {
+    "library": "Bibliothek",
+    "setlists": "Setlisten",
+    "collections": "Sammlungen",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "undo": "Rückgängig",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "done": "Fertig",
+    "close": "Schließen",
+    "back": "Zurück",
+    "retry": "Erneut versuchen",
+    "moreOptions": "Weitere Optionen"
+  },
   "library": {
     "searchPlaceholder": "Noten, Komponisten, Tags suchen",
     "import": "Importieren",
@@ -10,7 +24,23 @@
     "deleted_one": "{{count}} Stück gelöscht",
     "deleted_other": "{{count}} Stücke gelöscht"
   },
-  "setlists": { "emptyTitle": "Noch keine Setlisten", "emptyBody": "Stell die Stücke für deinen nächsten Auftritt oder Gottesdienst zusammen und spiel sie mit dem Pedal am Stück durch." },
-  "collections": { "emptyTitle": "Noch keine Sammlungen", "emptyBody": "Ordne Noten so, wie du denkst – nach Band, Heft, Jahreszeit oder Schüler." },
-  "settings": { "appearance": "Darstellung", "theme": "Design", "themeSystem": "System", "themeLight": "Hell", "themeDark": "Dunkel", "haptics": "Haptisches Feedback", "hapticsHint": "Sanftes Ticken beim Scrollen, Umsortieren und an Seitengrenzen. Nie beim Umblättern.", "designShowcase": "Design-Übersicht" }
+  "setlists": {
+    "emptyTitle": "Noch keine Setlisten",
+    "emptyBody": "Stell die Stücke für deinen nächsten Auftritt oder Gottesdienst zusammen und spiel sie mit dem Pedal am Stück durch."
+  },
+  "collections": {
+    "emptyTitle": "Noch keine Sammlungen",
+    "emptyBody": "Ordne Noten so, wie du denkst – nach Band, Heft, Jahreszeit oder Schüler."
+  },
+  "settings": {
+    "appearance": "Darstellung",
+    "theme": "Design",
+    "themeSystem": "System",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "haptics": "Haptisches Feedback",
+    "hapticsHint": "Sanftes Ticken beim Scrollen, Umsortieren und an Seitengrenzen. Nie beim Umblättern.",
+    "designShowcase": "Design-Übersicht",
+    "rendererLab": "Renderer-Labor"
+  }
 }

@@ -63,7 +63,7 @@
   },
   "codegenConfig": {
     "name": "ScoreReaderSpecs",
-    "type": "modules",
+    "type": "all",
     "jsSrcsDir": "src/specs",
     "android": {
       "javaPackageName": "com.alphastack.scorereader.specs"

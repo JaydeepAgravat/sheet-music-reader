@@ -16,7 +16,7 @@ module.exports = {
   overrides: [
     {
       // Dev-only surfaces and tests may use literal strings.
-      files: ['**/__tests__/**', '**/*.test.ts', '**/*.test.tsx', 'src/features/showcase/**'],
+      files: ['**/__tests__/**', '**/*.test.ts', '**/*.test.tsx', 'src/features/showcase/**', 'src/features/dev/**', 'src/dev/**'],
       rules: { 'i18next/no-literal-string': 'off' },
     },
   ],

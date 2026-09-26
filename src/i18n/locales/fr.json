@@ -1,6 +1,20 @@
 {
-  "nav": { "library": "Bibliothèque", "setlists": "Programmes", "collections": "Collections", "settings": "Réglages" },
-  "common": { "undo": "Annuler", "cancel": "Annuler", "delete": "Supprimer", "done": "Terminé", "close": "Fermer", "back": "Retour", "retry": "Réessayer", "moreOptions": "Plus d’options" },
+  "nav": {
+    "library": "Bibliothèque",
+    "setlists": "Programmes",
+    "collections": "Collections",
+    "settings": "Réglages"
+  },
+  "common": {
+    "undo": "Annuler",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "done": "Terminé",
+    "close": "Fermer",
+    "back": "Retour",
+    "retry": "Réessayer",
+    "moreOptions": "Plus d’options"
+  },
   "library": {
     "searchPlaceholder": "Rechercher partitions, compositeurs, tags",
     "import": "Importer",
@@ -10,7 +24,23 @@
     "deleted_one": "{{count}} partition supprimée",
     "deleted_other": "{{count}} partitions supprimées"
   },
-  "setlists": { "emptyTitle": "Aucun programme pour l’instant", "emptyBody": "Préparez les morceaux de votre prochain concert ou office, puis enchaînez-les avec votre pédale." },
-  "collections": { "emptyTitle": "Aucune collection pour l’instant", "emptyBody": "Regroupez vos partitions comme vous les pensez : par groupe, recueil, saison ou élève." },
-  "settings": { "appearance": "Apparence", "theme": "Thème", "themeSystem": "Système", "themeLight": "Clair", "themeDark": "Sombre", "haptics": "Retour haptique", "hapticsHint": "Légères vibrations en faisant défiler, en réordonnant et en fin de partition. Jamais en tournant les pages.", "designShowcase": "Vitrine du design" }
+  "setlists": {
+    "emptyTitle": "Aucun programme pour l’instant",
+    "emptyBody": "Préparez les morceaux de votre prochain concert ou office, puis enchaînez-les avec votre pédale."
+  },
+  "collections": {
+    "emptyTitle": "Aucune collection pour l’instant",
+    "emptyBody": "Regroupez vos partitions comme vous les pensez : par groupe, recueil, saison ou élève."
+  },
+  "settings": {
+    "appearance": "Apparence",
+    "theme": "Thème",
+    "themeSystem": "Système",
+    "themeLight": "Clair",
+    "themeDark": "Sombre",
+    "haptics": "Retour haptique",
+    "hapticsHint": "Légères vibrations en faisant défiler, en réordonnant et en fin de partition. Jamais en tournant les pages.",
+    "designShowcase": "Vitrine du design",
+    "rendererLab": "Labo de rendu"
+  }
 }

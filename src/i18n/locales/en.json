@@ -40,6 +40,7 @@
     "themeDark": "Dark",
     "haptics": "Haptic feedback",
     "hapticsHint": "Gentle ticks for scrubbing, reordering and page limits. Never on page turns.",
-    "designShowcase": "Design showcase"
+    "designShowcase": "Design showcase",
+    "rendererLab": "Renderer lab"
   }
 }

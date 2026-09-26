@@ -5,6 +5,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { Divider, ListRow, SegmentedControl, Switch, Text } from '@/ui/components';
 import { Screen } from '@/ui/layout/Screen';
+import { SHOW_DEV_TOOLS } from '@/dev/flags';
 import { usePref, type ThemeMode } from '@/data/prefs';
 import { radius, space, useTheme } from '@/ui/theme';
 import type { RootStackParamList } from '@/app/RootNavigator';
@@ -46,9 +47,11 @@ export function SettingsScreen() {
           />
         </View>
 
-        {__DEV__ && (
+        {SHOW_DEV_TOOLS && (
           <View style={[styles.group, styles.devGroup, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
             <ListRow icon="palette" title={t('settings.designShowcase')} chevron onPress={() => nav.navigate('Showcase')} />
+            <Divider inset={66} />
+            <ListRow icon="file-pdf" title={t('settings.rendererLab')} chevron onPress={() => nav.navigate('RendererLab')} />
           </View>
         )}
       </View>
