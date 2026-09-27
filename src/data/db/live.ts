@@ -4,7 +4,7 @@ import { useMemo, useSyncExternalStore } from 'react';
  * Live queries: repositories call notifyChanged(table) after writes; hooks re-run their query when a
  * table they read from changes. Synchronous SQLite reads are cheap, so re-querying beats diffing.
  */
-export type Table = 'scores' | 'setlists' | 'setlist_items' | 'collections' | 'tags' | 'pedal_mappings';
+export type Table = 'scores' | 'setlists' | 'setlist_items' | 'collections' | 'tags' | 'pedal_mappings' | 'ink';
 
 const versions = new Map<Table, number>();
 const listeners = new Map<Table, Set<() => void>>();

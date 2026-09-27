@@ -67,6 +67,8 @@ export const ScoreRow = memo(function ScoreRowImpl({
           </Text>
         </>
       )}
+      {score.annotated && <Icon name="pencil-simple" weight="fill" size={16} color="textTertiary" />}
+      {score.inSetlist && <Icon name="playlist" weight="fill" size={16} color="textTertiary" />}
       {score.isFavorite && <Icon name="star" weight="fill" size={16} color="accent" />}
       {!selecting && <IconButton icon="dots-three-vertical" label={t('library.details')} size="sm" onPress={() => onMore(score)} />}
     </Surface>
@@ -168,6 +170,7 @@ export function SelectionBar({
   onSelectAll,
   onFavorite,
   onCollection,
+  onSetlist,
   onEdit,
   onDelete,
 }: {
@@ -177,12 +180,14 @@ export function SelectionBar({
   onSelectAll: () => void;
   onFavorite: () => void;
   onCollection: (a: Anchor) => void;
+  onSetlist: (a: Anchor) => void;
   onEdit: () => void;
   onDelete: () => void;
 }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const colRef = useRef<React.ComponentRef<typeof View>>(null);
+  const setRef = useRef<React.ComponentRef<typeof View>>(null);
   return (
     <View style={[styles.selection, { backgroundColor: colors.accentContainer }]} accessibilityLiveRegion="polite">
       <IconButton icon="x" label={t('library.select.done')} onPress={onClose} color="onAccentContainer" />
@@ -199,6 +204,14 @@ export function SelectionBar({
           color="onAccentContainer"
         />
       </View>
+      <View ref={setRef} collapsable={false}>
+        <IconButton
+          icon="playlist"
+          label={t('library.select.setlist')}
+          onPress={() => setRef.current?.measureInWindow((x, y, width, height) => onSetlist({ x, y, width, height }))}
+          color="onAccentContainer"
+        />
+      </View>
       <IconButton icon="pencil-simple" label={t('library.select.edit')} onPress={onEdit} color="onAccentContainer" />
       <IconButton icon="trash" label={t('library.select.delete')} onPress={onDelete} color="onAccentContainer" />
     </View>
@@ -208,6 +221,7 @@ export function SelectionBar({
 const ICON_COMPOSER: IconName = 'user';
 const ICON_COLLECTION: IconName = 'folder-simple';
 const ICON_TAG: IconName = 'tag';
+const ICON_SETLIST: IconName = 'playlist';
 
 /** Search suggestions (composers, tags, collections) above the matching scores. */
 export function SearchGroups({
@@ -218,6 +232,8 @@ export function SearchGroups({
   onComposer,
   onTag,
   onCollection,
+  setlists = [],
+  onSetlist,
 }: {
   query: string;
   composers: Facet[];
@@ -226,6 +242,8 @@ export function SearchGroups({
   onComposer: (v: string) => void;
   onTag: (id: string) => void;
   onCollection: (id: string) => void;
+  setlists?: { id: string; name: string; count: number }[];
+  onSetlist?: (id: string) => void;
 }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -253,6 +271,10 @@ export function SearchGroups({
       {group(
         t('search.composers'),
         composers.map(c => ({ key: c.value, label: c.label, count: c.count, icon: ICON_COMPOSER, onPress: () => onComposer(c.value) })),
+      )}
+      {group(
+        t('search.setlists'),
+        setlists.map(s => ({ key: s.id, label: s.name, count: s.count, icon: ICON_SETLIST, onPress: () => onSetlist?.(s.id) })),
       )}
       {group(
         t('search.collections'),

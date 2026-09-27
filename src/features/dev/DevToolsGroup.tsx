@@ -8,6 +8,8 @@ import { benchmarkSearch, removeSyntheticScores, seedSyntheticScores } from '@/d
 import { seedLibraryFromTestPdfs } from '@/dev/seedLibrary';
 import { usePedalSheet } from '@/features/pedals/PedalHost';
 import { Divider, ListRow } from '@/ui/components';
+import { createGigSetlist } from '@/dev/gigSetlist';
+import { hashLibrary } from '@/dev/backupCheck';
 import { showToast } from '@/ui/feedback/store';
 import { radius, space, useTheme } from '@/ui/theme';
 
@@ -41,6 +43,24 @@ export function DevToolsGroup() {
       />
       <Divider inset={66} />
       <ListRow icon="trash" title="Remove synthetic scores" onPress={removeSyntheticScores} />
+      <Divider />
+      <ListRow
+        icon="shield-check"
+        title="Library digest (backup round-trip)"
+        onPress={() => {
+          const h = hashLibrary();
+          console.log(`[digest] ${h.digest} files=${h.files} rows=${JSON.stringify(h.rows)} tables=${JSON.stringify(h.tables)}`);
+          showToast({ message: `Digest ${h.digest.slice(0, 12)}`, icon: 'shield-check' });
+        }}
+      />
+      <ListRow
+        icon="playlist"
+        title="Create 15-song gig setlist"
+        onPress={() => {
+          const r = createGigSetlist();
+          showToast({ message: r ? `Gig setlist: ${r.songs} songs` : 'Add test PDFs first', icon: 'playlist' });
+        }}
+      />
       <Divider inset={66} />
       <ListRow
         icon="bluetooth"

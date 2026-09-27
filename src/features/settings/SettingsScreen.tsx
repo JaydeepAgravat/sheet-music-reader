@@ -11,6 +11,7 @@ import { radius, space, useTheme } from '@/ui/theme';
 import type { RootStackParamList } from '@/app/RootNavigator';
 import { DevToolsGroup } from '@/features/dev/DevToolsGroup';
 import { ReadingSettings } from './ReadingSettings';
+import { BackupSettings } from '@/features/backup/BackupSettings';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
@@ -61,6 +62,13 @@ export function SettingsScreen() {
         </Text>
         <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
           <ListRow icon="trash" title={t('settings.trash')} subtitle={t('settings.trashHint')} chevron onPress={() => nav.navigate('Trash')} />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.backup').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <BackupSettings />
         </View>
 
         {SHOW_DEV_TOOLS && <DevToolsGroup />}

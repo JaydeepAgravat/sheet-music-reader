@@ -6,4 +6,7 @@
     <color name="icon_background">#2F3F8F</color>
     <color name="icon_paper">#FBF8F2</color>
     <color name="icon_paper_shade">#DCD5C8</color>
+    <!-- System dialogs (date picker): accent + raised surface, per theme. -->
+    <color name="dialog_accent">#2F3F8F</color>
+    <color name="dialog_surface">#FFFFFF</color>
 </resources>

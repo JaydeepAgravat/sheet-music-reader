@@ -23,6 +23,10 @@ export type Score = {
   createdAt: number;
   /** Set while the score is in the Trash. */
   deletedAt: number | null;
+  /** Has at least one ink stroke (library badge). */
+  annotated: boolean;
+  /** Appears in at least one non-archived setlist (library badge). */
+  inSetlist: boolean;
 };
 
 /** Everything the detail/edit sheet shows. */
@@ -55,10 +59,14 @@ type Row = {
   last_opened_at: number | null;
   created_at: number;
   deleted_at: number | null;
+  annotated: number;
+  in_setlist: number;
 };
 
 const COLUMNS =
-  's.id, s.title, s.composer, s.file_path, s.page_count, s.cover_path, s.is_sample, s.is_favorite, s.reader_mode, s.half_split, s.page_filter, s.last_page, s.last_opened_at, s.created_at, s.deleted_at';
+  's.id, s.title, s.composer, s.file_path, s.page_count, s.cover_path, s.is_sample, s.is_favorite, s.reader_mode, s.half_split, s.page_filter, s.last_page, s.last_opened_at, s.created_at, s.deleted_at, ' +
+  'EXISTS (SELECT 1 FROM ink_strokes i WHERE i.score_id = s.id) AS annotated, ' +
+  'EXISTS (SELECT 1 FROM setlist_items si JOIN setlists sl ON sl.id = si.setlist_id WHERE si.score_id = s.id AND sl.archived = 0) AS in_setlist';
 
 const MODES: ReaderModePref[] = ['SINGLE', 'TWO_UP', 'HALF'];
 const FILTERS: PageFilter[] = ['ORIGINAL', 'PAPER', 'SEPIA', 'NIGHT', 'CONTRAST'];
@@ -85,6 +93,8 @@ function fromRow(r: Row): Score {
     lastOpenedAt: r.last_opened_at,
     createdAt: r.created_at,
     deletedAt: r.deleted_at,
+    annotated: r.annotated === 1,
+    inSetlist: r.in_setlist === 1,
   };
 }
 
@@ -249,8 +259,11 @@ export function insertScore(s: NewScore, now = Date.now()): string {
   return id;
 }
 
-/** Rebuilds a score's search row (title, people, genre, tags, notes). Call inside the write's transaction. */
-function reindex(id: string): void {
+/**
+ * Rebuilds a score's search row (title, people, genre, tags, notes). Call inside the write's transaction,
+ * for live scores only (trashed scores have no search row). Also used by backup restore.
+ */
+export function reindex(id: string): void {
   const db = sql();
   db.run('DELETE FROM scores_fts WHERE score_id = ?', [id]);
   db.run(
@@ -428,8 +441,9 @@ export function deleteForever(ids: readonly string[]): string[] {
     db.run(`DELETE FROM scores WHERE id IN (${inList(ids)}) AND deleted_at IS NOT NULL`, [...ids]);
     db.run('DELETE FROM tags WHERE id NOT IN (SELECT tag_id FROM score_tags)');
   });
-  notifyChanged('scores', 'tags', 'setlist_items');
-  return files;
+  notifyChanged('scores', 'tags', 'setlists', 'setlist_items');
+  // A restored backup may point several scores (same file_hash) at one file: keep files still in use.
+  return files.filter(f => !db.all('SELECT 1 FROM scores WHERE file_path = ? OR cover_path = ? LIMIT 1', [f, f]).length);
 }
 
 /** Trash items older than 30 days. */

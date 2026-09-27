@@ -18,3 +18,5 @@ export * from './Switch';
 export * from './Text';
 export * from './TextField';
 export * from './Menu';
+export * from './Popover';
+export * from './SortableList';

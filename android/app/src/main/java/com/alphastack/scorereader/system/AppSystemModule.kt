@@ -1,5 +1,7 @@
 package com.alphastack.scorereader.system
 
+import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.view.HapticFeedbackConstants
@@ -9,6 +11,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.alphastack.scorereader.specs.NativeAppSystemSpec
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.UiThreadUtil
 
@@ -69,6 +72,29 @@ class AppSystemModule(reactContext: ReactApplicationContext) : NativeAppSystemSp
     UiThreadUtil.runOnUiThread {
       reactApplicationContext.currentActivity?.requestedOrientation =
           if (locked) ActivityInfo.SCREEN_ORIENTATION_LOCKED else ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
+  }
+
+  override fun pickDate(initial: String, clearLabel: String, promise: Promise) {
+    UiThreadUtil.runOnUiThread {
+      val activity = reactApplicationContext.currentActivity ?: return@runOnUiThread promise.resolve(null)
+      val today = java.util.Calendar.getInstance()
+      val parts = initial.split("-").mapNotNull { it.toIntOrNull() }
+      val (y, m, d) =
+          if (parts.size == 3) Triple(parts[0], parts[1] - 1, parts[2])
+          else Triple(today.get(java.util.Calendar.YEAR), today.get(java.util.Calendar.MONTH), today.get(java.util.Calendar.DAY_OF_MONTH))
+      var settled = false
+      val settle = { value: String? ->
+        if (!settled) {
+          settled = true
+          promise.resolve(value)
+        }
+      }
+      val dialog =
+          DatePickerDialog(activity, com.alphastack.scorereader.R.style.DatePickerTheme, { _, yy, mm, dd -> settle("%04d-%02d-%02d".format(yy, mm + 1, dd)) }, y, m, d)
+      if (clearLabel.isNotEmpty()) dialog.setButton(DialogInterface.BUTTON_NEUTRAL, clearLabel) { _, _ -> settle("") }
+      dialog.setOnDismissListener { settle(null) }
+      dialog.show()
     }
   }
 

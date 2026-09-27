@@ -6,6 +6,8 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
+import com.alphastack.scorereader.backup.BackupPackage
+import com.alphastack.scorereader.ink.InkPackage
 import com.alphastack.scorereader.keys.KeyEventsPackage
 import com.alphastack.scorereader.renderer.RendererPackage
 import com.alphastack.scorereader.saf.SafImportPackage
@@ -23,6 +25,8 @@ class MainApplication : Application(), ReactApplication {
           add(RendererPackage())
           add(KeyEventsPackage())
           add(SafImportPackage())
+          add(InkPackage())
+          add(BackupPackage())
         },
     )
   }

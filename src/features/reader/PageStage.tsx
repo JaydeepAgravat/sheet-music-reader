@@ -40,6 +40,10 @@ export type StageHandle = {
 type Props = {
   ref?: React.Ref<StageHandle>;
   docId: string;
+  /** Score id for the ink layer. */
+  inkKey: string;
+  /** Fingers draw (annotate mode): one-finger swipes/taps are off; pinch still zooms and pans. */
+  fingerInk: boolean;
   pageCount: number;
   /** Flattened [w0, h0, w1, h1…] in points. */
   pageSizes: number[];
@@ -77,6 +81,8 @@ export function PageStage(props: Props) {
   const {
     ref,
     docId,
+    inkKey,
+    fingerInk,
     pageCount,
     pageSizes,
     layout,
@@ -253,6 +259,7 @@ export function PageStage(props: Props) {
 
   // --- Gestures ------------------------------------------------------------------------------------
   const pan = usePanGesture({
+    enabled: !fingerInk,
     maxPointers: 1,
     minDistance: 8,
     onActivate: e => {
@@ -408,6 +415,7 @@ export function PageStage(props: Props) {
   );
 
   const tap = useTapGesture({
+    enabled: !fingerInk,
     runOnJS: true,
     maxDuration: 400,
     maxDistance: 12,
@@ -457,8 +465,8 @@ export function PageStage(props: Props) {
   }, []);
 
   const frameProps = useMemo(
-    () => ({ docId, layout, pageCount, filter, halfSplit, width: cw, height: ch }),
-    [docId, layout, pageCount, filter, halfSplit, cw, ch],
+    () => ({ docId, inkKey, layout, pageCount, filter, halfSplit, width: cw, height: ch }),
+    [docId, inkKey, layout, pageCount, filter, halfSplit, cw, ch],
   );
 
   return (

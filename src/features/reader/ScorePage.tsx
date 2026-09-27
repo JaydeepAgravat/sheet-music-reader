@@ -22,6 +22,8 @@ type Props = {
   align?: PageAlign;
   /** Registers the view for native pedal turns ('main' | 'right'). */
   readerSlot?: string;
+  /** Score id whose ink this view draws (and, unless a thumbnail, captures). */
+  inkKey?: string;
   thumbnail?: boolean;
   zoom?: ZoomTile;
   onPageShown?: (e: PageShownEvent) => void;
@@ -39,6 +41,7 @@ export function ScorePage({
   turnRequestedAtMs = 0,
   align = 'CENTER',
   readerSlot = '',
+  inkKey = '',
   thumbnail = false,
   zoom,
   onPageShown,
@@ -55,6 +58,7 @@ export function ScorePage({
       turnRequestedAtMs={turnRequestedAtMs}
       alignX={align}
       readerSlot={readerSlot}
+      inkKey={inkKey}
       thumbnail={thumbnail}
       zoomScale={zoom?.scale ?? 1}
       zoomLeft={zoom?.left ?? 0}

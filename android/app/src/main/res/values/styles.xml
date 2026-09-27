@@ -8,6 +8,14 @@
         <item name="android:forceDarkAllowed">false</item>
     </style>
 
+    <!-- System date picker in our palette (headers, selection, buttons use the accent). -->
+    <style name="DatePickerTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/dialog_accent</item>
+        <item name="android:colorAccent">@color/dialog_accent</item>
+        <item name="android:windowBackground">@color/dialog_surface</item>
+        <item name="android:colorBackground">@color/dialog_surface</item>
+    </style>
+
     <!-- Launch theme: system splash with the app icon on the canvas colour. No artificial delay. -->
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/canvas</item>

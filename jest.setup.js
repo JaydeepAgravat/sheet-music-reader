@@ -18,6 +18,7 @@ jest.mock('@/specs/NativeAppSystem', () => ({
     setKeepAwake: jest.fn(),
     setImmersive: jest.fn(),
     setOrientationLock: jest.fn(),
+    pickDate: jest.fn(() => Promise.resolve(null)),
   },
 }));
 
@@ -38,6 +39,22 @@ jest.mock('@/specs/NativeKeyEvents', () => {
       onKeyLearned: jest.fn(sub),
       onDeviceAdded: jest.fn(sub),
       onDeviceRemoved: jest.fn(sub),
+    },
+  };
+});
+
+jest.mock('@/specs/NativeInk', () => {
+  const sub = () => ({ remove: jest.fn() });
+  return {
+    __esModule: true,
+    default: {
+      addStrokes: jest.fn(),
+      removeStrokes: jest.fn(),
+      releaseInk: jest.fn(),
+      setTool: jest.fn(),
+      hasSeenStylus: jest.fn(() => false),
+      onInkEdit: jest.fn(sub),
+      onStylus: jest.fn(sub),
     },
   };
 });
@@ -90,5 +107,20 @@ jest.mock('@/specs/NativeSafImport', () => ({
     deleteFile: jest.fn(() => true),
     freeBytes: jest.fn(() => 1e10),
     onShareReceived: jest.fn(() => ({ remove: jest.fn() })),
+  },
+}));
+
+jest.mock('@/specs/NativeBackup', () => ({
+  __esModule: true,
+  default: {
+    pickDestination: jest.fn(async () => null),
+    pickBackupFile: jest.fn(async () => null),
+    writeBackup: jest.fn(async () => ({ bytes: 0, missing: [], damaged: [] })),
+    readTextEntries: jest.fn(async () => []),
+    extractFiles: jest.fn(async (_uri, items) => items.map(i => ({ name: i.name, destPath: i.destPath, ok: true, sha256: i.sha256 }))),
+    hashFiles: jest.fn(async paths => paths.map(p => ({ path: p, ok: true, sha256: '' }))),
+    cancel: jest.fn(),
+    fileSize: jest.fn(async () => -1),
+    onBackupProgress: jest.fn(() => ({ remove: jest.fn() })),
   },
 }));

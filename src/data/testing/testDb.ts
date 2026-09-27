@@ -1,6 +1,6 @@
 import { DatabaseSync } from 'node:sqlite';
 import { migrate } from '@/data/db/migrations';
-import { setSqlRunnerForTests, type SqlRunner } from '@/data/db/runner';
+import { setSqlRunnerForTests, type Scalar, type SqlRunner } from '@/data/db/runner';
 
 /** A fresh, fully migrated in-memory database wired in as the app's SQL runner. */
 export function createTestDb(): DatabaseSync {
@@ -9,7 +9,7 @@ export function createTestDb(): DatabaseSync {
     run: (q, p = []) => {
       db.prepare(q).run(...p);
     },
-    all: <T,>(q: string, p: (string | number | null)[] = []) => db.prepare(q).all(...p) as T[],
+    all: <T,>(q: string, p: Scalar[] = []) => db.prepare(q).all(...p) as T[],
     tx: fn => {
       db.exec('BEGIN');
       try {

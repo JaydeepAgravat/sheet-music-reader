@@ -1,9 +1,12 @@
 import React from 'react';
+import type { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
+import { CollectionScreen } from '@/features/collections/CollectionScreen';
 import { CollectionsScreen } from '@/features/collections/CollectionsScreen';
 import { LibraryScreen } from '@/features/library/LibraryScreen';
 import { SetlistsScreen } from '@/features/setlists/SetlistsScreen';
+import { SetlistScreen } from '@/features/setlists/SetlistScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
 import { ShowcaseScreen } from '@/features/showcase/ShowcaseScreen';
 import { RendererLabScreen } from '@/features/dev/RendererLabScreen';
@@ -14,13 +17,19 @@ import { useTheme } from '@/ui/theme';
 import { createAdaptiveTabs } from './navigation/AdaptiveTabs';
 
 export type RootStackParamList = {
-  Main: undefined;
+  Main: NavigatorScreenParams<MainTabParamList> | undefined;
   Showcase: undefined;
   RendererLab: undefined;
-  /** startPage overrides the remembered page (setlists always start at the entry's page). */
-  Reader: { scoreId: string; startPage?: number };
+  /**
+   * startPage overrides the remembered page. With setlistId the reader plays the setlist from
+   * itemIndex (scoreId is that item's score, for transitions and fallbacks).
+   */
+  Reader: { scoreId: string; startPage?: number; setlistId?: string; itemIndex?: number };
   Pedals: undefined;
   Trash: undefined;
+  Collection: { collectionId: string };
+  /** addSongs: open the "Add songs" sheet straight away (a brand-new setlist). */
+  Setlist: { setlistId: string; addSongs?: boolean };
 };
 
 export type MainTabParamList = {
@@ -66,6 +75,8 @@ export function RootNavigator() {
       />
       <Stack.Screen name="Pedals" component={PedalsScreen} options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="Trash" component={TrashScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="Collection" component={CollectionScreen} options={{ animation: 'slide_from_right' }} />
+      <Stack.Screen name="Setlist" component={SetlistScreen} options={{ animation: 'slide_from_right' }} />
     </Stack.Navigator>
   );
 }

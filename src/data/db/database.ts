@@ -1,5 +1,5 @@
 import { open, type DB } from '@op-engineering/op-sqlite';
-import { migrate, type SqlExecutor } from './migrations';
+import { migrate, splitStatements, type SqlExecutor } from './migrations';
 
 let instance: DB | null = null;
 
@@ -21,14 +21,4 @@ export function getDb(): DB {
   migrate(exec);
   instance = db;
   return db;
-}
-
-/** Splits a migration script into statements. Our migrations contain no semicolons inside strings. */
-export function splitStatements(sql: string): string[] {
-  return sql
-    .replace(/--[^\n]*/g, '')
-    .split(';')
-    .map(s => s.trim())
-    .filter(Boolean)
-    .map(s => `${s};`);
 }

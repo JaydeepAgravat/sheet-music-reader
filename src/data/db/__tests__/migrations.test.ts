@@ -3,7 +3,7 @@
  * so schema mistakes are caught in CI rather than on a device.
  */
 import { DatabaseSync } from 'node:sqlite';
-import { LATEST_VERSION, migrate, type SqlExecutor } from '../migrations';
+import { LATEST_VERSION, migrate, migrations, splitStatements, type SqlExecutor } from '../migrations';
 
 function memoryDb(): { db: DatabaseSync; exec: SqlExecutor } {
   const db = new DatabaseSync(':memory:');
@@ -22,6 +22,21 @@ const insertScore = (db: DatabaseSync, id: string, title: string, composer: stri
     .run(id, title, composer, `/scores/${id}.pdf`, `h-${id}`, 1000, now, now);
 
 describe('migrations', () => {
+  it('migrates statement by statement, the way the app runs them (op-sqlite: one statement per call)', () => {
+    const db = new DatabaseSync(':memory:');
+    const exec: SqlExecutor = {
+      exec: sql => splitStatements(sql).forEach(stmt => db.prepare(stmt).run()),
+      all: <T,>(sql: string) => db.prepare(sql).all() as T[],
+    };
+    expect(migrate(exec)).toEqual(Array.from({ length: LATEST_VERSION }, (_, i) => i + 1));
+  });
+
+  it('keeps trigger bodies whole when splitting', () => {
+    const parts = splitStatements('CREATE TABLE a (x);\nCREATE TRIGGER t AFTER DELETE ON a BEGIN DELETE FROM a; DELETE FROM a; END;\n-- c;\nSELECT 1;');
+    expect(parts).toEqual(['CREATE TABLE a (x);', 'CREATE TRIGGER t AFTER DELETE ON a BEGIN DELETE FROM a; DELETE FROM a; END;', 'SELECT 1;']);
+    for (const m of migrations) expect(splitStatements(m.sql).every(s => s.endsWith(';'))).toBe(true);
+  });
+
   it('applies every migration on a fresh database', () => {
     const { exec } = memoryDb();
     expect(migrate(exec)).toEqual(Array.from({ length: LATEST_VERSION }, (_, i) => i + 1));

@@ -28,6 +28,11 @@ export interface NativeProps extends ViewProps {
   alignX?: CodegenTypes.WithDefault<string, 'CENTER'>;
   /** Registers this view with KeyRouter so pedal turns can be applied natively ('' = none). */
   readerSlot?: CodegenTypes.WithDefault<string, ''>;
+  /**
+   * Ink: the score whose annotations this view draws (NativeInk / InkStore key; '' = no ink).
+   * Non-thumbnail views also capture drawing input per NativeInk.setTool.
+   */
+  inkKey?: CodegenTypes.WithDefault<string, ''>;
   /** Thumbnail: lowest render priority, no prefetch, no onPageShown. */
   thumbnail?: CodegenTypes.WithDefault<boolean, false>;
   /**

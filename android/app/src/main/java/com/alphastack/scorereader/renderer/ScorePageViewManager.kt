@@ -53,6 +53,8 @@ class ScorePageViewManager : SimpleViewManager<ScorePageView>(), ScorePageViewMa
 
   @ReactProp(name = "readerSlot") override fun setReaderSlot(view: ScorePageView, value: String?) = view.setReaderSlot(value)
 
+  @ReactProp(name = "inkKey") override fun setInkKey(view: ScorePageView, value: String?) = view.setInkKey(value)
+
   @ReactProp(name = "thumbnail") override fun setThumbnail(view: ScorePageView, value: Boolean) = view.setThumbnail(value)
 
   @ReactProp(name = "zoomScale", defaultFloat = 1f)

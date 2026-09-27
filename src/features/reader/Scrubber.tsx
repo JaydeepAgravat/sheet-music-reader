@@ -11,6 +11,7 @@ import { ScorePage, type PageFilter } from './ScorePage';
 
 type Props = {
   docId: string;
+  inkKey?: string;
   pageCount: number;
   /** Flattened page sizes (points), for thumbnail aspect ratios. */
   pageSizes: number[];
@@ -30,7 +31,7 @@ const BUBBLE_W = 112;
  * Thumbnail strip with a draggable page window. Dragging shows a large preview bubble and ticks a
  * haptic detent on every page; releasing jumps there. Tapping the strip jumps directly.
  */
-export const Scrubber = memo(function ScrubberImpl({ docId, pageCount, pageSizes, page, label, filter, onSeek, onScrubbingChange }: Props) {
+export const Scrubber = memo(function ScrubberImpl({ docId, inkKey, pageCount, pageSizes, page, label, filter, onSeek, onScrubbingChange }: Props) {
   const { t } = useTranslation();
   const { colors, reduceMotion } = useTheme();
   const [trackW, setTrackW] = useState(0);
@@ -152,7 +153,7 @@ export const Scrubber = memo(function ScrubberImpl({ docId, pageCount, pageSizes
           <View style={[styles.thumbs, { gap: slots > 1 ? (trackW - slots * thumbW) / (slots - 1) : 0 }]}>
             {sampled.map((p, i) => (
               <View key={i} style={[styles.thumb, { width: thumbW, backgroundColor: '#FFFFFF', borderColor: colors.borderSubtle }]}>
-                <ScorePage docId={docId} page={p} thumbnail prefetchRadius={0} filter={filter} style={StyleSheet.absoluteFill} />
+                <ScorePage docId={docId} inkKey={inkKey} page={p} thumbnail prefetchRadius={0} filter={filter} style={StyleSheet.absoluteFill} />
               </View>
             ))}
           </View>
@@ -165,7 +166,7 @@ export const Scrubber = memo(function ScrubberImpl({ docId, pageCount, pageSizes
               style={[styles.bubble, elevation.high, { width: BUBBLE_W, height: bubbleH + 30, bottom: THUMB_H + space.md, backgroundColor: colors.surfaceRaised, borderColor: colors.borderSubtle }, bubbleStyle]}
             >
               <View style={[styles.bubblePage, { height: bubbleH }]}>
-                <ScorePage docId={docId} page={preview} thumbnail prefetchRadius={0} filter={filter} style={StyleSheet.absoluteFill} />
+                <ScorePage docId={docId} inkKey={inkKey} page={preview} thumbnail prefetchRadius={0} filter={filter} style={StyleSheet.absoluteFill} />
               </View>
               <Text variant="numeric" style={styles.bubbleLabel}>
                 {preview + 1}

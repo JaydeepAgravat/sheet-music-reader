@@ -2,7 +2,6 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { BackHandler, Keyboard, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { FlashList } from '@shopify/flash-list';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
@@ -12,19 +11,24 @@ import { useLiveQuery } from '@/data/db/live';
 import { usePref } from '@/data/prefs';
 import { addToCollection, createCollection, listCollections } from '@/data/repos/collections';
 import { searchLibrary } from '@/data/repos/search';
+import { addToSetlist, createSetlist, listSetlists, searchSetlists } from '@/data/repos/setlists';
 import { countScores, listFacets, listScores, restoreScores, setFavorite, trashScores, type Score, type ScoreFilters, type ScoreSort } from '@/data/repos/scores';
 import { haptic } from '@/platform/haptics';
-import { Button, Dialog, EmptyState, IconButton, Menu, ScoreCard, SearchBar, Text, TextField, type Anchor, type MenuItem } from '@/ui/components';
+import { Button, Chip, Dialog, EmptyState, IconButton, Menu, SearchBar, Text, TextField, type Anchor, type MenuItem } from '@/ui/components';
 import { showSnackbar, useFeedback } from '@/ui/feedback/store';
 import { EmptyLibraryArt } from '@/ui/illustrations/Illustrations';
 import { Screen } from '@/ui/layout/Screen';
 import { breakpoints, motion, space } from '@/ui/theme';
 import { ImportChooser, ImportStatus } from '@/features/import/ImportUI';
-import { FilterBar, ListHeader, RecentSearches, ScoreRow, SearchGroups, SelectionBar, type FacetKind, type FacetLists } from './LibraryParts';
+import { BackupBanner } from '@/features/backup/BackupBanner';
+import { useLibraryFocus } from './libraryFocus';
+import { FilterBar, ListHeader, RecentSearches, SearchGroups, SelectionBar, type FacetKind, type FacetLists } from './LibraryParts';
 import { ScoreDetailSheet } from './ScoreDetailSheet';
+import { ScoreGrid } from './ScoreGrid';
+import { SetlistNameDialog } from '@/features/setlists/SetlistParts';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
-type MenuState = { kind: 'sort' | 'more' | 'collection' | FacetKind; anchor: Anchor } | null;
+type MenuState = { kind: 'sort' | 'more' | 'collection' | 'setlist' | FacetKind; anchor: Anchor } | null;
 
 const SORTS: ScoreSort[] = ['title', 'composer', 'recent', 'added'];
 
@@ -51,7 +55,19 @@ export function LibraryScreen() {
 
   const q = query.trim();
   const search = useLiveQuery(['scores', 'tags', 'collections'], () => (q ? searchLibrary(q) : null), [q]);
-  const scores = useLiveQuery(['scores', 'tags', 'collections'], () => listScores(sort, search ? { ...filters, ids: search.scoreIds } : filters), [sort, filters, search]);
+  const setlistHits = useLiveQuery(['setlists'], () => (q ? searchSetlists(q) : []), [q]);
+  const [newSetlist, setNewSetlist] = useState(false);
+  const focus = useLibraryFocus(st => st.focus);
+  const clearFocus = useLibraryFocus(st => st.clear);
+  const scores = useLiveQuery(
+    ['scores', 'tags', 'collections'],
+    () => {
+      const focusIds = focus ? new Set(focus.ids) : null;
+      const ids = search ? search.scoreIds.filter(id => !focusIds || focusIds.has(id)) : focus?.ids;
+      return listScores(sort, ids ? { ...filters, ids } : filters);
+    },
+    [sort, filters, search, focus],
+  );
   const total = useLiveQuery(['scores'], () => countScores().total, []);
   const facets: FacetLists = useLiveQuery(['scores', 'tags', 'collections'], () => ({ ...listFacets(), collections: listCollections() }), []);
   // Search results keep their relevance order unless the user picked a sort explicitly.
@@ -63,9 +79,6 @@ export function LibraryScreen() {
 
   const selecting = selected.size > 0;
   const wide = width >= breakpoints.expanded;
-  const railWidth = width >= breakpoints.medium ? 88 : 0;
-  const gutter = width >= breakpoints.expanded ? space.xxl : width >= breakpoints.medium ? space.xl : space.lg;
-  const columns = Math.max(2, Math.floor((width - railWidth - gutter * 2) / (width >= breakpoints.medium ? 176 : 150)));
 
   // Back leaves selection / search before leaving the screen.
   useFocusEffect(
@@ -158,6 +171,17 @@ export function LibraryScreen() {
             { key: 'select', label: t('library.select.start'), icon: 'check-circle', onPress: () => ordered[0] && setSelected(new Set([ordered[0].id])) },
             { key: 'trash', label: t('trash.title'), icon: 'trash', onPress: () => nav.navigate('Trash') },
           ]
+        : menu.kind === 'setlist'
+          ? [
+              ...listSetlists().map(sl => ({
+                key: sl.id,
+                label: sl.name,
+                hint: t('setlists.songs', { count: sl.itemCount }),
+                icon: 'playlist' as const,
+                onPress: () => addSelectedToSetlist(sl.id, sl.name),
+              })),
+              { key: 'new', label: t('setlists.newSetlistEllipsis'), icon: 'plus' as const, onPress: () => setNewSetlist(true), dividerBefore: true },
+            ]
         : menu.kind === 'collection'
           ? [
               ...facets.collections.map(c => ({
@@ -169,6 +193,17 @@ export function LibraryScreen() {
               { key: 'new', label: t('library.newCollection'), icon: 'plus' as const, onPress: () => setNewCollection(''), dividerBefore: facets.collections.length > 0 },
             ]
           : facetItems(menu.kind);
+
+  function addSelectedToSetlist(setlistId: string, name: string) {
+    const ids = ordered.filter(s => selected.has(s.id)).map(s => s.id);
+    addToSetlist(setlistId, ids);
+    haptic('confirm');
+    setSelected(new Set());
+    showSnackbar({
+      message: t('setlists.added', { count: ids.length, name }),
+      action: { label: t('setlists.details'), onPress: () => nav.navigate('Setlist', { setlistId }) },
+    });
+  }
 
   function addSelectedTo(collectionId: string, name: string) {
     const ids = [...selected];
@@ -196,6 +231,7 @@ export function LibraryScreen() {
             haptic('confirm');
           }}
           onCollection={anchored('collection')}
+          onSetlist={anchored('setlist')}
           onEdit={() => setDetailIds([...selected])}
           onDelete={() => requestDelete([...selected])}
         />
@@ -218,7 +254,13 @@ export function LibraryScreen() {
           onClear={() => setFilters({})}
         />
       )}
+      {focus && (
+        <View style={styles.focusRow}>
+          <Chip label={focus.label} selected trailingIcon="x" onPress={clearFocus} accessibilityHint={t('library.filters.clear')} />
+        </View>
+      )}
       <ImportStatus />
+      {!selecting && !q && <BackupBanner scoreCount={total} />}
     </View>
   );
 
@@ -245,6 +287,19 @@ export function LibraryScreen() {
     <>
       <ImportChooser visible={chooser} onClose={() => setChooser(false)} />
       <Menu visible={menu !== null} anchor={menu?.anchor ?? null} items={menuItems} onClose={() => setMenu(null)} title={menuTitle(menu?.kind, t)} />
+      <SetlistNameDialog
+        visible={newSetlist}
+        title={t('setlists.newSetlist')}
+        confirmLabel={t('common.save')}
+        initialName=""
+        initialDate={null}
+        withDate
+        onSubmit={(name, date) => {
+          setNewSetlist(false);
+          addSelectedToSetlist(createSetlist(name, date), name);
+        }}
+        onCancel={() => setNewSetlist(false)}
+      />
       <ScoreDetailSheet
         ids={detailIds}
         onClose={() => setDetailIds([])}
@@ -305,6 +360,11 @@ export function LibraryScreen() {
           composers={search.composers}
           tags={search.tags}
           collections={search.collections}
+          setlists={setlistHits.map(sl => ({ id: sl.id, name: sl.name, count: sl.itemCount }))}
+          onSetlist={id => {
+            rememberSearch();
+            nav.navigate('Setlist', { setlistId: id });
+          }}
           onComposer={v => {
             setFilters(f => ({ ...f, composer: v }));
             rememberSearch();
@@ -346,56 +406,18 @@ export function LibraryScreen() {
   return (
     <View style={styles.fill}>
       <Screen scroll={false} title={selecting ? t('nav.library') : t('nav.library')} actions={selecting ? undefined : actions} header={header}>
-        {view === 'grid' ? (
-          <FlashList
-            key={`grid-${columns}`}
-            data={ordered}
-            numColumns={columns}
-            keyExtractor={s => s.id}
-            extraData={selected}
-            ListHeaderComponent={listHeader}
-            ListEmptyComponent={empty}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ paddingBottom: 104 + (bottomObstruction > 0 ? 0 : insets.bottom) }}
-            style={styles.list}
-            renderItem={({ item }) => (
-              <View style={styles.cell}>
-                <ScoreCard
-                  title={item.title}
-                  composer={item.composer ?? undefined}
-                  coverUri={item.coverPath ?? undefined}
-                  favorite={item.isFavorite}
-                  selected={selected.has(item.id)}
-                  onPress={() => open(item)}
-                  onLongPress={() => longPress(item)}
-                />
-              </View>
-            )}
-          />
-        ) : (
-          <FlashList
-            key="list"
-            data={ordered}
-            keyExtractor={s => s.id}
-            extraData={selected}
-            ListHeaderComponent={listHeader}
-            ListEmptyComponent={empty}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ paddingBottom: 104 + (bottomObstruction > 0 ? 0 : insets.bottom) }}
-            renderItem={({ item }) => (
-              <ScoreRow
-                score={item}
-                query={q}
-                wide={wide}
-                selected={selected.has(item.id)}
-                selecting={selecting}
-                onPress={open}
-                onLongPress={longPress}
-                onMore={showDetails}
-              />
-            )}
-          />
-        )}
+        <ScoreGrid
+          scores={ordered}
+          view={view}
+          selected={selected}
+          query={q}
+          onPress={open}
+          onLongPress={longPress}
+          onMore={showDetails}
+          ListHeaderComponent={listHeader}
+          ListEmptyComponent={empty}
+          contentContainerStyle={{ paddingBottom: 104 + (bottomObstruction > 0 ? 0 : insets.bottom) }}
+        />
       </Screen>
       {fab}
       {overlays}
@@ -409,6 +431,8 @@ function menuTitle(kind: NonNullable<MenuState>['kind'] | undefined, t: TFunctio
       return t('library.sortBy');
     case 'collection':
       return t('library.select.collection');
+    case 'setlist':
+      return t('library.select.setlist');
     case 'composer':
       return t('library.filters.composer');
     case 'genre':
@@ -434,10 +458,9 @@ function AnchorButton({ icon, label, onPress }: { icon: 'arrows-down-up' | 'dots
 }
 
 const styles = StyleSheet.create({
+  focusRow: { flexDirection: 'row', marginTop: space.sm },
   fill: { flex: 1 },
   header: { gap: space.sm },
-  list: { marginHorizontal: -space.xs },
-  cell: { flex: 1, padding: space.xs },
   resultsLabel: { marginBottom: space.sm, marginLeft: space.xs },
   noResults: { alignItems: 'center', gap: space.sm, paddingVertical: space.xxxl, paddingHorizontal: space.xl },
   fab: { position: 'absolute', right: space.lg, elevation: 6, shadowColor: '#000', borderRadius: 12 },

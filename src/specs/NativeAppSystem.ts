@@ -21,6 +21,11 @@ export interface Spec extends TurboModule {
   setImmersive(on: boolean): void;
   /** true = lock to the current orientation; false = follow the sensor/system again. */
   setOrientationLock(locked: boolean): void;
+  /**
+   * System date picker. initial: 'YYYY-MM-DD' or '' (today). Resolves 'YYYY-MM-DD', '' when the
+   * user taps clearLabel (neutral button; omitted when clearLabel is ''), or null when cancelled.
+   */
+  pickDate(initial: string, clearLabel: string): Promise<string | null>;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('AppSystem');

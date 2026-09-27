@@ -5,6 +5,7 @@ import { ScorePage, type PageFilter, type PageShownEvent, type ZoomTile } from '
 
 type Props = {
   docId: string;
+  inkKey?: string;
   pos: Position;
   layout: ReaderLayout;
   pageCount: number;
@@ -27,6 +28,7 @@ type Props = {
  */
 export const PageFrame = memo(function PageFrameImpl({
   docId,
+  inkKey,
   pos,
   layout,
   pageCount,
@@ -49,6 +51,7 @@ export const PageFrame = memo(function PageFrameImpl({
       <View style={[styles.row, { width, height }]}>
         <ScorePage
           docId={docId}
+          inkKey={inkKey}
           page={left?.page ?? -1}
           filter={filter}
           align="RIGHT"
@@ -62,6 +65,7 @@ export const PageFrame = memo(function PageFrameImpl({
         />
         <ScorePage
           docId={docId}
+          inkKey={inkKey}
           page={right?.page ?? -1}
           filter={filter}
           align="LEFT"
@@ -77,6 +81,7 @@ export const PageFrame = memo(function PageFrameImpl({
   return (
     <ScorePage
       docId={docId}
+      inkKey={inkKey}
       page={main?.page ?? -1}
       mode={main?.mode}
       halfSplit={halfSplit}

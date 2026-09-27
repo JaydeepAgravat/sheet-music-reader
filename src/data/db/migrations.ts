@@ -111,6 +111,43 @@ export const migrations: Migration[] = [
       ALTER TABLE pedal_mappings ADD COLUMN key_name TEXT;
     `,
   },
+  {
+    version: 3,
+    name: 'ink strokes',
+    sql: `
+      CREATE TABLE ink_strokes (
+        id TEXT PRIMARY KEY NOT NULL,                -- uuid v7, minted by native when the stroke ends
+        score_id TEXT NOT NULL REFERENCES scores(id) ON DELETE CASCADE,
+        page INTEGER NOT NULL,                       -- 0-based source page
+        layer INTEGER NOT NULL DEFAULT 0,            -- Pro layers later
+        kind TEXT NOT NULL,                          -- PEN | HIGHLIGHTER
+        color INTEGER NOT NULL,                      -- ARGB (unsigned)
+        width REAL NOT NULL,                         -- PDF points
+        points BLOB NOT NULL,                        -- Float32 LE [x, y, pressure]*, normalised to the source page
+        seq REAL NOT NULL,                           -- draw order
+        created_at INTEGER NOT NULL
+      );
+      CREATE INDEX idx_ink_score_page ON ink_strokes(score_id, page, seq);
+    `,
+  },
+  {
+    version: 4,
+    name: 'setlist items follow permanently deleted scores',
+    sql: `
+      -- setlist_items.score_id deliberately has no ON DELETE CASCADE: a *trashed* score must stay in
+      -- the setlist as "missing · Restore". Once a score row is really deleted (Trash purge, delete
+      -- forever, a Replace restore from backup, …) there is nothing left to restore, so its entries go
+      -- with it. A trigger covers every delete path, not only the one in the scores repository.
+      -- AFTER DELETE is safe with foreign_keys = ON: SQLite checks NO ACTION constraints at the end of
+      -- the statement, after trigger programs have run.
+      CREATE TRIGGER trg_scores_delete_setlist_items AFTER DELETE ON scores
+      BEGIN
+        DELETE FROM setlist_items WHERE score_id = OLD.id;
+      END;
+      -- "In a setlist" badge (EXISTS per library row) and the trigger above look items up by score.
+      CREATE INDEX idx_setlist_items_score ON setlist_items(score_id);
+    `,
+  },
 ];
 
 export const LATEST_VERSION = migrations[migrations.length - 1]?.version ?? 0;
@@ -137,4 +174,26 @@ export function migrate(db: SqlExecutor): number[] {
     }
   }
   return applied;
+}
+
+/**
+ * Splits a migration script into statements. Our migrations contain no semicolons inside strings;
+ * trigger bodies (CREATE TRIGGER … BEGIN …; END) are kept whole.
+ */
+export function splitStatements(sql: string): string[] {
+  const out: string[] = [];
+  let buf = '';
+  for (const piece of sql.replace(/--[^\n]*/g, '').split(';')) {
+    buf = buf ? `${buf};${piece}` : piece;
+    const stmt = buf.trim();
+    if (!stmt) {
+      buf = '';
+      continue;
+    }
+    if (/^CREATE\s+(TEMP\s+|TEMPORARY\s+)?TRIGGER\b/i.test(stmt) && !/\bEND$/i.test(stmt)) continue;
+    out.push(`${stmt};`);
+    buf = '';
+  }
+  if (buf.trim()) out.push(`${buf.trim()};`);
+  return out;
 }

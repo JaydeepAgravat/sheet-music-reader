@@ -3,12 +3,16 @@ package com.alphastack.scorereader.renderer
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import android.os.Build
 import android.os.SystemClock
+import android.view.MotionEvent
 import android.view.View
+import com.alphastack.scorereader.ink.InkOverlay
+import com.alphastack.scorereader.ink.InkPlacement
 import com.alphastack.scorereader.keys.KeyRouter
 import com.alphastack.scorereader.renderer.core.PageBitmap
 import com.alphastack.scorereader.renderer.core.PageSize
@@ -31,6 +35,8 @@ import kotlin.math.sqrt
  *   zoom resolution as a separate cropped tile and drawn over the (always drawn) base bitmap.
  * - Pedal turns: KeyRouter can set page/mode directly ([applyNativeTurn]); React props still win,
  *   because setters compare against what is displayed, not against the last prop.
+ * - Ink ([InkOverlay]): drawn over the page through [inkPlacements], the same page → view mapping
+ *   the bitmaps use, which also maps touches back to (page, normalised x/y).
  */
 class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
 
@@ -62,6 +68,8 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   /** Visible region while zoomed, normalised to this view's own (untransformed) size. */
   private val zoomRect = RectF(0f, 0f, 1f, 1f)
   private var pageSizes: List<PageSize> = emptyList()
+
+  private val ink = InkOverlay(this)
 
   // Bitmaps currently pinned for drawing (released when no longer needed).
   private val pinned = HashMap<RenderKey, PageBitmap>()
@@ -163,6 +171,8 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     if (hasWindowFocus && readerSlot == MAIN_SLOT && !hasFocus()) requestFocus()
   }
 
+  fun setInkKey(value: String?) = ink.setInkKey(value ?: "")
+
   fun setThumbnail(value: Boolean) {
     if (value == thumbnail) return
     thumbnail = value
@@ -201,6 +211,7 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     paint.colorFilter = PageFilters.forName(value)
     paperPaint.colorFilter = paint.colorFilter
     dividerPaint.color = if (value == "NIGHT") 0x33FFFFFF else 0x22000000
+    ink.setFilter(value)
     invalidate()
   }
 
@@ -222,6 +233,7 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     engine.addListener(this)
+    ink.attach()
     if (readerSlot.isNotEmpty()) KeyRouter.register(readerSlot, this)
     holdKeyFocus()
     refresh()
@@ -229,6 +241,7 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
 
   override fun onDetachedFromWindow() {
     engine.removeListener(this)
+    ink.detach()
     if (readerSlot.isNotEmpty()) KeyRouter.unregister(readerSlot, this)
     removeCallbacks(tileRefresh)
     releaseAll()
@@ -310,6 +323,43 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     )
   }
 
+  /**
+   * Where each visible page is drawn, as page points → view pixels. Mirrors drawSingle/drawHalf
+   * exactly, including HALF's bitmap row rounding, so ink stays glued to the notes.
+   */
+  private fun inkPlacements(): List<InkPlacement> {
+    if (docId == null || page < 0) return emptyList()
+    if (!isHalfLayout()) {
+      val size = pageSizes.getOrNull(page) ?: return emptyList()
+      val fit = fitRect(page) ?: return emptyList()
+      val m = Matrix().apply { setScale(fit.width() / size.widthPt, fit.height() / size.heightPt); postTranslate(fit.left, fit.top) }
+      return listOf(InkPlacement(page, size.widthPt, size.heightPt, fit, m))
+    }
+    val cur = fitRect(page) ?: return emptyList()
+    val next = fitRect(page + 1) ?: return emptyList()
+    val splitY = cur.top + cur.height() * halfSplit
+    val top = bandPlacement(page + 1, RectF(next.left, cur.top, next.right, splitY), fromTop = true) ?: return emptyList()
+    val bottom = bandPlacement(page, RectF(cur.left, splitY, cur.right, cur.bottom), fromTop = false) ?: return emptyList()
+    return listOf(top, bottom)
+  }
+
+  /** A HALF band: rows [0, split] (top) or [split, h] (bottom) of page [p]'s bitmap drawn into [dst]. */
+  private fun bandPlacement(p: Int, dst: RectF, fromTop: Boolean): InkPlacement? {
+    val size = pageSizes.getOrNull(p) ?: return null
+    val key = keyFor(p) ?: return null
+    val splitRow = (key.heightPx * halfSplit).roundToInt()
+    val srcTop = if (fromTop) 0 else splitRow
+    val srcBottom = if (fromTop) splitRow else key.heightPx
+    if (srcBottom <= srcTop || dst.height() <= 0f) return null
+    val pxPerRow = dst.height() / (srcBottom - srcTop)
+    val m =
+        Matrix().apply {
+          setScale(dst.width() / size.widthPt, key.heightPx / size.heightPt * pxPerRow)
+          postTranslate(dst.left, dst.top - srcTop * pxPerRow)
+        }
+    return InkPlacement(p, size.widthPt, size.heightPt, dst, m)
+  }
+
   // --- Rendering requests ----------------------------------------------------------------------
 
   private fun refresh() {
@@ -381,6 +431,7 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     // Blank paper until the render lands (never a flash of empty).
     if (bmp == null) canvas.drawRect(dst, paperPaint) else canvas.drawBitmap(bmp.bitmap, null, dst, paint)
     drawTile(canvas, dst)
+    ink.draw(canvas, inkPlacements(), zoomScale)
     if (bmp != null) reportShown(bmp)
   }
 
@@ -417,6 +468,8 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
       canvas.drawBitmap(b, Rect(0, (b.height * halfSplit).roundToInt(), b.width, b.height), bottomDst, paint)
     } else canvas.drawRect(bottomDst, paperPaint)
 
+    ink.draw(canvas, inkPlacements(), zoomScale)
+
     // Soft divider so the player always knows which half is which.
     dividerPaint.strokeWidth = max(1f, density)
     canvas.drawLine(min(cur.left, next.left) + 24f, splitY, max(cur.right, next.right) - 24f, splitY, dividerPaint)
@@ -427,6 +480,14 @@ class ScorePageView(context: Context) : View(context), RenderEngine.Listener {
     drawTag(canvas, "p. ${page + 1}", tagX, splitY + 6f * density, above = false)
 
     if (nextBmp != null && curBmp != null) reportShown(nextBmp)
+  }
+
+  // --- Input ---------------------------------------------------------------------------------
+
+  override fun onTouchEvent(event: MotionEvent): Boolean {
+    val enabled = !thumbnail && page >= 0
+    if (ink.onTouchEvent(event, if (enabled) inkPlacements() else emptyList(), enabled)) return true
+    return super.onTouchEvent(event)
   }
 
   private fun drawTag(canvas: Canvas, label: String, x: Float, y: Float, above: Boolean) {
