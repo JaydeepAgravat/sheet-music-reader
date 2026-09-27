@@ -24,6 +24,7 @@ import { showSnackbar, showToast } from '@/ui/feedback/store';
 import { EmptySetlistsArt } from '@/ui/illustrations/Illustrations';
 import { Screen } from '@/ui/layout/Screen';
 import { breakpoints, space } from '@/ui/theme';
+import { requirePro } from '@/features/billing/entitlement';
 import { SetlistCard, SetlistNameDialog } from './SetlistParts';
 
 type Nav = NativeStackNavigationProp<RootStackParamList>;
@@ -59,6 +60,11 @@ export function SetlistsScreen() {
   ].filter((s): s is Section => s.items.length > 0);
   const showHeadings = sections.length > 1;
 
+  // Check the free limit before asking for a name, not after.
+  const startCreate = () => {
+    if (requirePro('setlists')) setCreating(true);
+  };
+
   const create = (name: string, date: string | null) => {
     setCreating(false);
     const id = createSetlist(name, date);
@@ -73,11 +79,12 @@ export function SetlistsScreen() {
   };
 
   const duplicate = (s: Setlist) => {
+    if (!requirePro('setlists')) return;
     const name = t('setlists.duplicateName', { name: s.name });
     if (duplicateSetlist(s.id, name)) showToast({ message: t('setlists.duplicated', { name }), icon: 'copy' });
   };
 
-  const newButton = <IconButton icon="plus" label={t('setlists.newSetlist')} onPress={() => setCreating(true)} variant="tonal" />;
+  const newButton = <IconButton icon="plus" label={t('setlists.newSetlist')} onPress={startCreate} variant="tonal" />;
 
   return (
     <>
@@ -85,7 +92,7 @@ export function SetlistsScreen() {
         <Screen centerContent title={t('nav.setlists')}>
           <EmptyState art={<EmptySetlistsArt />} title={t('setlists.emptyTitle')} body={t('setlists.emptyBody')} />
           <View style={styles.emptyAction}>
-            <Button label={t('setlists.newSetlist')} icon="plus" onPress={() => setCreating(true)} />
+            <Button label={t('setlists.newSetlist')} icon="plus" onPress={startCreate} />
           </View>
         </Screen>
       ) : (

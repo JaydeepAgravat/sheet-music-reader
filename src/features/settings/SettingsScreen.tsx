@@ -11,6 +11,10 @@ import { radius, space, useTheme } from '@/ui/theme';
 import type { RootStackParamList } from '@/app/RootNavigator';
 import { DevToolsGroup } from '@/features/dev/DevToolsGroup';
 import { ReadingSettings } from './ReadingSettings';
+import { LanguageSettings } from './LanguageSettings';
+import { StylusSettings } from './StylusSettings';
+import { ProSettings } from '@/features/billing/ProSettings';
+import { AboutSettings } from '@/features/support/AboutSettings';
 import { BackupSettings } from '@/features/backup/BackupSettings';
 
 export function SettingsScreen() {
@@ -24,7 +28,21 @@ export function SettingsScreen() {
     <Screen title={t('nav.settings')}>
       <View style={styles.column}>
         <Text variant="overline" color="textSecondary" style={styles.section}>
-          {t('settings.appearance').toUpperCase()}
+          {t('settings.reading').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <ReadingSettings onOpenPedals={() => nav.navigate('Pedals')} />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.stylus').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <StylusSettings />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.display').toUpperCase()}
         </Text>
         <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
           <View style={styles.padded}>
@@ -51,13 +69,6 @@ export function SettingsScreen() {
         </View>
 
         <Text variant="overline" color="textSecondary" style={styles.section}>
-          {t('settings.reading').toUpperCase()}
-        </Text>
-        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
-          <ReadingSettings onOpenPedals={() => nav.navigate('Pedals')} />
-        </View>
-
-        <Text variant="overline" color="textSecondary" style={styles.section}>
           {t('settings.library').toUpperCase()}
         </Text>
         <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
@@ -69,6 +80,27 @@ export function SettingsScreen() {
         </Text>
         <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
           <BackupSettings />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.languageSection').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <LanguageSettings />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('settings.pro').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <ProSettings />
+        </View>
+
+        <Text variant="overline" color="textSecondary" style={styles.section}>
+          {t('support.about').toUpperCase()}
+        </Text>
+        <View style={[styles.group, { backgroundColor: colors.surface, borderColor: colors.borderSubtle }]}>
+          <AboutSettings />
         </View>
 
         {SHOW_DEV_TOOLS && <DevToolsGroup />}

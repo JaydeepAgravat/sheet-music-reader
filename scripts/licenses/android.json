@@ -1,0 +1,108 @@
+{
+  "_readme": [
+    "Native Android libraries that ship in the APK (not visible to npm). Curated by hand because",
+    "resolving Gradle metadata reliably is hard. To refresh: run",
+    "  cd android && ./gradlew :app:dependencies --configuration releaseRuntimeClasspath",
+    "and make sure every top-level group below is still listed (and nothing new is missing),",
+    "then run `npm run licenses`. text: 'MIT' | 'BSD-3-Clause' (generated from `copyright`),",
+    "'Apache-2.0' (assets/licenses/Apache-2.0.txt), 'file:<path>' or a literal 'note:<text>'."
+  ],
+  "libraries": [
+    {
+      "id": "android:react-native",
+      "name": "React Native for Android (incl. Yoga, JSI)",
+      "license": "MIT",
+      "copyright": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+      "url": "https://github.com/facebook/react-native",
+      "text": "file:node_modules/react-native/LICENSE"
+    },
+    {
+      "id": "android:hermes",
+      "name": "Hermes JavaScript engine",
+      "license": "MIT",
+      "copyright": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+      "url": "https://github.com/facebook/hermes",
+      "text": "MIT"
+    },
+    {
+      "id": "android:fresco",
+      "name": "Fresco",
+      "license": "MIT",
+      "copyright": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+      "url": "https://github.com/facebook/fresco",
+      "text": "MIT"
+    },
+    {
+      "id": "android:fbjni",
+      "name": "fbjni",
+      "license": "Apache-2.0",
+      "copyright": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+      "url": "https://github.com/facebookincubator/fbjni",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:soloader",
+      "name": "SoLoader",
+      "license": "Apache-2.0",
+      "copyright": "Copyright (c) Meta Platforms, Inc. and affiliates.",
+      "url": "https://github.com/facebook/SoLoader",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:okhttp",
+      "name": "OkHttp & Okio",
+      "license": "Apache-2.0",
+      "copyright": "Copyright (C) Square, Inc.",
+      "url": "https://github.com/square/okhttp",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:androidx",
+      "name": "AndroidX (AppCompat, Core, Fragment, Splash Screen, Transition and others)",
+      "license": "Apache-2.0",
+      "copyright": "Copyright (C) The Android Open Source Project",
+      "url": "https://developer.android.com/jetpack/androidx",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:material",
+      "name": "Material Components for Android",
+      "license": "Apache-2.0",
+      "copyright": "Copyright (C) The Android Open Source Project",
+      "url": "https://github.com/material-components/material-components-android",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:kotlin",
+      "name": "Kotlin standard library & coroutines",
+      "license": "Apache-2.0",
+      "copyright": "Copyright JetBrains s.r.o. and Kotlin Programming Language contributors.",
+      "url": "https://github.com/JetBrains/kotlin",
+      "text": "Apache-2.0"
+    },
+    {
+      "id": "android:mmkv",
+      "name": "MMKV",
+      "license": "BSD-3-Clause",
+      "copyright": "Copyright (C) 2018 THL A29 Limited, a Tencent company. All rights reserved.",
+      "url": "https://github.com/Tencent/MMKV",
+      "text": "BSD-3-Clause"
+    },
+    {
+      "id": "android:sqlite",
+      "name": "SQLite",
+      "license": "Public domain",
+      "copyright": "",
+      "url": "https://sqlite.org/copyright.html",
+      "text": "note:The author disclaims copyright to this source code. In place of a legal notice, here is a blessing:\n\n    May you do good and not evil.\n    May you find forgiveness for yourself and forgive others.\n    May you share freely, never taking more than you give."
+    },
+    {
+      "id": "android:play-billing",
+      "name": "Google Play Billing Library",
+      "license": "Android SDK License",
+      "copyright": "Copyright Google LLC",
+      "url": "https://developer.android.com/google/play/billing",
+      "text": "note:The Google Play Billing Library is provided by Google LLC under the Android Software Development Kit License Agreement: https://developer.android.com/studio/terms"
+    }
+  ]
+}

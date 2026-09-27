@@ -52,6 +52,12 @@ export interface Spec extends TurboModule {
    * background thread; several may run concurrently.
    */
   copyToLibrary(uri: string, destPath: string): Promise<CopyResult>;
+  /**
+   * Copies a file bundled in the APK assets (path relative to the assets root, e.g.
+   * "samples/hymn.pdf") to destPath, with the same temp-file, %PDF- check, hashing and error codes
+   * as copyToLibrary. Used to seed the bundled sample scores on first run.
+   */
+  copyAsset(assetPath: string, destPath: string): Promise<CopyResult>;
   /** Files handed to us by ACTION_SEND / SEND_MULTIPLE / VIEW since the last call (then cleared). */
   takePendingShares(): ReadonlyArray<SourceFile>;
   /** Absolute app-private directory for library PDFs (filesDir/library). */

@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import Svg, { Path, Rect } from 'react-native-svg';
+import { useTranslation } from 'react-i18next';
 import { Icon, type IconName } from '@/ui/icons';
 import { radius, space, useTheme } from '@/ui/theme';
 import { Surface } from './Surface';
@@ -34,6 +35,7 @@ export const ScoreCard = memo(function ScoreCardImpl({
   selected,
 }: ScoreCardProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const badges: IconName[] = [];
   if (favorite) badges.push('star');
   if (annotated) badges.push('pencil-simple');
@@ -44,7 +46,9 @@ export const ScoreCard = memo(function ScoreCardImpl({
       onPress={onPress}
       onLongPress={onLongPress}
       accessibilityRole="button"
-      accessibilityLabel={[title, composer].filter(Boolean).join(', ')}
+      accessibilityLabel={[title, composer, favorite && t('library.badges.favorite'), annotated && t('library.badges.annotated'), inSetlist && t('library.badges.inSetlist')]
+        .filter(Boolean)
+        .join(', ')}
       accessibilityState={{ selected }}
       style={styles.card}
     >

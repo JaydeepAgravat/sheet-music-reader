@@ -42,6 +42,7 @@ import { Scrubber } from './Scrubber';
 import { usePedalTurns } from './usePedalTurns';
 import type { DocState } from './useScoreDocument';
 import { NextSongPill } from './SetlistOverlays';
+import { AnnotateHint } from '@/features/onboarding/AnnotateHint';
 
 type Nav = NativeStackNavigationProp<RootStackParamList, 'Reader'>;
 
@@ -119,6 +120,7 @@ export function ReaderSession({ score, docState, startPage: startPageProp, setli
   const [presetsRaw, setPresetsRaw] = usePref('inkPresets');
   const [activeTool, setActiveTool] = usePref('inkActiveTool');
   const [fingerDraws, setFingerDraws] = usePref('inkFingerDraws');
+  const [stylusAnywhere] = usePref('inkStylusAnywhere');
   const presets = useMemo(() => normalizePresets(presetsRaw), [presetsRaw]);
   const ink = useInkSession(score?.id ?? null);
   const fingerInk = annotating && (fingerDraws || !stylusSeen);
@@ -358,13 +360,13 @@ export function ReaderSession({ score, docState, startPage: startPageProp, setli
   useEffect(() => {
     NativeInk.setTool({
       annotating: annotating && isFocused,
-      stylusDraws: isFocused && !performance,
+      stylusDraws: isFocused && !performance && (stylusAnywhere || annotating),
       fingerDraws,
       tool: activeTool === ERASER ? 'ERASER' : activePreset.kind,
       color: presetArgb(activePreset),
       width: activePreset.width,
     });
-  }, [annotating, isFocused, performance, fingerDraws, activeTool, activePreset]);
+  }, [annotating, isFocused, performance, stylusAnywhere, fingerDraws, activeTool, activePreset]);
   useEffect(
     () => () => NativeInk.setTool({ annotating: false, stylusDraws: false, fingerDraws: false, tool: 'PEN', color: 0, width: 1 }),
     [],
@@ -545,6 +547,7 @@ export function ReaderSession({ score, docState, startPage: startPageProp, setli
       </View>
 
       {hint && !performance && <TapZoneHint mode={tapZones} onDone={() => setHint(false)} />}
+      <AnnotateHint trigger={!!doc && chrome && !hint} blocked={performance || annotating} top={insets.top + 60 + space.sm} />
 
       {doc && !performance && !annotating && (
         <>

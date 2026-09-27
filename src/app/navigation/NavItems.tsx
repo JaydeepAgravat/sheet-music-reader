@@ -31,7 +31,17 @@ export function NavDestination({ item, active, onPress, orientation }: ItemProps
         <Animated.View style={[styles.pill, { backgroundColor: colors.accentContainer }, pill]} />
         <Icon name={item.icon} weight={active ? 'fill' : 'regular'} size={24} color={active ? 'onAccentContainer' : 'textSecondary'} />
       </View>
-      <Text variant="labelSmall" color={active ? 'textPrimary' : 'textSecondary'} numberOfLines={1} style={styles.label}>
+      {/* Nav labels grow to 1.3× at most (Material guidance) and shrink to fit long translations
+          ("Einstellungen"), so they never truncate; TalkBack reads the full label anyway. */}
+      <Text
+        variant="labelSmall"
+        color={active ? 'textPrimary' : 'textSecondary'}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.75}
+        maxFontSizeMultiplier={1.3}
+        style={styles.label}
+      >
         {item.label}
       </Text>
     </Surface>

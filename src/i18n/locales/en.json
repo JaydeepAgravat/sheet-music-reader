@@ -75,7 +75,12 @@
     "confirmDeleteBody": "You can restore them from the Trash for 30 days.",
     "moveToTrash": "Move to Trash",
     "noMatchTitle": "Nothing matches these filters",
-    "noMatchBody": "Try removing a filter to see more of your library."
+    "noMatchBody": "Try removing a filter to see more of your library.",
+    "badges": {
+      "favorite": "Favourite",
+      "annotated": "Annotated",
+      "inSetlist": "In a setlist"
+    }
   },
   "setlists": {
     "emptyTitle": "No setlists yet",
@@ -175,7 +180,11 @@
     "trash": "Trash",
     "library": "Library",
     "trashHint": "Deleted scores, kept for 30 days",
-    "backup": "Backup"
+    "backup": "Backup",
+    "display": "Display",
+    "stylus": "Stylus & ink",
+    "languageSection": "Language",
+    "pro": "Score Reader Pro"
   },
   "filters": {
     "ORIGINAL": "Original",
@@ -486,5 +495,191 @@
     "showDamaged": "Show",
     "damagedFilter_one": "{{count, number}} score with a missing file",
     "damagedFilter_other": "{{count, number}} scores with missing files"
+  },
+  "stylus": {
+    "anywhere": "Write with the stylus any time",
+    "anywhereHint": "The pen writes on the page without opening annotate mode. Fingers still turn pages.",
+    "fingerHint": "In annotate mode, fingers keep drawing even after a stylus has been used.",
+    "resetPresets": "Reset pens to default",
+    "resetPresetsHint": "Graphite, ink blue, teacher red and yellow highlighter.",
+    "presetsReset": "Pens reset to default"
+  },
+  "language": {
+    "title": "App language",
+    "system": "Same as device ({{name}})"
+  },
+  "billing": {
+    "pro": "Pro",
+    "getPro": "Get Pro",
+    "paywall": {
+      "headline": "Make room for all your music",
+      "reasonImports": "You've added {{limit}} scores — Pro keeps them coming.",
+      "reasonSetlists": "The free version includes one setlist. Pro gives you one for every gig.",
+      "reasonSettings": "Everything that's free stays free. Pro simply removes the limits.",
+      "pending": "Waiting for payment — Pro unlocks when it's approved.",
+      "unavailable": "Purchases aren't available on this device. Buying Pro needs Google Play.",
+      "notFound": "Pro can't be bought right now. Please try again later.",
+      "failed": "The purchase didn't go through. Please try again.",
+      "loadingPrice": "Loading price",
+      "priceUnknown": "Price unavailable",
+      "terms": "One-time · All your Android devices · No subscription",
+      "buy": "Unlock Pro",
+      "buyWithPrice": "Unlock Pro · {{price}}",
+      "keepYours": "Everything you've already added stays yours, with or without Pro.",
+      "unlockedTitle": "Pro is yours",
+      "unlockedBody": "Thank you for supporting an independent app. No limits from here on.",
+      "alreadyProTitle": "You have Pro",
+      "alreadyProBody": "No limits on scores or setlists. Thank you for your support."
+    },
+    "benefits": {
+      "scores": {
+        "title": "Unlimited scores",
+        "body": "Bring in your whole library, however big it grows."
+      },
+      "setlists": {
+        "title": "Unlimited setlists",
+        "body": "One for every gig, rehearsal and service."
+      },
+      "tools": {
+        "title": "Pro tools as they arrive",
+        "body": "Planned additions like links, crop, stamps and a metronome come to Pro at no extra cost."
+      },
+      "devices": {
+        "title": "All your Android devices",
+        "body": "Buy once, restore on any phone or tablet with the same Google account."
+      },
+      "offline": {
+        "title": "Still offline and private",
+        "body": "No account, no tracking. Your scores stay on your device."
+      }
+    },
+    "restore": {
+      "action": "Restore purchase",
+      "hint": "Already bought Pro? Get it back on this device.",
+      "restored": "Pro restored. Welcome back.",
+      "alreadyPro": "Pro is active on this device.",
+      "pending": "Your purchase is still waiting for payment.",
+      "none": "No Pro purchase found for this Google account.",
+      "unavailable": "Google Play isn't available on this device.",
+      "error": "Couldn't reach Google Play. Please try again in a moment."
+    },
+    "settings": {
+      "freeTitle": "Free version",
+      "scoresUsed": "Scores: {{used}} of {{limit}}",
+      "setlistsUsed": "Setlists: {{used}} of {{limit}}",
+      "proTitle": "Pro",
+      "proBody": "Unlimited scores and setlists. Thank you for your support."
+    },
+    "import": {
+      "overLimit_one": "{{count}} not added (free limit)",
+      "overLimit_other": "{{count}} not added (free limit)",
+      "overLimitTitle": "Not added — free limit",
+      "overLimitHint": "The free version holds {{limit}} scores (samples don't count). Get Pro to add these — your other scores are untouched."
+    }
+  },
+  "support": {
+    "about": "About",
+    "help": "Help & feedback",
+    "helpHint": "Pedals, importing, backups and more",
+    "privacy": "Privacy policy",
+    "privacyHint": "No account, no tracking",
+    "licences": "Licences",
+    "licencesHint": "Fonts, icons and open-source software",
+    "versionLine": "{{name}} {{version}} (build {{build}})",
+    "shareFailed": "Couldn't open the share sheet.",
+    "crash": {
+      "title": "Something went wrong last time",
+      "body": "The app closed unexpectedly. A short report was saved on this device. Sending it helps us fix the problem, and you'll see exactly what's in it before it goes anywhere.",
+      "send": "Send report",
+      "notNow": "Not now",
+      "subject": "Crash report",
+      "intro": "The app crashed. Here is the report it saved. (If you remember what you were doing, please add it here.)"
+    },
+    "helpScreen": {
+      "title": "Help & feedback",
+      "faq": "Common questions",
+      "pedalsQ": "My pedal doesn't turn pages",
+      "pedalsA": "Check that the pedal is paired in Android's Bluetooth settings and set to a keyboard mode (arrow keys or Page Up/Down; its manual shows how to switch). Then open the pedal test and press each pedal: the matching tile should light up. If a key does nothing, assign it in Settings › Reading › Pedals.",
+      "pedalsAction": "Open pedal test",
+      "driveQ": "How do I import from Google Drive?",
+      "driveA": "In the library, tap Import › Choose files, then pick Drive (or any cloud app) in the file picker's side menu. The score is copied into the app, so afterwards it opens offline. To bring in many scores at once, use Import a folder.",
+      "filesQ": "Where are my scores stored?",
+      "filesA": "Imported scores are copied into the app's private storage on this device. They keep working if the original file is moved or deleted, and other apps can't see them. Deleted scores stay in the Trash for 30 days.",
+      "backupQ": "How do I keep my library safe?",
+      "backupA": "Your library lives only on this device. Make a backup now and then in Settings › Backup and save it somewhere safe, like a cloud folder or a computer. One file holds everything: scores, annotations, setlists and collections. You can restore it on a new device too.",
+      "stylusQ": "Tips for writing with a stylus",
+      "stylusA": "Tap the pen in the reader to annotate. A stylus writes while your fingers keep turning pages and zooming; turn on “Draw with finger” to use a finger instead. Double-tap a pen to change its colour and width. Every stroke can be undone. Settings › Stylus & ink has more options.",
+      "contact": "Still stuck?",
+      "contactBody": "Write to us. A real person reads every message.",
+      "email": "Email support",
+      "emailHint": "Opens your email app with your app version and device model filled in",
+      "emailSubject": "Support request",
+      "emailBody": "What happened, and what were you trying to do?",
+      "sendLog": "Send app log",
+      "sendLogHint": "Recent app activity for troubleshooting. You choose where it goes.",
+      "logSubject": "App log"
+    },
+    "privacyScreen": {
+      "title": "Privacy policy",
+      "updated": "Last updated 27 September 2026",
+      "summary": "The short version: your music and notes stay on your device. We don't collect anything about you.",
+      "accountTitle": "No account",
+      "accountBody": "There's nothing to sign up for. The app doesn't know who you are.",
+      "analyticsTitle": "No analytics, no ads",
+      "analyticsBody": "No tracking, no advertising IDs, no usage statistics and no third-party code that reports back.",
+      "networkTitle": "No internet, except to buy Pro",
+      "networkBody": "The app has no internet access. The only exception is Google Play Billing when you buy or restore Pro, which the Play Store app handles under Google's privacy policy. We never see your payment details.",
+      "deviceTitle": "Everything stays on your device",
+      "deviceBody": "Scores you import are copied into the app's private storage. Annotations, setlists, collections and settings are stored there too. Uninstalling the app deletes them.",
+      "filesTitle": "Only the files you choose",
+      "filesBody": "The app can only read the files and folders you pick in Android's file picker, or share to it.",
+      "backupsTitle": "Backups go where you save them",
+      "backupsBody": "A backup is a single file saved wherever you choose: your device, a memory card or a cloud folder. The app only writes it, and reads it back when you restore.",
+      "crashTitle": "Crash reports only if you send them",
+      "crashBody": "If the app crashes, a short technical report is kept on your device: app version, device model, Android version, what the code was doing and a log of recent app activity. Next time, the app asks if you'd like to send it. It only leaves your device if you share it yourself, by email or another app you pick. Choosing “Not now” deletes it.",
+      "changesTitle": "Changes",
+      "changesBody": "If this policy changes, the new version will be in the app and on the Play Store listing before it applies.",
+      "contactTitle": "Questions",
+      "contactBody": "Email {{email}}.",
+      "listing": "The app's Play Store listing links to this same text."
+    },
+    "licencesScreen": {
+      "title": "Licences",
+      "intro": "This app is made with these fonts, icons and open-source projects. Thank you to everyone who built them.",
+      "fonts": "Fonts",
+      "icons": "Icons",
+      "libraries": "Libraries",
+      "showText": "Shows the licence text",
+      "hideText": "Hides the licence text"
+    }
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "skipHint": "Goes straight to your library",
+    "next": "Next",
+    "start": "Start",
+    "startHint": "Opens your library, where a few sample scores are ready to try",
+    "stepOf": "Step {{step}} of {{count}}",
+    "import": {
+      "title": "Your music, on this device",
+      "body": "Import PDFs from your files, a cloud drive or a whole folder. They stay on this device — no account, nothing uploaded."
+    },
+    "pedal": {
+      "title": "Turn pages hands-free",
+      "body": "Tap the edge of the page or press a page-turn pedal. Bluetooth pedals work straight away."
+    },
+    "annotate": {
+      "title": "Write on the page",
+      "body": "Pencil-like ink for fingerings, breath marks and reminders. Anything can be undone."
+    },
+    "annotateHint": "Tip: tap the pencil to write on the page — with a stylus, just write.",
+    "annotateHintNoStylus": "Tip: tap the pencil to write on the page.",
+    "dismissHint": "Dismiss tip",
+    "licence": {
+      "pd": "Sample score · public-domain music. This engraving is free to copy and share (CC0).",
+      "pdArr": "Sample score · public-domain melody and words. This arrangement is free to copy and share (CC0).",
+      "cc0": "Sample score · written for this app. Free to copy, play and arrange (CC0).",
+      "sample": "Sample score included with the app."
+    }
   }
 }

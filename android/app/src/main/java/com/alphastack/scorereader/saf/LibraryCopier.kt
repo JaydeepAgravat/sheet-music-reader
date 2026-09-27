@@ -24,10 +24,24 @@ class LibraryCopier(private val context: Context) {
   class CopyException(val code: String, message: String, cause: Throwable? = null) : IOException(message, cause)
 
   /**
-   * Writes to "[dest].part" and renames, so [dest] is either absent or complete — never partial.
+   * Stream-copies [uri] into [dest]. Writes to "[dest].part" and renames, so [dest] is either absent or complete — never partial.
    * Throws [CopyException] only; the temp file is removed on every failure.
    */
-  fun copy(uri: Uri, dest: File): Result {
+  fun copy(uri: Uri, dest: File): Result = copyStream(dest) { open(uri) }
+
+  /**
+   * Copies a file bundled in the APK's assets (e.g. "samples/hymn.pdf") — the first-run sample
+   * scores. Same guarantees and error codes as [copy]. Paths are relative to the assets root and
+   * may not climb out of it.
+   */
+  fun copyAsset(assetPath: String, dest: File): Result {
+    if (assetPath.isBlank() || assetPath.startsWith("/") || assetPath.split('/').any { it == ".." }) {
+      throw CopyException(E_COPY, "Bad asset path: $assetPath")
+    }
+    return copyStream(dest) { context.assets.open(assetPath) }
+  }
+
+  private fun copyStream(dest: File, openInput: () -> InputStream): Result {
     val tmp = File(dest.path + ".part")
     try {
       dest.parentFile?.mkdirs()
@@ -35,7 +49,7 @@ class LibraryCopier(private val context: Context) {
       val head = ByteArray(PdfRules.HEADER_WINDOW)
       var headLen = 0
       var size = 0L
-      open(uri).use { input ->
+      openInput().use { input ->
         FileOutputStream(tmp).use { out ->
           val buf = ByteArray(BUFFER_SIZE)
           while (true) {

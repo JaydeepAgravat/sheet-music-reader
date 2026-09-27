@@ -1,3 +1,5 @@
+// First: fatal JS errors are saved on the device (never sent) so the next launch can offer to share them.
+import '@/features/support/installCrashHandler';
 import './src/i18n';
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
@@ -9,12 +11,16 @@ import { navigationRef } from '@/app/navigationRef';
 import { ImportHost } from '@/features/import/ImportHost';
 import { BackupProgressHost } from '@/features/backup/BackupSettings';
 import { PedalHost } from '@/features/pedals/PedalHost';
+import { CrashPromptHost } from '@/features/support/CrashPromptHost';
+import { initBilling } from '@/features/billing/entitlement';
 import { getDb } from '@/data/db/database';
 import { FeedbackHost } from '@/ui/feedback/FeedbackHost';
 import { ThemeProvider, useTheme } from '@/ui/theme';
 
 // Open + migrate the library DB before the first screen renders (synchronous, a few ms).
 getDb();
+// Pro entitlement: cached state is live immediately; Play re-verifies in the background.
+initBilling();
 
 function Navigation() {
   const { colors, isDark } = useTheme();
@@ -41,6 +47,7 @@ function Navigation() {
       <ImportHost />
       <BackupProgressHost />
       <FeedbackHost />
+      <CrashPromptHost />
     </NavigationContainer>
   );
 }

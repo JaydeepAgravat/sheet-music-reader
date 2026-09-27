@@ -12,6 +12,7 @@ import { usePref } from '@/data/prefs';
 import { addToCollection, createCollection, listCollections } from '@/data/repos/collections';
 import { searchLibrary } from '@/data/repos/search';
 import { addToSetlist, createSetlist, listSetlists, searchSetlists } from '@/data/repos/setlists';
+import { requirePro } from '@/features/billing/entitlement';
 import { countScores, listFacets, listScores, restoreScores, setFavorite, trashScores, type Score, type ScoreFilters, type ScoreSort } from '@/data/repos/scores';
 import { haptic } from '@/platform/haptics';
 import { Button, Chip, Dialog, EmptyState, IconButton, Menu, SearchBar, Text, TextField, type Anchor, type MenuItem } from '@/ui/components';
@@ -180,7 +181,7 @@ export function LibraryScreen() {
                 icon: 'playlist' as const,
                 onPress: () => addSelectedToSetlist(sl.id, sl.name),
               })),
-              { key: 'new', label: t('setlists.newSetlistEllipsis'), icon: 'plus' as const, onPress: () => setNewSetlist(true), dividerBefore: true },
+              { key: 'new', label: t('setlists.newSetlistEllipsis'), icon: 'plus' as const, onPress: () => requirePro('setlists') && setNewSetlist(true), dividerBefore: true },
             ]
         : menu.kind === 'collection'
           ? [

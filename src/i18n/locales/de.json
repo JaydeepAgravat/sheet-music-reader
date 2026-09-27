@@ -75,7 +75,12 @@
     "confirmDeleteBody": "Du kannst sie 30 Tage lang aus dem Papierkorb wiederherstellen.",
     "moveToTrash": "In den Papierkorb",
     "noMatchTitle": "Keine Treffer für diese Filter",
-    "noMatchBody": "Entferne einen Filter, um mehr aus deiner Bibliothek zu sehen."
+    "noMatchBody": "Entferne einen Filter, um mehr aus deiner Bibliothek zu sehen.",
+    "badges": {
+      "favorite": "Favorit",
+      "annotated": "Kommentiert",
+      "inSetlist": "In einer Setliste"
+    }
   },
   "setlists": {
     "emptyTitle": "Noch keine Setlisten",
@@ -175,7 +180,11 @@
     "trash": "Papierkorb",
     "library": "Bibliothek",
     "trashHint": "Gelöschte Stücke, 30 Tage aufbewahrt",
-    "backup": "Sicherung"
+    "backup": "Sicherung",
+    "display": "Anzeige",
+    "stylus": "Stylus & Tinte",
+    "languageSection": "Sprache",
+    "pro": "Score Reader Pro"
   },
   "filters": {
     "ORIGINAL": "Original",
@@ -486,5 +495,191 @@
     "showDamaged": "Anzeigen",
     "damagedFilter_one": "{{count, number}} Stück mit fehlender Datei",
     "damagedFilter_other": "{{count, number}} Stücke mit fehlenden Dateien"
+  },
+  "stylus": {
+    "anywhere": "Jederzeit mit dem Stylus schreiben",
+    "anywhereHint": "Der Stift schreibt auf der Seite, ohne den Anmerkungsmodus zu öffnen. Finger blättern weiterhin um.",
+    "fingerHint": "Im Anmerkungsmodus zeichnen Finger weiter, auch nachdem ein Stylus verwendet wurde.",
+    "resetPresets": "Stifte auf Standard zurücksetzen",
+    "resetPresetsHint": "Grafit, Tintenblau, Korrekturrot und gelber Textmarker.",
+    "presetsReset": "Stifte auf Standard zurückgesetzt"
+  },
+  "language": {
+    "title": "App-Sprache",
+    "system": "Wie Gerät ({{name}})"
+  },
+  "billing": {
+    "pro": "Pro",
+    "getPro": "Pro holen",
+    "paywall": {
+      "headline": "Platz für all deine Noten",
+      "reasonImports": "Du hast {{limit}} Stücke hinzugefügt – mit Pro geht es weiter.",
+      "reasonSetlists": "Die kostenlose Version enthält eine Setlist. Mit Pro hast du eine für jeden Auftritt.",
+      "reasonSettings": "Was kostenlos ist, bleibt kostenlos. Pro hebt nur die Grenzen auf.",
+      "pending": "Warte auf die Zahlung – Pro wird freigeschaltet, sobald sie bestätigt ist.",
+      "unavailable": "Käufe sind auf diesem Gerät nicht verfügbar. Für Pro wird Google Play benötigt.",
+      "notFound": "Pro kann gerade nicht gekauft werden. Bitte versuche es später noch einmal.",
+      "failed": "Der Kauf wurde nicht abgeschlossen. Bitte versuche es noch einmal.",
+      "loadingPrice": "Preis wird geladen",
+      "priceUnknown": "Preis nicht verfügbar",
+      "terms": "Einmalig · Alle deine Android-Geräte · Kein Abo",
+      "buy": "Pro freischalten",
+      "buyWithPrice": "Pro freischalten · {{price}}",
+      "keepYours": "Alles, was du schon hinzugefügt hast, bleibt dir – mit oder ohne Pro.",
+      "unlockedTitle": "Pro gehört dir",
+      "unlockedBody": "Danke, dass du eine unabhängige App unterstützt. Ab jetzt ohne Grenzen.",
+      "alreadyProTitle": "Du hast Pro",
+      "alreadyProBody": "Keine Grenzen für Stücke und Setlists. Danke für deine Unterstützung."
+    },
+    "benefits": {
+      "scores": {
+        "title": "Unbegrenzt viele Stücke",
+        "body": "Bring deine ganze Notensammlung mit, egal wie groß sie wird."
+      },
+      "setlists": {
+        "title": "Unbegrenzt viele Setlists",
+        "body": "Eine für jeden Auftritt, jede Probe und jeden Gottesdienst."
+      },
+      "tools": {
+        "title": "Neue Pro-Werkzeuge inklusive",
+        "body": "Geplante Funktionen wie Sprungmarken, Zuschneiden, Stempel und ein Metronom kommen ohne Aufpreis zu Pro."
+      },
+      "devices": {
+        "title": "Alle deine Android-Geräte",
+        "body": "Einmal kaufen, auf jedem Handy oder Tablet mit demselben Google-Konto wiederherstellen."
+      },
+      "offline": {
+        "title": "Weiterhin offline und privat",
+        "body": "Kein Konto, kein Tracking. Deine Noten bleiben auf deinem Gerät."
+      }
+    },
+    "restore": {
+      "action": "Kauf wiederherstellen",
+      "hint": "Pro schon gekauft? Hol es dir auf dieses Gerät zurück.",
+      "restored": "Pro wiederhergestellt. Willkommen zurück.",
+      "alreadyPro": "Pro ist auf diesem Gerät aktiv.",
+      "pending": "Dein Kauf wartet noch auf die Zahlung.",
+      "none": "Für dieses Google-Konto wurde kein Pro-Kauf gefunden.",
+      "unavailable": "Google Play ist auf diesem Gerät nicht verfügbar.",
+      "error": "Google Play ist nicht erreichbar. Bitte versuche es gleich noch einmal."
+    },
+    "settings": {
+      "freeTitle": "Kostenlose Version",
+      "scoresUsed": "Stücke: {{used}} von {{limit}}",
+      "setlistsUsed": "Setlists: {{used}} von {{limit}}",
+      "proTitle": "Pro",
+      "proBody": "Unbegrenzt viele Stücke und Setlists. Danke für deine Unterstützung."
+    },
+    "import": {
+      "overLimit_one": "{{count}} nicht hinzugefügt (Gratis-Limit)",
+      "overLimit_other": "{{count}} nicht hinzugefügt (Gratis-Limit)",
+      "overLimitTitle": "Nicht hinzugefügt – Gratis-Limit",
+      "overLimitHint": "Die kostenlose Version fasst {{limit}} Stücke (Beispiele zählen nicht). Mit Pro kannst du diese hinzufügen – deine anderen Stücke bleiben unberührt."
+    }
+  },
+  "support": {
+    "about": "Über die App",
+    "help": "Hilfe & Feedback",
+    "helpHint": "Pedale, Import, Sicherungen und mehr",
+    "privacy": "Datenschutzerklärung",
+    "privacyHint": "Kein Konto, kein Tracking",
+    "licences": "Lizenzen",
+    "licencesHint": "Schriften, Symbole und Open-Source-Software",
+    "versionLine": "{{name}} {{version}} (Build {{build}})",
+    "shareFailed": "Das Teilen-Menü ließ sich nicht öffnen.",
+    "crash": {
+      "title": "Beim letzten Mal ist etwas schiefgelaufen",
+      "body": "Die App wurde unerwartet beendet. Ein kurzer Bericht wurde auf diesem Gerät gespeichert. Wenn du ihn sendest, hilfst du uns, den Fehler zu beheben – und du siehst genau, was drinsteht, bevor er irgendwohin geht.",
+      "send": "Bericht senden",
+      "notNow": "Jetzt nicht",
+      "subject": "Absturzbericht",
+      "intro": "Die App ist abgestürzt. Hier ist der gespeicherte Bericht. (Falls du noch weißt, was du gerade gemacht hast, schreib es gern dazu.)"
+    },
+    "helpScreen": {
+      "title": "Hilfe & Feedback",
+      "faq": "Häufige Fragen",
+      "pedalsQ": "Mein Pedal blättert nicht um",
+      "pedalsA": "Prüfe, ob das Pedal in den Bluetooth-Einstellungen von Android gekoppelt ist und in einem Tastaturmodus läuft (Pfeiltasten oder Bild auf/ab; wie man umschaltet, steht in der Anleitung). Öffne dann den Pedaltest und drücke jedes Pedal: Die passende Kachel sollte aufleuchten. Wenn eine Taste nichts tut, weise sie unter Einstellungen › Lesen › Pedale zu.",
+      "pedalsAction": "Pedaltest öffnen",
+      "driveQ": "Wie importiere ich aus Google Drive?",
+      "driveA": "Tippe in der Bibliothek auf Importieren › Dateien auswählen und wähle dann im Seitenmenü der Dateiauswahl Drive (oder eine andere Cloud-App). Die Noten werden in die App kopiert und öffnen sich danach auch offline. Viele Stücke auf einmal holst du mit „Ordner importieren“.",
+      "filesQ": "Wo werden meine Noten gespeichert?",
+      "filesA": "Importierte Noten werden in den privaten Speicher der App auf diesem Gerät kopiert. Sie funktionieren weiter, auch wenn die Originaldatei verschoben oder gelöscht wird, und andere Apps sehen sie nicht. Gelöschte Stücke bleiben 30 Tage im Papierkorb.",
+      "backupQ": "Wie schütze ich meine Bibliothek?",
+      "backupA": "Deine Bibliothek gibt es nur auf diesem Gerät. Erstelle ab und zu unter Einstellungen › Sicherung eine Sicherung und speichere sie an einem sicheren Ort, etwa in einem Cloud-Ordner oder auf einem Computer. Eine Datei enthält alles: Noten, Anmerkungen, Setlisten und Sammlungen. Du kannst sie auch auf einem neuen Gerät wiederherstellen.",
+      "stylusQ": "Tipps zum Schreiben mit dem Stift",
+      "stylusA": "Tippe im Reader auf den Stift, um Anmerkungen zu machen. Der Eingabestift schreibt, während deine Finger weiter umblättern und zoomen; mit „Mit dem Finger zeichnen“ geht es auch per Finger. Doppeltippe auf einen Stift, um Farbe und Stärke zu ändern. Jeder Strich lässt sich rückgängig machen. Weitere Optionen findest du unter Einstellungen › Stift & Tinte.",
+      "contact": "Kommst du nicht weiter?",
+      "contactBody": "Schreib uns. Jede Nachricht wird von einem echten Menschen gelesen.",
+      "email": "Support per E-Mail",
+      "emailHint": "Öffnet deine E-Mail-App mit App-Version und Gerätemodell",
+      "emailSubject": "Support-Anfrage",
+      "emailBody": "Was ist passiert, und was wolltest du gerade tun?",
+      "sendLog": "App-Protokoll senden",
+      "sendLogHint": "Letzte App-Aktivität zur Fehlersuche. Du entscheidest, wohin es geht.",
+      "logSubject": "App-Protokoll"
+    },
+    "privacyScreen": {
+      "title": "Datenschutzerklärung",
+      "updated": "Zuletzt aktualisiert am 27. September 2026",
+      "summary": "Kurz gesagt: Deine Noten und Anmerkungen bleiben auf deinem Gerät. Wir erheben keinerlei Daten über dich.",
+      "accountTitle": "Kein Konto",
+      "accountBody": "Es gibt nichts, wofür du dich registrieren musst. Die App weiß nicht, wer du bist.",
+      "analyticsTitle": "Keine Analyse, keine Werbung",
+      "analyticsBody": "Kein Tracking, keine Werbe-IDs, keine Nutzungsstatistiken und kein Fremdcode, der Daten zurückmeldet.",
+      "networkTitle": "Kein Internet, außer für den Kauf von Pro",
+      "networkBody": "Die App hat keinen Internetzugriff. Einzige Ausnahme ist Google Play Billing, wenn du Pro kaufst oder wiederherstellst; das übernimmt die Play Store-App gemäß der Datenschutzerklärung von Google. Deine Zahlungsdaten sehen wir nie.",
+      "deviceTitle": "Alles bleibt auf deinem Gerät",
+      "deviceBody": "Importierte Noten werden in den privaten Speicher der App kopiert. Auch Anmerkungen, Setlisten, Sammlungen und Einstellungen liegen dort. Wenn du die App deinstallierst, werden sie gelöscht.",
+      "filesTitle": "Nur die Dateien, die du auswählst",
+      "filesBody": "Die App kann nur die Dateien und Ordner lesen, die du in der Android-Dateiauswahl auswählst oder mit ihr teilst.",
+      "backupsTitle": "Sicherungen landen dort, wo du sie speicherst",
+      "backupsBody": "Eine Sicherung ist eine einzelne Datei, die du speicherst, wo du willst: auf dem Gerät, einer Speicherkarte oder in einem Cloud-Ordner. Die App schreibt sie nur und liest sie beim Wiederherstellen wieder ein.",
+      "crashTitle": "Absturzberichte nur, wenn du sie sendest",
+      "crashBody": "Stürzt die App ab, wird ein kurzer technischer Bericht auf deinem Gerät gespeichert: App-Version, Gerätemodell, Android-Version, was der Code gerade tat, und ein Protokoll der letzten App-Aktivität. Beim nächsten Start fragt die App, ob du ihn senden möchtest. Er verlässt dein Gerät nur, wenn du ihn selbst teilst, per E-Mail oder mit einer anderen App deiner Wahl. Mit „Jetzt nicht“ wird er gelöscht.",
+      "changesTitle": "Änderungen",
+      "changesBody": "Ändert sich diese Erklärung, steht die neue Fassung in der App und im Play Store-Eintrag, bevor sie gilt.",
+      "contactTitle": "Fragen",
+      "contactBody": "Schreib an {{email}}.",
+      "listing": "Der Play Store-Eintrag der App verlinkt genau diesen Text."
+    },
+    "licencesScreen": {
+      "title": "Lizenzen",
+      "intro": "Diese App verwendet die folgenden Schriften, Symbole und Open-Source-Projekte. Danke an alle, die sie geschaffen haben.",
+      "fonts": "Schriften",
+      "icons": "Symbole",
+      "libraries": "Bibliotheken",
+      "showText": "Zeigt den Lizenztext",
+      "hideText": "Blendet den Lizenztext aus"
+    }
+  },
+  "onboarding": {
+    "skip": "Überspringen",
+    "skipHint": "Direkt zu deiner Bibliothek",
+    "next": "Weiter",
+    "start": "Los geht’s",
+    "startHint": "Öffnet deine Bibliothek, in der schon ein paar Beispielnoten zum Ausprobieren liegen",
+    "stepOf": "Schritt {{step}} von {{count}}",
+    "import": {
+      "title": "Deine Noten, auf diesem Gerät",
+      "body": "Importiere PDFs aus deinen Dateien, einem Cloud-Speicher oder einem ganzen Ordner. Sie bleiben auf diesem Gerät – kein Konto, kein Upload."
+    },
+    "pedal": {
+      "title": "Umblättern ohne Hände",
+      "body": "Tippe an den Seitenrand oder tritt auf ein Blätterpedal. Bluetooth-Pedale funktionieren sofort."
+    },
+    "annotate": {
+      "title": "Auf die Seite schreiben",
+      "body": "Tinte wie mit dem Bleistift – für Fingersätze, Atemzeichen und Erinnerungen. Alles lässt sich rückgängig machen."
+    },
+    "annotateHint": "Tipp: Tippe auf den Stift, um auf die Seite zu schreiben – mit einem Eingabestift schreibst du einfach los.",
+    "annotateHintNoStylus": "Tipp: Tippe auf den Stift, um auf die Seite zu schreiben.",
+    "dismissHint": "Tipp schließen",
+    "licence": {
+      "pd": "Beispielnoten · gemeinfreie Musik. Dieser Notensatz darf frei kopiert und weitergegeben werden (CC0).",
+      "pdArr": "Beispielnoten · gemeinfreie Melodie und gemeinfreier Text. Dieser Satz darf frei kopiert und weitergegeben werden (CC0).",
+      "cc0": "Beispielnoten · für diese App geschrieben. Frei zum Kopieren, Spielen und Arrangieren (CC0).",
+      "sample": "Beispielnoten, die mit der App geliefert werden."
+    }
   }
 }

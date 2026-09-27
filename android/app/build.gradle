@@ -112,6 +112,9 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation("androidx.core:core-splashscreen:1.2.0")
+    // Play Billing (one non-consumable, pro_lifetime). Talks to the Play Store app over IPC.
+    // 8.x: 9.x exists (9.1.0) but 8.3 is the latest of the line we target; see billing/BillingModule.kt.
+    implementation("com.android.billingclient:billing:8.3.0")
 
     testImplementation("junit:junit:4.13.2")
 

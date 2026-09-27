@@ -75,7 +75,12 @@
     "confirmDeleteBody": "Potrai ripristinarli dal cestino per 30 giorni.",
     "moveToTrash": "Sposta nel cestino",
     "noMatchTitle": "Nessuno spartito corrisponde a questi filtri",
-    "noMatchBody": "Prova a togliere un filtro per vedere più spartiti della tua libreria."
+    "noMatchBody": "Prova a togliere un filtro per vedere più spartiti della tua libreria.",
+    "badges": {
+      "favorite": "Preferito",
+      "annotated": "Annotato",
+      "inSetlist": "In una scaletta"
+    }
   },
   "setlists": {
     "emptyTitle": "Ancora nessuna scaletta",
@@ -175,7 +180,11 @@
     "trash": "Cestino",
     "library": "Libreria",
     "trashHint": "Spartiti eliminati, conservati per 30 giorni",
-    "backup": "Backup"
+    "backup": "Backup",
+    "display": "Schermo",
+    "stylus": "Penna e inchiostro",
+    "languageSection": "Lingua",
+    "pro": "Score Reader Pro"
   },
   "filters": {
     "ORIGINAL": "Originale",
@@ -486,5 +495,191 @@
     "showDamaged": "Mostra",
     "damagedFilter_one": "{{count, number}} spartito con un file mancante",
     "damagedFilter_other": "{{count, number}} spartiti con file mancanti"
+  },
+  "stylus": {
+    "anywhere": "Scrivi con la penna in qualsiasi momento",
+    "anywhereHint": "La penna scrive sulla pagina senza aprire la modalità annotazione. Le dita continuano a girare pagina.",
+    "fingerHint": "In modalità annotazione, le dita continuano a disegnare anche dopo aver usato una penna.",
+    "resetPresets": "Ripristina le penne predefinite",
+    "resetPresetsHint": "Grafite, blu inchiostro, rosso correzione ed evidenziatore giallo.",
+    "presetsReset": "Penne ripristinate ai valori predefiniti"
+  },
+  "language": {
+    "title": "Lingua dell’app",
+    "system": "Come il dispositivo ({{name}})"
+  },
+  "billing": {
+    "pro": "Pro",
+    "getPro": "Passa a Pro",
+    "paywall": {
+      "headline": "Spazio per tutta la tua musica",
+      "reasonImports": "Hai aggiunto {{limit}} spartiti: con Pro puoi continuare.",
+      "reasonSetlists": "La versione gratuita include una scaletta. Con Pro ne hai una per ogni concerto.",
+      "reasonSettings": "Ciò che è gratuito resta gratuito. Pro toglie solo i limiti.",
+      "pending": "In attesa del pagamento: Pro si sblocca quando viene approvato.",
+      "unavailable": "Gli acquisti non sono disponibili su questo dispositivo. Per acquistare Pro serve Google Play.",
+      "notFound": "Al momento non è possibile acquistare Pro. Riprova più tardi.",
+      "failed": "L'acquisto non è andato a buon fine. Riprova.",
+      "loadingPrice": "Caricamento del prezzo",
+      "priceUnknown": "Prezzo non disponibile",
+      "terms": "Una tantum · Tutti i tuoi dispositivi Android · Nessun abbonamento",
+      "buy": "Sblocca Pro",
+      "buyWithPrice": "Sblocca Pro · {{price}}",
+      "keepYours": "Tutto ciò che hai già aggiunto resta tuo, con o senza Pro.",
+      "unlockedTitle": "Pro è tuo",
+      "unlockedBody": "Grazie per sostenere un'app indipendente. Da ora in poi, nessun limite.",
+      "alreadyProTitle": "Hai Pro",
+      "alreadyProBody": "Nessun limite per spartiti e scalette. Grazie per il tuo sostegno."
+    },
+    "benefits": {
+      "scores": {
+        "title": "Spartiti illimitati",
+        "body": "Porta tutta la tua libreria, per quanto grande diventi."
+      },
+      "setlists": {
+        "title": "Scalette illimitate",
+        "body": "Una per ogni concerto, prova e funzione."
+      },
+      "tools": {
+        "title": "Nuovi strumenti Pro inclusi",
+        "body": "Le novità previste, come collegamenti, ritaglio, timbri e metronomo, arriveranno in Pro senza costi aggiuntivi."
+      },
+      "devices": {
+        "title": "Tutti i tuoi dispositivi Android",
+        "body": "Acquista una volta e ripristina su qualsiasi telefono o tablet con lo stesso account Google."
+      },
+      "offline": {
+        "title": "Sempre offline e privato",
+        "body": "Nessun account, nessun tracciamento. I tuoi spartiti restano sul tuo dispositivo."
+      }
+    },
+    "restore": {
+      "action": "Ripristina acquisto",
+      "hint": "Hai già acquistato Pro? Recuperalo su questo dispositivo.",
+      "restored": "Pro ripristinato. Bentornato.",
+      "alreadyPro": "Pro è attivo su questo dispositivo.",
+      "pending": "Il tuo acquisto è ancora in attesa di pagamento.",
+      "none": "Nessun acquisto Pro trovato per questo account Google.",
+      "unavailable": "Google Play non è disponibile su questo dispositivo.",
+      "error": "Impossibile contattare Google Play. Riprova tra poco."
+    },
+    "settings": {
+      "freeTitle": "Versione gratuita",
+      "scoresUsed": "Spartiti: {{used}} di {{limit}}",
+      "setlistsUsed": "Scalette: {{used}} di {{limit}}",
+      "proTitle": "Pro",
+      "proBody": "Spartiti e scalette illimitati. Grazie per il tuo sostegno."
+    },
+    "import": {
+      "overLimit_one": "{{count}} non aggiunto (limite gratuito)",
+      "overLimit_other": "{{count}} non aggiunti (limite gratuito)",
+      "overLimitTitle": "Non aggiunti: limite gratuito",
+      "overLimitHint": "La versione gratuita contiene {{limit}} spartiti (gli esempi non contano). Passa a Pro per aggiungere questi; gli altri spartiti restano invariati."
+    }
+  },
+  "support": {
+    "about": "Informazioni",
+    "help": "Aiuto e feedback",
+    "helpHint": "Pedali, importazione, backup e altro",
+    "privacy": "Informativa sulla privacy",
+    "privacyHint": "Nessun account, nessun tracciamento",
+    "licences": "Licenze",
+    "licencesHint": "Font, icone e software open source",
+    "versionLine": "{{name}} {{version}} (build {{build}})",
+    "shareFailed": "Impossibile aprire il menu di condivisione.",
+    "crash": {
+      "title": "L’ultima volta qualcosa è andato storto",
+      "body": "L’app si è chiusa inaspettatamente. Su questo dispositivo è stato salvato un breve rapporto. Inviarlo ci aiuta a risolvere il problema, e vedrai esattamente cosa contiene prima che vada da qualche parte.",
+      "send": "Invia rapporto",
+      "notNow": "Non ora",
+      "subject": "Rapporto di arresto anomalo",
+      "intro": "L’app si è arrestata. Ecco il rapporto che ha salvato. (Se ricordi cosa stavi facendo, aggiungilo qui.)"
+    },
+    "helpScreen": {
+      "title": "Aiuto e feedback",
+      "faq": "Domande frequenti",
+      "pedalsQ": "Il pedale non gira le pagine",
+      "pedalsA": "Controlla che il pedale sia associato nelle impostazioni Bluetooth di Android e impostato in una modalità tastiera (frecce o Pag su/Pag giù; il manuale spiega come cambiarla). Poi apri il test dei pedali e premi ogni pedale: il riquadro corrispondente dovrebbe illuminarsi. Se un tasto non fa nulla, assegnalo in Impostazioni › Lettura › Pedali.",
+      "pedalsAction": "Apri il test dei pedali",
+      "driveQ": "Come importo da Google Drive?",
+      "driveA": "Nella libreria, tocca Importa › Scegli file, poi scegli Drive (o un’altra app cloud) nel menu laterale del selettore di file. Lo spartito viene copiato nell’app, quindi in seguito si apre anche offline. Per aggiungerne molti insieme, usa Importa una cartella.",
+      "filesQ": "Dove sono salvati i miei spartiti?",
+      "filesA": "Gli spartiti importati vengono copiati nella memoria privata dell’app su questo dispositivo. Continuano a funzionare anche se il file originale viene spostato o eliminato, e le altre app non possono vederli. Gli spartiti eliminati restano nel cestino per 30 giorni.",
+      "backupQ": "Come metto al sicuro la mia libreria?",
+      "backupA": "La tua libreria esiste solo su questo dispositivo. Ogni tanto fai un backup in Impostazioni › Backup e salvalo in un posto sicuro, come una cartella cloud o un computer. Un unico file contiene tutto: spartiti, annotazioni, scalette e raccolte. Puoi ripristinarlo anche su un nuovo dispositivo.",
+      "stylusQ": "Consigli per scrivere con il pennino",
+      "stylusA": "Tocca la penna nel lettore per annotare. Il pennino scrive mentre le dita continuano a girare pagina e a zoomare; attiva «Disegna con il dito» per usare il dito. Tocca due volte una penna per cambiarne colore e spessore. Ogni tratto si può annullare. Trovi altre opzioni in Impostazioni › Pennino e inchiostro.",
+      "contact": "Ancora bloccato?",
+      "contactBody": "Scrivici. Ogni messaggio viene letto da una persona vera.",
+      "email": "Scrivi all’assistenza",
+      "emailHint": "Apre la tua app email con la versione dell’app e il modello del dispositivo",
+      "emailSubject": "Richiesta di assistenza",
+      "emailBody": "Cosa è successo e cosa stavi cercando di fare?",
+      "sendLog": "Invia registro dell’app",
+      "sendLogHint": "Attività recente dell’app per la diagnosi. Scegli tu dove inviarlo.",
+      "logSubject": "Registro dell’app"
+    },
+    "privacyScreen": {
+      "title": "Informativa sulla privacy",
+      "updated": "Ultimo aggiornamento: 27 settembre 2026",
+      "summary": "In breve: la tua musica e le tue note restano sul tuo dispositivo. Non raccogliamo nulla su di te.",
+      "accountTitle": "Nessun account",
+      "accountBody": "Non c’è nessuna registrazione. L’app non sa chi sei.",
+      "analyticsTitle": "Niente analisi, niente pubblicità",
+      "analyticsBody": "Nessun tracciamento, nessun ID pubblicitario, nessuna statistica d’uso e nessun codice di terze parti che invia dati.",
+      "networkTitle": "Niente internet, tranne per acquistare Pro",
+      "networkBody": "L’app non ha accesso a internet. L’unica eccezione è Google Play Billing quando acquisti o ripristini Pro, gestito dall’app Play Store secondo l’informativa sulla privacy di Google. Non vediamo mai i tuoi dati di pagamento.",
+      "deviceTitle": "Tutto resta sul tuo dispositivo",
+      "deviceBody": "Gli spartiti che importi vengono copiati nella memoria privata dell’app. Anche annotazioni, scalette, raccolte e impostazioni sono salvate lì. Disinstallando l’app vengono eliminati.",
+      "filesTitle": "Solo i file che scegli",
+      "filesBody": "L’app può leggere solo i file e le cartelle che scegli nel selettore di file di Android o che condividi con essa.",
+      "backupsTitle": "I backup vanno dove li salvi tu",
+      "backupsBody": "Un backup è un singolo file salvato dove vuoi: sul dispositivo, su una scheda di memoria o in una cartella cloud. L’app si limita a scriverlo e a rileggerlo durante il ripristino.",
+      "crashTitle": "Rapporti sugli arresti solo se li invii",
+      "crashBody": "Se l’app si arresta, sul tuo dispositivo viene conservato un breve rapporto tecnico: versione dell’app, modello del dispositivo, versione di Android, cosa stava facendo il codice e un registro dell’attività recente dell’app. Al successivo avvio, l’app ti chiede se vuoi inviarlo. Lascia il dispositivo solo se lo condividi tu, via email o con un’altra app a tua scelta. «Non ora» lo elimina.",
+      "changesTitle": "Modifiche",
+      "changesBody": "Se questa informativa cambia, la nuova versione sarà nell’app e nella scheda del Play Store prima di entrare in vigore.",
+      "contactTitle": "Domande",
+      "contactBody": "Scrivi a {{email}}.",
+      "listing": "La scheda dell’app sul Play Store rimanda a questo stesso testo."
+    },
+    "licencesScreen": {
+      "title": "Licenze",
+      "intro": "Questa app è realizzata con questi font, icone e progetti open source. Grazie a tutte le persone che li hanno creati.",
+      "fonts": "Font",
+      "icons": "Icone",
+      "libraries": "Librerie",
+      "showText": "Mostra il testo della licenza",
+      "hideText": "Nasconde il testo della licenza"
+    }
+  },
+  "onboarding": {
+    "skip": "Salta",
+    "skipHint": "Vai direttamente alla tua libreria",
+    "next": "Avanti",
+    "start": "Inizia",
+    "startHint": "Apre la tua libreria, dove trovi alcuni spartiti di esempio da provare",
+    "stepOf": "Passo {{step}} di {{count}}",
+    "import": {
+      "title": "La tua musica, su questo dispositivo",
+      "body": "Importa PDF dai tuoi file, da un cloud o da un’intera cartella. Restano su questo dispositivo: nessun account, niente caricato online."
+    },
+    "pedal": {
+      "title": "Gira pagina senza mani",
+      "body": "Tocca il bordo della pagina o premi un pedale voltapagine. I pedali Bluetooth funzionano subito."
+    },
+    "annotate": {
+      "title": "Scrivi sullo spartito",
+      "body": "Un inchiostro come di matita per diteggiature, respiri e promemoria. Tutto si può annullare."
+    },
+    "annotateHint": "Suggerimento: tocca la matita per scrivere sulla pagina; con una penna, scrivi e basta.",
+    "annotateHintNoStylus": "Suggerimento: tocca la matita per scrivere sulla pagina.",
+    "dismissHint": "Chiudi suggerimento",
+    "licence": {
+      "pd": "Spartito di esempio · musica di pubblico dominio. Questa incisione si può copiare e condividere liberamente (CC0).",
+      "pdArr": "Spartito di esempio · melodia e testo di pubblico dominio. Questo arrangiamento si può copiare e condividere liberamente (CC0).",
+      "cc0": "Spartito di esempio · scritto per questa app. Libero da copiare, suonare e arrangiare (CC0).",
+      "sample": "Spartito di esempio incluso nell’app."
+    }
   }
 }

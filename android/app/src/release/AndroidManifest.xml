@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- The app is fully offline. Play Billing talks to the Play Store app over IPC; the billing
+         library's datatransport dependency merges INTERNET in for its own diagnostics, which we
+         don't want (no data leaves the device). ACCESS_NETWORK_STATE stays: the library's job
+         scheduler needs it on API 34+. Verify purchases with a license tester on release builds. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+</manifest>

@@ -75,7 +75,12 @@
     "confirmDeleteBody": "Puedes restaurarlas desde la papelera durante 30 días.",
     "moveToTrash": "Mover a la papelera",
     "noMatchTitle": "Nada coincide con estos filtros",
-    "noMatchBody": "Quita algún filtro para ver más de tu biblioteca."
+    "noMatchBody": "Quita algún filtro para ver más de tu biblioteca.",
+    "badges": {
+      "favorite": "Favorita",
+      "annotated": "Anotado",
+      "inSetlist": "En un repertorio"
+    }
   },
   "setlists": {
     "emptyTitle": "Aún no hay repertorios",
@@ -175,7 +180,11 @@
     "trash": "Papelera",
     "library": "Biblioteca",
     "trashHint": "Partituras eliminadas, guardadas 30 días",
-    "backup": "Copia de seguridad"
+    "backup": "Copia de seguridad",
+    "display": "Pantalla",
+    "stylus": "Lápiz óptico y tinta",
+    "languageSection": "Idioma",
+    "pro": "Score Reader Pro"
   },
   "filters": {
     "ORIGINAL": "Original",
@@ -486,5 +495,191 @@
     "showDamaged": "Mostrar",
     "damagedFilter_one": "{{count, number}} partitura con un archivo que falta",
     "damagedFilter_other": "{{count, number}} partituras con archivos que faltan"
+  },
+  "stylus": {
+    "anywhere": "Escribe con el lápiz óptico en cualquier momento",
+    "anywhereHint": "El lápiz escribe en la página sin abrir el modo de anotación. Los dedos siguen pasando página.",
+    "fingerHint": "En el modo de anotación, los dedos siguen dibujando incluso después de usar un lápiz óptico.",
+    "resetPresets": "Restablecer lápices a los valores predeterminados",
+    "resetPresetsHint": "Grafito, azul tinta, rojo corrector y resaltador amarillo.",
+    "presetsReset": "Lápices restablecidos a los valores predeterminados"
+  },
+  "language": {
+    "title": "Idioma de la app",
+    "system": "Igual que el dispositivo ({{name}})"
+  },
+  "billing": {
+    "pro": "Pro",
+    "getPro": "Obtener Pro",
+    "paywall": {
+      "headline": "Espacio para toda tu música",
+      "reasonImports": "Has añadido {{limit}} partituras: con Pro puedes seguir sumando.",
+      "reasonSetlists": "La versión gratuita incluye un repertorio. Con Pro tendrás uno para cada concierto.",
+      "reasonSettings": "Lo gratuito sigue siendo gratuito. Pro solo quita los límites.",
+      "pending": "Esperando el pago: Pro se desbloquea cuando se apruebe.",
+      "unavailable": "Las compras no están disponibles en este dispositivo. Para comprar Pro se necesita Google Play.",
+      "notFound": "Ahora mismo no se puede comprar Pro. Inténtalo más tarde.",
+      "failed": "La compra no se completó. Inténtalo de nuevo.",
+      "loadingPrice": "Cargando precio",
+      "priceUnknown": "Precio no disponible",
+      "terms": "Pago único · Todos tus dispositivos Android · Sin suscripción",
+      "buy": "Desbloquear Pro",
+      "buyWithPrice": "Desbloquear Pro · {{price}}",
+      "keepYours": "Todo lo que ya has añadido sigue siendo tuyo, con o sin Pro.",
+      "unlockedTitle": "Ya tienes Pro",
+      "unlockedBody": "Gracias por apoyar una app independiente. A partir de ahora, sin límites.",
+      "alreadyProTitle": "Tienes Pro",
+      "alreadyProBody": "Sin límites de partituras ni repertorios. Gracias por tu apoyo."
+    },
+    "benefits": {
+      "scores": {
+        "title": "Partituras ilimitadas",
+        "body": "Trae toda tu biblioteca, por grande que sea."
+      },
+      "setlists": {
+        "title": "Repertorios ilimitados",
+        "body": "Uno para cada concierto, ensayo y celebración."
+      },
+      "tools": {
+        "title": "Nuevas herramientas Pro incluidas",
+        "body": "Las funciones previstas, como enlaces, recorte, sellos y metrónomo, llegarán a Pro sin coste adicional."
+      },
+      "devices": {
+        "title": "Todos tus dispositivos Android",
+        "body": "Compra una vez y restaura en cualquier móvil o tableta con la misma cuenta de Google."
+      },
+      "offline": {
+        "title": "Sin conexión y privado",
+        "body": "Sin cuenta ni rastreo. Tus partituras se quedan en tu dispositivo."
+      }
+    },
+    "restore": {
+      "action": "Restaurar compra",
+      "hint": "¿Ya compraste Pro? Recupéralo en este dispositivo.",
+      "restored": "Pro restaurado. Bienvenido de nuevo.",
+      "alreadyPro": "Pro está activo en este dispositivo.",
+      "pending": "Tu compra sigue pendiente de pago.",
+      "none": "No hay ninguna compra de Pro en esta cuenta de Google.",
+      "unavailable": "Google Play no está disponible en este dispositivo.",
+      "error": "No se pudo conectar con Google Play. Inténtalo de nuevo en un momento."
+    },
+    "settings": {
+      "freeTitle": "Versión gratuita",
+      "scoresUsed": "Partituras: {{used}} de {{limit}}",
+      "setlistsUsed": "Repertorios: {{used}} de {{limit}}",
+      "proTitle": "Pro",
+      "proBody": "Partituras y repertorios ilimitados. Gracias por tu apoyo."
+    },
+    "import": {
+      "overLimit_one": "{{count}} sin añadir (límite gratuito)",
+      "overLimit_other": "{{count}} sin añadir (límite gratuito)",
+      "overLimitTitle": "Sin añadir: límite gratuito",
+      "overLimitHint": "La versión gratuita admite {{limit}} partituras (los ejemplos no cuentan). Obtén Pro para añadir estas; tus otras partituras no cambian."
+    }
+  },
+  "support": {
+    "about": "Acerca de",
+    "help": "Ayuda y comentarios",
+    "helpHint": "Pedales, importación, copias de seguridad y más",
+    "privacy": "Política de privacidad",
+    "privacyHint": "Sin cuenta, sin rastreo",
+    "licences": "Licencias",
+    "licencesHint": "Fuentes, iconos y software de código abierto",
+    "versionLine": "{{name}} {{version}} (compilación {{build}})",
+    "shareFailed": "No se pudo abrir el menú para compartir.",
+    "crash": {
+      "title": "Algo salió mal la última vez",
+      "body": "La app se cerró inesperadamente. Se guardó un breve informe en este dispositivo. Enviarlo nos ayuda a corregir el problema, y verás exactamente lo que contiene antes de que salga a ningún sitio.",
+      "send": "Enviar informe",
+      "notNow": "Ahora no",
+      "subject": "Informe de error",
+      "intro": "La app se cerró por un error. Este es el informe que guardó. (Si recuerdas qué estabas haciendo, añádelo aquí.)"
+    },
+    "helpScreen": {
+      "title": "Ayuda y comentarios",
+      "faq": "Preguntas frecuentes",
+      "pedalsQ": "Mi pedal no pasa las páginas",
+      "pedalsA": "Comprueba que el pedal esté vinculado en los ajustes de Bluetooth de Android y en un modo de teclado (flechas o Re Pág/Av Pág; el manual explica cómo cambiarlo). Luego abre la prueba de pedales y pulsa cada pedal: la casilla correspondiente debería iluminarse. Si una tecla no hace nada, asígnala en Ajustes › Lectura › Pedales.",
+      "pedalsAction": "Abrir prueba de pedales",
+      "driveQ": "¿Cómo importo desde Google Drive?",
+      "driveA": "En la biblioteca, toca Importar › Elegir archivos y luego elige Drive (u otra app en la nube) en el menú lateral del selector de archivos. La partitura se copia en la app, así que después se abre sin conexión. Para traer muchas a la vez, usa Importar una carpeta.",
+      "filesQ": "¿Dónde se guardan mis partituras?",
+      "filesA": "Las partituras importadas se copian en el almacenamiento privado de la app en este dispositivo. Siguen funcionando aunque muevas o borres el archivo original, y otras apps no pueden verlas. Las partituras eliminadas se quedan 30 días en la papelera.",
+      "backupQ": "¿Cómo protejo mi biblioteca?",
+      "backupA": "Tu biblioteca solo existe en este dispositivo. Haz una copia de seguridad de vez en cuando en Ajustes › Copia de seguridad y guárdala en un lugar seguro, como una carpeta en la nube o un ordenador. Un solo archivo lo contiene todo: partituras, anotaciones, setlists y colecciones. También puedes restaurarla en un dispositivo nuevo.",
+      "stylusQ": "Consejos para escribir con lápiz",
+      "stylusA": "Toca el lápiz en el lector para anotar. El lápiz óptico escribe mientras tus dedos siguen pasando páginas y haciendo zoom; activa «Dibujar con el dedo» para usar el dedo. Toca dos veces un lápiz para cambiar su color y grosor. Cada trazo se puede deshacer. Tienes más opciones en Ajustes › Lápiz y tinta.",
+      "contact": "¿Sigues atascado?",
+      "contactBody": "Escríbenos. Una persona de verdad lee cada mensaje.",
+      "email": "Escribir al soporte",
+      "emailHint": "Abre tu app de correo con la versión de la app y el modelo del dispositivo",
+      "emailSubject": "Solicitud de soporte",
+      "emailBody": "¿Qué pasó y qué intentabas hacer?",
+      "sendLog": "Enviar registro de la app",
+      "sendLogHint": "Actividad reciente de la app para diagnosticar problemas. Tú eliges adónde va.",
+      "logSubject": "Registro de la app"
+    },
+    "privacyScreen": {
+      "title": "Política de privacidad",
+      "updated": "Última actualización: 27 de septiembre de 2026",
+      "summary": "En resumen: tu música y tus notas se quedan en tu dispositivo. No recopilamos nada sobre ti.",
+      "accountTitle": "Sin cuenta",
+      "accountBody": "No hay que registrarse. La app no sabe quién eres.",
+      "analyticsTitle": "Sin analíticas ni anuncios",
+      "analyticsBody": "Sin rastreo, sin identificadores publicitarios, sin estadísticas de uso y sin código de terceros que envíe datos.",
+      "networkTitle": "Sin internet, salvo para comprar Pro",
+      "networkBody": "La app no tiene acceso a internet. La única excepción es Google Play Billing cuando compras o restauras Pro, y de eso se encarga la app de Play Store según la política de privacidad de Google. Nunca vemos tus datos de pago.",
+      "deviceTitle": "Todo se queda en tu dispositivo",
+      "deviceBody": "Las partituras que importas se copian en el almacenamiento privado de la app. Las anotaciones, setlists, colecciones y ajustes también se guardan ahí. Si desinstalas la app, se eliminan.",
+      "filesTitle": "Solo los archivos que eliges",
+      "filesBody": "La app solo puede leer los archivos y carpetas que eliges en el selector de archivos de Android o que compartes con ella.",
+      "backupsTitle": "Las copias van donde tú las guardas",
+      "backupsBody": "Una copia de seguridad es un único archivo que guardas donde quieras: en el dispositivo, en una tarjeta de memoria o en una carpeta en la nube. La app solo lo escribe y lo vuelve a leer al restaurar.",
+      "crashTitle": "Informes de errores solo si los envías",
+      "crashBody": "Si la app se cierra por un error, se guarda en tu dispositivo un breve informe técnico: versión de la app, modelo del dispositivo, versión de Android, qué estaba haciendo el código y un registro de la actividad reciente de la app. La próxima vez, la app te pregunta si quieres enviarlo. Solo sale de tu dispositivo si lo compartes tú, por correo o con otra app que elijas. Con «Ahora no» se elimina.",
+      "changesTitle": "Cambios",
+      "changesBody": "Si esta política cambia, la nueva versión estará en la app y en la ficha de Play Store antes de aplicarse.",
+      "contactTitle": "Preguntas",
+      "contactBody": "Escribe a {{email}}.",
+      "listing": "La ficha de la app en Play Store enlaza este mismo texto."
+    },
+    "licencesScreen": {
+      "title": "Licencias",
+      "intro": "Esta app está hecha con estas fuentes, iconos y proyectos de código abierto. Gracias a todas las personas que los crearon.",
+      "fonts": "Fuentes",
+      "icons": "Iconos",
+      "libraries": "Bibliotecas",
+      "showText": "Muestra el texto de la licencia",
+      "hideText": "Oculta el texto de la licencia"
+    }
+  },
+  "onboarding": {
+    "skip": "Omitir",
+    "skipHint": "Ve directamente a tu biblioteca",
+    "next": "Siguiente",
+    "start": "Empezar",
+    "startHint": "Abre tu biblioteca, donde tienes unas partituras de ejemplo para probar",
+    "stepOf": "Paso {{step}} de {{count}}",
+    "import": {
+      "title": "Tu música, en este dispositivo",
+      "body": "Importa PDF desde tus archivos, una nube o una carpeta entera. Se quedan en este dispositivo: sin cuenta y sin subir nada."
+    },
+    "pedal": {
+      "title": "Pasa páginas sin manos",
+      "body": "Toca el borde de la página o pisa un pedal pasapáginas. Los pedales Bluetooth funcionan al instante."
+    },
+    "annotate": {
+      "title": "Escribe en la partitura",
+      "body": "Tinta como de lápiz para digitaciones, respiraciones y recordatorios. Todo se puede deshacer."
+    },
+    "annotateHint": "Consejo: toca el lápiz para escribir en la página; con un lápiz óptico, escribe directamente.",
+    "annotateHintNoStylus": "Consejo: toca el lápiz para escribir en la página.",
+    "dismissHint": "Cerrar consejo",
+    "licence": {
+      "pd": "Partitura de ejemplo · música de dominio público. Esta edición se puede copiar y compartir libremente (CC0).",
+      "pdArr": "Partitura de ejemplo · melodía y letra de dominio público. Este arreglo se puede copiar y compartir libremente (CC0).",
+      "cc0": "Partitura de ejemplo · escrita para esta app. Libre para copiar, tocar y arreglar (CC0).",
+      "sample": "Partitura de ejemplo incluida con la app."
+    }
   }
 }

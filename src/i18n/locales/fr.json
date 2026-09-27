@@ -75,7 +75,12 @@
     "confirmDeleteBody": "Vous pourrez les restaurer depuis la corbeille pendant 30 jours.",
     "moveToTrash": "Placer dans la corbeille",
     "noMatchTitle": "Aucune partition ne correspond à ces filtres",
-    "noMatchBody": "Retirez un filtre pour voir davantage de partitions."
+    "noMatchBody": "Retirez un filtre pour voir davantage de partitions.",
+    "badges": {
+      "favorite": "Favori",
+      "annotated": "Annoté",
+      "inSetlist": "Dans un programme"
+    }
   },
   "setlists": {
     "emptyTitle": "Aucun programme pour l’instant",
@@ -175,7 +180,11 @@
     "trash": "Corbeille",
     "library": "Bibliothèque",
     "trashHint": "Partitions supprimées, conservées 30 jours",
-    "backup": "Sauvegarde"
+    "backup": "Sauvegarde",
+    "display": "Affichage",
+    "stylus": "Stylet et encre",
+    "languageSection": "Langue",
+    "pro": "Score Reader Pro"
   },
   "filters": {
     "ORIGINAL": "Original",
@@ -486,5 +495,191 @@
     "showDamaged": "Afficher",
     "damagedFilter_one": "{{count, number}} partition avec un fichier manquant",
     "damagedFilter_other": "{{count, number}} partitions avec des fichiers manquants"
+  },
+  "stylus": {
+    "anywhere": "Écrire avec le stylet à tout moment",
+    "anywhereHint": "Le stylo écrit sur la page sans ouvrir le mode annotation. Les doigts continuent de tourner les pages.",
+    "fingerHint": "En mode annotation, les doigts continuent de dessiner même après avoir utilisé un stylet.",
+    "resetPresets": "Rétablir les stylos par défaut",
+    "resetPresetsHint": "Graphite, bleu encre, rouge correcteur et surligneur jaune.",
+    "presetsReset": "Stylos rétablis par défaut"
+  },
+  "language": {
+    "title": "Langue de l’app",
+    "system": "Comme l’appareil ({{name}})"
+  },
+  "billing": {
+    "pro": "Pro",
+    "getPro": "Passer à Pro",
+    "paywall": {
+      "headline": "De la place pour toute votre musique",
+      "reasonImports": "Vous avez ajouté {{limit}} partitions : avec Pro, continuez sans limite.",
+      "reasonSetlists": "La version gratuite comprend une setlist. Avec Pro, une pour chaque concert.",
+      "reasonSettings": "Ce qui est gratuit le reste. Pro supprime simplement les limites.",
+      "pending": "En attente du paiement : Pro sera débloqué dès sa validation.",
+      "unavailable": "Les achats ne sont pas disponibles sur cet appareil. Google Play est nécessaire pour acheter Pro.",
+      "notFound": "Pro ne peut pas être acheté pour le moment. Réessayez plus tard.",
+      "failed": "L'achat n'a pas abouti. Veuillez réessayer.",
+      "loadingPrice": "Chargement du prix",
+      "priceUnknown": "Prix indisponible",
+      "terms": "Achat unique · Tous vos appareils Android · Sans abonnement",
+      "buy": "Débloquer Pro",
+      "buyWithPrice": "Débloquer Pro · {{price}}",
+      "keepYours": "Tout ce que vous avez déjà ajouté reste à vous, avec ou sans Pro.",
+      "unlockedTitle": "Pro est à vous",
+      "unlockedBody": "Merci de soutenir une app indépendante. Désormais, plus aucune limite.",
+      "alreadyProTitle": "Vous avez Pro",
+      "alreadyProBody": "Aucune limite de partitions ni de setlists. Merci pour votre soutien."
+    },
+    "benefits": {
+      "scores": {
+        "title": "Partitions illimitées",
+        "body": "Importez toute votre bibliothèque, quelle que soit sa taille."
+      },
+      "setlists": {
+        "title": "Setlists illimitées",
+        "body": "Une pour chaque concert, répétition ou office."
+      },
+      "tools": {
+        "title": "Nouveaux outils Pro inclus",
+        "body": "Les ajouts prévus, comme les liens, le recadrage, les tampons et un métronome, arriveront dans Pro sans surcoût."
+      },
+      "devices": {
+        "title": "Tous vos appareils Android",
+        "body": "Achetez une fois, restaurez sur n'importe quel téléphone ou tablette avec le même compte Google."
+      },
+      "offline": {
+        "title": "Toujours hors ligne et privé",
+        "body": "Pas de compte, pas de pistage. Vos partitions restent sur votre appareil."
+      }
+    },
+    "restore": {
+      "action": "Restaurer l'achat",
+      "hint": "Vous avez déjà acheté Pro ? Récupérez-le sur cet appareil.",
+      "restored": "Pro restauré. Bon retour parmi nous.",
+      "alreadyPro": "Pro est actif sur cet appareil.",
+      "pending": "Votre achat est toujours en attente de paiement.",
+      "none": "Aucun achat Pro trouvé pour ce compte Google.",
+      "unavailable": "Google Play n'est pas disponible sur cet appareil.",
+      "error": "Impossible de joindre Google Play. Réessayez dans un instant."
+    },
+    "settings": {
+      "freeTitle": "Version gratuite",
+      "scoresUsed": "Partitions : {{used}} sur {{limit}}",
+      "setlistsUsed": "Setlists : {{used}} sur {{limit}}",
+      "proTitle": "Pro",
+      "proBody": "Partitions et setlists illimitées. Merci pour votre soutien."
+    },
+    "import": {
+      "overLimit_one": "{{count}} non ajoutée (limite gratuite)",
+      "overLimit_other": "{{count}} non ajoutées (limite gratuite)",
+      "overLimitTitle": "Non ajoutées : limite gratuite",
+      "overLimitHint": "La version gratuite contient {{limit}} partitions (les exemples ne comptent pas). Passez à Pro pour ajouter celles-ci ; vos autres partitions ne changent pas."
+    }
+  },
+  "support": {
+    "about": "À propos",
+    "help": "Aide et commentaires",
+    "helpHint": "Pédales, importation, sauvegardes et plus",
+    "privacy": "Politique de confidentialité",
+    "privacyHint": "Aucun compte, aucun suivi",
+    "licences": "Licences",
+    "licencesHint": "Polices, icônes et logiciels libres",
+    "versionLine": "{{name}} {{version}} (build {{build}})",
+    "shareFailed": "Impossible d’ouvrir le menu de partage.",
+    "crash": {
+      "title": "Un problème est survenu la dernière fois",
+      "body": "L’app s’est fermée de façon inattendue. Un court rapport a été enregistré sur cet appareil. En l’envoyant, vous nous aidez à corriger le problème, et vous verrez exactement son contenu avant qu’il ne parte.",
+      "send": "Envoyer le rapport",
+      "notNow": "Plus tard",
+      "subject": "Rapport de plantage",
+      "intro": "L’app a planté. Voici le rapport qu’elle a enregistré. (Si vous vous souvenez de ce que vous faisiez, ajoutez-le ici.)"
+    },
+    "helpScreen": {
+      "title": "Aide et commentaires",
+      "faq": "Questions fréquentes",
+      "pedalsQ": "Ma pédale ne tourne pas les pages",
+      "pedalsA": "Vérifiez que la pédale est associée dans les paramètres Bluetooth d’Android et réglée sur un mode clavier (flèches ou Page préc./suiv. ; son manuel explique comment changer). Ouvrez ensuite le test des pédales et appuyez sur chaque pédale : la vignette correspondante doit s’allumer. Si une touche ne fait rien, attribuez-la dans Réglages › Lecture › Pédales.",
+      "pedalsAction": "Ouvrir le test des pédales",
+      "driveQ": "Comment importer depuis Google Drive ?",
+      "driveA": "Dans la bibliothèque, touchez Importer › Choisir des fichiers, puis choisissez Drive (ou une autre app cloud) dans le menu latéral du sélecteur de fichiers. La partition est copiée dans l’app et s’ouvre ensuite hors ligne. Pour en ajouter beaucoup d’un coup, utilisez Importer un dossier.",
+      "filesQ": "Où sont stockées mes partitions ?",
+      "filesA": "Les partitions importées sont copiées dans le stockage privé de l’app sur cet appareil. Elles restent utilisables même si le fichier d’origine est déplacé ou supprimé, et les autres apps ne peuvent pas les voir. Les partitions supprimées restent 30 jours dans la corbeille.",
+      "backupQ": "Comment protéger ma bibliothèque ?",
+      "backupA": "Votre bibliothèque n’existe que sur cet appareil. Faites de temps en temps une sauvegarde dans Réglages › Sauvegarde et gardez-la en lieu sûr, par exemple dans un dossier cloud ou sur un ordinateur. Un seul fichier contient tout : partitions, annotations, setlists et collections. Vous pouvez aussi la restaurer sur un nouvel appareil.",
+      "stylusQ": "Conseils pour écrire au stylet",
+      "stylusA": "Touchez le stylo dans le lecteur pour annoter. Le stylet écrit pendant que vos doigts continuent de tourner les pages et de zoomer ; activez « Dessiner avec le doigt » pour utiliser le doigt. Touchez deux fois un stylo pour changer sa couleur et son épaisseur. Chaque trait peut être annulé. D’autres options se trouvent dans Réglages › Stylet et encre.",
+      "contact": "Toujours bloqué ?",
+      "contactBody": "Écrivez-nous. Chaque message est lu par une vraie personne.",
+      "email": "Écrire au support",
+      "emailHint": "Ouvre votre app de messagerie avec la version de l’app et le modèle de l’appareil",
+      "emailSubject": "Demande d’assistance",
+      "emailBody": "Que s’est-il passé, et qu’essayiez-vous de faire ?",
+      "sendLog": "Envoyer le journal de l’app",
+      "sendLogHint": "Activité récente de l’app pour le dépannage. Vous choisissez où il part.",
+      "logSubject": "Journal de l’app"
+    },
+    "privacyScreen": {
+      "title": "Politique de confidentialité",
+      "updated": "Dernière mise à jour : 27 septembre 2026",
+      "summary": "En bref : votre musique et vos notes restent sur votre appareil. Nous ne collectons rien sur vous.",
+      "accountTitle": "Aucun compte",
+      "accountBody": "Il n’y a rien à créer. L’app ne sait pas qui vous êtes.",
+      "analyticsTitle": "Ni statistiques, ni publicité",
+      "analyticsBody": "Aucun suivi, aucun identifiant publicitaire, aucune statistique d’utilisation et aucun code tiers qui envoie des données.",
+      "networkTitle": "Pas d’internet, sauf pour acheter Pro",
+      "networkBody": "L’app n’a pas accès à internet. Seule exception : Google Play Billing lorsque vous achetez ou restaurez Pro, géré par l’app Play Store selon les règles de confidentialité de Google. Nous ne voyons jamais vos données de paiement.",
+      "deviceTitle": "Tout reste sur votre appareil",
+      "deviceBody": "Les partitions importées sont copiées dans le stockage privé de l’app. Les annotations, setlists, collections et réglages y sont aussi. Désinstaller l’app les supprime.",
+      "filesTitle": "Uniquement les fichiers que vous choisissez",
+      "filesBody": "L’app ne peut lire que les fichiers et dossiers que vous choisissez dans le sélecteur de fichiers d’Android ou que vous partagez avec elle.",
+      "backupsTitle": "Les sauvegardes vont où vous les enregistrez",
+      "backupsBody": "Une sauvegarde est un seul fichier enregistré où vous voulez : sur l’appareil, une carte mémoire ou un dossier cloud. L’app se contente de l’écrire, puis de le relire lors d’une restauration.",
+      "crashTitle": "Rapports de plantage seulement si vous les envoyez",
+      "crashBody": "Si l’app plante, un court rapport technique est conservé sur votre appareil : version de l’app, modèle de l’appareil, version d’Android, ce que faisait le code et un journal de l’activité récente de l’app. Au lancement suivant, l’app vous demande si vous souhaitez l’envoyer. Il ne quitte votre appareil que si vous le partagez vous-même, par e-mail ou via une autre app de votre choix. « Plus tard » le supprime.",
+      "changesTitle": "Modifications",
+      "changesBody": "Si cette politique change, la nouvelle version sera dans l’app et sur la fiche Play Store avant de s’appliquer.",
+      "contactTitle": "Questions",
+      "contactBody": "Écrivez à {{email}}.",
+      "listing": "La fiche Play Store de l’app renvoie vers ce même texte."
+    },
+    "licencesScreen": {
+      "title": "Licences",
+      "intro": "Cette app utilise les polices, icônes et projets libres ci-dessous. Merci à toutes les personnes qui les ont créés.",
+      "fonts": "Polices",
+      "icons": "Icônes",
+      "libraries": "Bibliothèques",
+      "showText": "Affiche le texte de la licence",
+      "hideText": "Masque le texte de la licence"
+    }
+  },
+  "onboarding": {
+    "skip": "Passer",
+    "skipHint": "Ouvre directement votre bibliothèque",
+    "next": "Suivant",
+    "start": "Commencer",
+    "startHint": "Ouvre votre bibliothèque, où quelques partitions d’exemple vous attendent",
+    "stepOf": "Étape {{step}} sur {{count}}",
+    "import": {
+      "title": "Votre musique, sur cet appareil",
+      "body": "Importez des PDF depuis vos fichiers, un cloud ou un dossier entier. Ils restent sur cet appareil : pas de compte, rien n’est envoyé."
+    },
+    "pedal": {
+      "title": "Tournez les pages sans les mains",
+      "body": "Touchez le bord de la page ou appuyez sur une pédale tourne-page. Les pédales Bluetooth fonctionnent immédiatement."
+    },
+    "annotate": {
+      "title": "Écrivez sur la partition",
+      "body": "Une encre comme au crayon pour les doigtés, les respirations et les rappels. Tout peut être annulé."
+    },
+    "annotateHint": "Astuce : touchez le crayon pour écrire sur la page — avec un stylet, écrivez directement.",
+    "annotateHintNoStylus": "Astuce : touchez le crayon pour écrire sur la page.",
+    "dismissHint": "Fermer l’astuce",
+    "licence": {
+      "pd": "Partition d’exemple · musique du domaine public. Cette gravure peut être copiée et partagée librement (CC0).",
+      "pdArr": "Partition d’exemple · mélodie et paroles du domaine public. Cet arrangement peut être copié et partagé librement (CC0).",
+      "cc0": "Partition d’exemple · écrite pour cette app. Libre de copie, de jeu et d’arrangement (CC0).",
+      "sample": "Partition d’exemple fournie avec l’app."
+    }
   }
 }

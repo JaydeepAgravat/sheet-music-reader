@@ -42,12 +42,28 @@ type PrefSchema = {
   inkToolbarPos: { x: number; y: number } | null;
   /** In annotate mode, fingers keep drawing even after a stylus has been seen. */
   inkFingerDraws: boolean;
+  /** A stylus writes on the page any time, without entering annotate mode. */
+  inkStylusAnywhere: boolean;
   /** When the last backup finished (ms since epoch); null = never. */
   lastBackupAt: number | null;
   /** Scores in the last backup (the "N new since your last backup" nudge). */
   lastBackupScores: number;
   /** The one-time "back up your library" banner (25+ scores) was dismissed. */
   backupBannerDismissed: boolean;
+  /** The first-run intro (Import · Pedal · Annotate) was finished or skipped. */
+  introDone: boolean;
+  /** The bundled sample scores were added once; never again, even if the user deletes them. */
+  samplesSeeded: boolean;
+  /** The one-time "tap the pencil to write" tip in the reader was shown. */
+  annotateHintShown: boolean;
+  /**
+   * Pro entitlement cache (src/features/billing/entitlement.ts): read instantly at launch so a
+   * paying user is never locked out offline, then re-verified with Play. Never backed up — a
+   * backup file must not be able to grant Pro.
+   */
+  proUnlocked: boolean;
+  /** Play purchase token of the cached Pro purchase; null when unknown. */
+  proToken: string | null;
 };
 
 const defaults: PrefSchema = {
@@ -69,9 +85,15 @@ const defaults: PrefSchema = {
   inkActiveTool: 'graphite',
   inkToolbarPos: null,
   inkFingerDraws: false,
+  inkStylusAnywhere: true,
   lastBackupAt: null,
   lastBackupScores: 0,
   backupBannerDismissed: false,
+  introDone: false,
+  samplesSeeded: false,
+  annotateHintShown: false,
+  proUnlocked: false,
+  proToken: null,
 };
 
 type Key = keyof PrefSchema;
@@ -98,6 +120,7 @@ export const BACKED_UP_PREFS: readonly Key[] = [
   'inkPresets',
   'inkActiveTool',
   'inkFingerDraws',
+  'inkStylusAnywhere',
 ];
 
 const isFiniteNum = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
@@ -111,6 +134,7 @@ const validators: { [K in Key]?: (value: unknown) => PrefSchema[K] | undefined }
   inkPresets: v => normalizePresets(v),
   inkActiveTool: v => (typeof v === 'string' && v.length > 0 ? v : undefined),
   lastBackupAt: v => (v === null || isFiniteNum(v) ? v : undefined),
+  proToken: v => (v === null || typeof v === 'string' ? v : undefined),
   inkToolbarPos: v => {
     if (v === null) return null;
     if (typeof v !== 'object' || Array.isArray(v)) return undefined;

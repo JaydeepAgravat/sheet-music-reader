@@ -6,6 +6,7 @@ import { addToCollection, listCollections, removeFromCollection } from '@/data/r
 import { getScoreDetail, setFavorite, updateMetadata, type MetadataPatch, type ScoreDetail } from '@/data/repos/scores';
 import { Button, Chip, IconButton, Sheet, Text, TextField } from '@/ui/components';
 import { radius, space, useTheme } from '@/ui/theme';
+import { sampleLicenceNote } from '@/features/onboarding/samples';
 
 type Draft = { title: string; composer: string; arranger: string; genre: string; musicKey: string; tempo: string; timeSig: string; tags: string; notes: string };
 
@@ -108,7 +109,11 @@ export function ScoreDetailSheet({
                   t('details.added', { date: new Date(detail.createdAt).toLocaleDateString(i18n.language, { dateStyle: 'medium' }) }),
                 ].join(' · ')}
               </Text>
-              {detail.originalName ? (
+              {detail.isSample ? (
+                <Text variant="caption" color="textTertiary">
+                  {sampleLicenceNote(detail.originalName, t)}
+                </Text>
+              ) : detail.originalName ? (
                 <Text variant="caption" color="textTertiary" numberOfLines={1}>
                   {detail.originalName}
                 </Text>

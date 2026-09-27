@@ -101,6 +101,7 @@ jest.mock('@/specs/NativeSafImport', () => ({
     pickFolder: jest.fn(async () => null),
     listFolder: jest.fn(async () => []),
     copyToLibrary: jest.fn(),
+    copyAsset: jest.fn(),
     takePendingShares: jest.fn(() => []),
     libraryDir: jest.fn(() => '/data/files/library'),
     coversDir: jest.fn(() => '/data/files/covers'),
@@ -122,5 +123,17 @@ jest.mock('@/specs/NativeBackup', () => ({
     cancel: jest.fn(),
     fileSize: jest.fn(async () => -1),
     onBackupProgress: jest.fn(() => ({ remove: jest.fn() })),
+  },
+}));
+
+jest.mock('@/specs/NativeBilling', () => ({
+  __esModule: true,
+  default: {
+    connect: jest.fn(async () => false),
+    getProduct: jest.fn(async () => null),
+    purchase: jest.fn(async () => undefined),
+    queryOwned: jest.fn(async () => []),
+    acknowledge: jest.fn(async () => true),
+    onPurchaseUpdate: jest.fn(() => ({ remove: jest.fn() })),
   },
 }));

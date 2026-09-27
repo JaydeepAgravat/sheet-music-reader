@@ -115,6 +115,22 @@ class SafImportModule(reactContext: ReactApplicationContext) : NativeSafImportSp
     }
   }
 
+  override fun copyAsset(assetPath: String, destPath: String, promise: Promise) {
+    io.execute {
+      try {
+        val r = copier.copyAsset(assetPath, File(destPath.removePrefix("file://")))
+        promise.resolve(
+            Arguments.createMap().apply {
+              putString("path", r.file.absolutePath)
+              putDouble("size", r.size.toDouble())
+              putString("sha256", r.sha256)
+            })
+      } catch (e: LibraryCopier.CopyException) {
+        promise.reject(e.code, e.message, e)
+      }
+    }
+  }
+
   override fun takePendingShares(): WritableArray =
       Arguments.createArray().apply { ShareInbox.take().forEach { pushMap(it.toMap()) } }
 

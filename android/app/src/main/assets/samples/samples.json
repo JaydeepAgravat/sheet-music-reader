@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "samples": [
+    {
+      "file": "bach-prelude-in-c.pdf",
+      "title": "Prelude in C major",
+      "composer": "J. S. Bach",
+      "genre": "Classical",
+      "key": "C major",
+      "tags": [
+        "Piano",
+        "Baroque"
+      ],
+      "licence": "pd",
+      "licenceNote": "Public domain. Engraved for Score Reader; this edition is dedicated to the public domain (CC0).",
+      "pages": 3,
+      "bytes": 78378,
+      "sha256": "32818cd4bd9e9797e3300cbfa0f9a968c7e67a3deb5247d386b473830ba62a02"
+    },
+    {
+      "file": "quiet-pages-lead-sheet.pdf",
+      "title": "Quiet Pages",
+      "composer": "Score Reader",
+      "genre": "Jazz",
+      "key": "F major",
+      "tags": [
+        "Lead sheet"
+      ],
+      "licence": "cc0",
+      "licenceNote": "An original tune written for Score Reader. Dedicated to the public domain (CC0) — copy, play and arrange freely.",
+      "pages": 1,
+      "bytes": 29868,
+      "sha256": "5c3e8b2d630782899566433f151b8972093df99a6ab13a85fe90130685afe8a0"
+    },
+    {
+      "file": "old-hundredth-hymn.pdf",
+      "title": "Old Hundredth",
+      "composer": "Louis Bourgeois",
+      "genre": "Choral",
+      "key": "G major",
+      "tags": [
+        "Hymn",
+        "SATB"
+      ],
+      "licence": "pd-arr",
+      "licenceNote": "Melody and words public domain. Rhythm and harmonisation: Score Reader edition, dedicated to the public domain (CC0).",
+      "pages": 1,
+      "bytes": 28761,
+      "sha256": "ea359a6ebd55081a031c1c59b329cb4ce946ba794feb5a9039f0c32dbe6bd186"
+    },
+    {
+      "file": "scales-and-arpeggios.pdf",
+      "title": "Scales & Arpeggios",
+      "composer": "Score Reader",
+      "genre": "Studies",
+      "key": null,
+      "tags": [
+        "Piano",
+        "Technique"
+      ],
+      "licence": "cc0",
+      "licenceNote": "Written for Score Reader. Dedicated to the public domain (CC0).",
+      "pages": 25,
+      "bytes": 325223,
+      "sha256": "1ee3cccb75c624796d52ab6f15bcdcb7d856ac25c415f42b75143621897df46a"
+    }
+  ]
+}

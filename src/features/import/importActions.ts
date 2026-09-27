@@ -1,8 +1,11 @@
 import NativeSafImport, { type PickedFolder, type SourceFile } from '@/specs/NativeSafImport';
+import { requirePro } from '@/features/billing/entitlement';
 import { enqueueImport } from './importQueue';
 
 /** Library "Import" → system file picker (multi-select). */
 export async function pickAndImportFiles(): Promise<void> {
+  // At the free limit already: say so before the picker, not after the user chose files.
+  if (!requirePro('imports')) return;
   const files = await NativeSafImport.pickFiles();
   enqueueImport({ files });
 }
@@ -11,6 +14,7 @@ export type FolderListing = { folder: PickedFolder; files: SourceFile[]; subfold
 
 /** Library "Import a folder" → tree picker + recursive listing (the caller confirms, then imports). */
 export async function pickFolderListing(): Promise<FolderListing | null> {
+  if (!requirePro('imports')) return null;
   const folder = await NativeSafImport.pickFolder();
   if (!folder) return null;
   const files = [...(await NativeSafImport.listFolder(folder.uri))];

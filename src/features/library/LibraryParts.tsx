@@ -38,7 +38,16 @@ export const ScoreRow = memo(function ScoreRowImpl({
       onLongPress={() => onLongPress(score)}
       accessibilityRole="button"
       accessibilityState={{ selected }}
-      accessibilityLabel={[score.title, score.composer, t('library.pages', { count: score.pageCount })].filter(Boolean).join(', ')}
+      accessibilityLabel={[
+        score.title,
+        score.composer,
+        t('library.pages', { count: score.pageCount }),
+        score.isFavorite && t('library.badges.favorite'),
+        score.annotated && t('library.badges.annotated'),
+        score.inSetlist && t('library.badges.inSetlist'),
+      ]
+        .filter(Boolean)
+        .join(', ')}
       style={[styles.row, selected && { backgroundColor: colors.accentContainer }]}
     >
       <View style={[styles.thumb, { borderColor: selected ? colors.accent : colors.borderSubtle }]}>

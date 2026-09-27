@@ -29,6 +29,7 @@ import { Icon } from '@/ui/icons';
 import { EmptySetlistsArt } from '@/ui/illustrations/Illustrations';
 import { Screen } from '@/ui/layout/Screen';
 import { radius, space, useTheme } from '@/ui/theme';
+import { requirePro } from '@/features/billing/entitlement';
 import { AddSongsSheet } from './AddSongsSheet';
 import { SetlistNameDialog, useEventDateLabel } from './SetlistParts';
 import { playSetlist } from './SetlistsScreen';
@@ -107,6 +108,7 @@ export function SetlistScreen() {
             label: t('setlists.duplicate'),
             icon: 'copy',
             onPress: () => {
+              if (!requirePro('setlists')) return;
               const name = t('setlists.duplicateName', { name: setlist.name });
               const copy = duplicateSetlist(id, name);
               if (copy) {

@@ -9,6 +9,7 @@ import { Button, IconButton, ListRow, ProgressPill, Sheet, Surface, Switch, Text
 import { showToast } from '@/ui/feedback/store';
 import { Icon } from '@/ui/icons';
 import { motion, radius, space, useTheme } from '@/ui/theme';
+import { FREE_SCORE_LIMIT, openPaywall } from '@/features/billing/entitlement';
 import { pickAndImportFiles, pickFolderListing, type FolderListing } from './importActions';
 import { cancelImport, enqueueImport, importDuplicateAnyway, useImport, type FailReason } from './importQueue';
 
@@ -108,7 +109,7 @@ export function ImportStatus() {
   const [reviewing, setReviewing] = useState(false);
 
   useEffect(() => {
-    if (summary && !summary.cancelled && summary.failed.length === 0 && summary.duplicates.length === 0 && summary.imported.length > 0) haptic('confirm');
+    if (summary && !summary.cancelled && summary.failed.length === 0 && summary.duplicates.length === 0 && summary.overLimit.length === 0 && summary.imported.length > 0) haptic('confirm');
   }, [summary]);
 
   if (running && progress) {
@@ -127,6 +128,7 @@ export function ImportStatus() {
   const parts = [
     summary.duplicates.length ? t('import.duplicatesSkipped', { count: summary.duplicates.length }) : null,
     summary.failed.length ? t('import.failedCount', { count: summary.failed.length }) : null,
+    summary.overLimit.length ? t('billing.import.overLimit', { count: summary.overLimit.length }) : null,
   ].filter(Boolean);
 
   return (
@@ -216,6 +218,29 @@ function ReviewSheet({ visible, onClose, onDone }: { visible: boolean; onClose: 
             ))}
           </>
         )}
+        {summary.overLimit.length > 0 && (
+          <>
+            <Text variant="overline" color="textSecondary" style={styles.reviewSection}>
+              {t('billing.import.overLimitTitle').toUpperCase()}
+            </Text>
+            <Text variant="caption" color="textSecondary">
+              {t('billing.import.overLimitHint', { limit: FREE_SCORE_LIMIT })}
+            </Text>
+            {summary.overLimit.map((name, i) => (
+              <View key={`${name}-${i}`} style={styles.issueRow}>
+                <Icon name="lock-simple" size={20} color="textTertiary" />
+                <Text variant="body" numberOfLines={1} style={styles.flex}>
+                  {name}
+                </Text>
+              </View>
+            ))}
+            <Button label={t('billing.getPro')} icon="sparkle" variant="tonal" onPress={() => {
+                onClose(); // a sheet (RN Modal) would cover the paywall screen
+                openPaywall('imports');
+              }}
+              style={styles.getPro} />
+          </>
+        )}
         <Button label={t('common.done')} onPress={onDone} style={styles.done} />
       </ScrollView>
     </Sheet>
@@ -268,4 +293,5 @@ const styles = StyleSheet.create({
   fields: { flex: 1, gap: space.sm },
   issueRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, minHeight: 48 },
   done: { marginTop: space.lg, alignSelf: 'flex-end' },
+  getPro: { marginTop: space.sm, alignSelf: 'flex-start' },
 });

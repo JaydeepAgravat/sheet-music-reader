@@ -6,6 +6,8 @@
     "android": "react-native run-android",
     "start": "react-native start",
     "icons": "node scripts/gen-icons.mjs",
+    "samples": "node scripts/gen-samples.mjs",
+    "licenses": "node scripts/gen-licenses.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "test": "jest",
@@ -54,10 +56,13 @@
     "eslint": "^8.19.0",
     "eslint-plugin-i18next": "^6.1.5",
     "jest": "^29.6.3",
+    "pdfkit": "^0.20.2",
     "prettier": "2.8.8",
     "react-test-renderer": "19.2.3",
+    "svg-to-pdfkit": "^0.1.8",
     "svgo": "^4.1.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "verovio": "^6.3.0"
   },
   "engines": {
     "node": ">= 22.11.0"

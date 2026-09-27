@@ -54,6 +54,15 @@ export function DevToolsGroup() {
         }}
       />
       <ListRow
+        icon="warning-circle"
+        title="Crash the app (tests the crash report)"
+        onPress={() => {
+          setTimeout(() => {
+            throw new Error('Dev test crash');
+          }, 0);
+        }}
+      />
+      <ListRow
         icon="playlist"
         title="Create 15-song gig setlist"
         onPress={() => {
