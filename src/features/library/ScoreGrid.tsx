@@ -17,6 +17,13 @@ export function useScoreGridLayout(): { wide: boolean; columns: number } {
   };
 }
 
+/**
+ * FlashList v2 anchors the visible content by default. When scores are inserted above the viewport
+ * (an import sorted by title), the grid then left some cells at their old positions: cards drew on
+ * top of each other and a slot stayed empty until the app restarted. The library is top-anchored.
+ */
+const NO_ANCHORING = { disabled: true } as const;
+
 type Props = {
   scores: readonly Score[];
   view: 'grid' | 'list';
@@ -42,6 +49,7 @@ export function ScoreGrid({ scores, view, selected, query = '', onPress, onLongP
       data={scores}
       numColumns={columns}
       keyExtractor={s => s.id}
+      maintainVisibleContentPosition={NO_ANCHORING}
       extraData={selected}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
@@ -69,6 +77,7 @@ export function ScoreGrid({ scores, view, selected, query = '', onPress, onLongP
       key="list"
       data={scores}
       keyExtractor={s => s.id}
+      maintainVisibleContentPosition={NO_ANCHORING}
       extraData={selected}
       ListHeaderComponent={ListHeaderComponent}
       ListEmptyComponent={ListEmptyComponent}
