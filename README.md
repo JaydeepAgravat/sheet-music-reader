@@ -342,7 +342,9 @@ Sample scores are public-domain works or original material, engraved here and re
 
 ## 📄 License
 
-_License to be added._
+The code is released under the [MIT License](LICENSE): use it, learn from it, build on it.
+
+Bundled third-party assets keep their own licences: the Source Serif 4, Inter and Bravura fonts (SIL Open Font License) and Phosphor icons (MIT). The app lists them all under *Settings › Licences*.
 
 <div align="center">
 <br/>
